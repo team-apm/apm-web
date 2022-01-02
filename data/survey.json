@@ -1,101 +1,171 @@
 {
     "locale": "ja",
+    "title": {
+        "ja": "apm用パッケージデータの編集"
+    },
+    "description": {
+        "ja": "送信したデータには\"CC BY-NC-SA 4.0\"ライセンスが適用されます。"
+    },
     "pages": [
         {
             "name": "packages",
             "elements": [
                 {
                     "type": "text",
-                    "name": "question1",
+                    "name": "id",
                     "title": {
-                        "ja": "id"
+                        "ja": "【重要】id: 作者名/パッケージ名"
                     },
                     "description": {
-                        "ja": "【重要】作者名(半角英数)/パッケージ名(半角英数)　例：amate/InputPipePlugin"
+                        "ja": "かな・漢字・記号は入力できません；データ修正の際はidを変えずに送信してください"
                     },
-                    "isRequired": true
+                    "isRequired": true,
+                    "placeHolder": {
+                        "ja": "amate/InputPipePlugin"
+                    }
                 },
                 {
                     "type": "text",
-                    "name": "question2",
+                    "name": "name",
                     "title": {
-                        "ja": "name"
+                        "ja": "【重要】パッケージ名（25文字以内）"
                     },
                     "description": {
-                        "ja": "【重要】パッケージ名(25文字以内)　例：InputPipePlugin"
+                        "ja": "プラグイン名やスクリプト名をそのまま書いてOK"
                     },
-                    "isRequired": true
+                    "isRequired": true,
+                    "placeHolder": {
+                        "ja": "InputPipePlugin"
+                    }
                 },
                 {
                     "type": "text",
-                    "name": "question6",
+                    "name": "overview",
                     "title": {
-                        "ja": "overview"
-                    },
-                    "description": {
                         "ja": "概要（35文字以内）"
+                    },
+                    "placeHolder": {
+                        "ja": "AviUtlのメモリ使用量を減らす"
                     }
                 },
                 {
                     "type": "text",
-                    "name": "question5",
+                    "name": "description",
                     "title": {
-                        "ja": "description"
+                        "ja": "説明（概要より詳細な説明）"
                     },
-                    "description": {
-                        "ja": "説明"
+                    "placeHolder": {
+                        "ja": "このソフトは、L-SMASH_Works File Reader(lwinput.aui)を別プロセスで実行してあげることによって、Aviutlのメモリ使用量削減を目論む、aviutlの入力プラグインです"
                     }
                 },
                 {
                     "type": "text",
-                    "name": "question4",
+                    "name": "developer",
                     "title": {
-                        "ja": "developer"
-                    },
-                    "description": {
                         "ja": "【重要】作者名"
                     },
-                    "isRequired": true
+                    "isRequired": true,
+                    "placeHolder": {
+                        "ja": "amate"
+                    }
+                },
+                {
+                    "type": "comment",
+                    "name": "dependencies",
+                    "title": {
+                        "ja": "依存パッケージ"
+                    },
+                    "description": {
+                        "ja": "このパッケージを導入する前にインストールする必要があるパッケージのid。改行により複数入力、「|」によりor指定ができます。特定の拡張編集バージョンに依存する場合は「exedit0.93rc1」、特定のAviUtlバージョンに依存する場合は「aviutl1.10」等の方法で指定します。"
+                    },
+                    "placeHolder": {
+                        "ja": "exedit0.92"
+                    }
                 },
                 {
                     "type": "text",
-                    "name": "question3",
+                    "name": "pageURL",
                     "title": {
-                        "ja": "pageURL"
+                        "ja": "紹介・解説ページのURL"
                     },
                     "description": {
-                        "ja": "紹介ページのURL"
+                        "ja": "動画サイトのURLも可；ダウンロードページのURLと同一でも可"
                     },
-                    "inputType": "url"
+                    "inputType": "url",
+                    "placeHolder": {
+                        "ja": "https://example.com/aviutl/解説.html"
+                    }
                 },
                 {
                     "type": "text",
-                    "name": "question9",
+                    "name": "downloadURL",
                     "title": {
-                        "ja": "downloadURL"
-                    },
-                    "description": {
                         "ja": "【重要】ダウンロードページのURL"
                     },
                     "isRequired": true,
-                    "inputType": "url"
+                    "inputType": "url",
+                    "placeHolder": {
+                        "ja": "https://example.com/aviutl/download.html"
+                    }
                 },
                 {
                     "type": "text",
-                    "name": "question8",
+                    "name": "lataestVersion",
                     "title": {
-                        "ja": "lataestVersion"
+                        "ja": "パッケージの最新バージョン"
                     },
                     "description": {
-                        "ja": "パッケージの最新バージョン"
+                        "ja": "プラグインの場合、AviUtlの「その他→プラグイン情報」から確認できる場合があります"
+                    },
+                    "placeHolder": {
+                        "ja": "v1.8"
                     }
                 },
                 {
-                    "type": "text",
-                    "name": "question7",
+                    "type": "paneldynamic",
+                    "name": "files",
                     "title": {
-                        "ja": "pageURL"
-                    }
+                        "ja": "ファイルの一覧"
+                    },
+                    "description": {
+                        "ja": "インストール時にコピーするファイルの一覧　※この欄を手動で変更しないでください。"
+                    },
+                    "templateElements": [
+                        {
+                            "type": "text",
+                            "name": "filename",
+                            "title": {
+                                "ja": "filename: ファイル名とその置き場所（ファイルのコピー先）"
+                            }
+                        },
+                        {
+                            "type": "boolean",
+                            "name": "isOptional",
+                            "title": {
+                                "ja": "isOptional: インストール時には存在せず、アンインストール時に存在するファイル（一時ファイル）であるならYes"
+                            },
+                            "defaultValue": "false"
+                        },
+                        {
+                            "type": "boolean",
+                            "name": "isDirectory",
+                            "title": {
+                                "ja": "isDirectory: ファイルならNo、フォルダならYes"
+                            },
+                            "defaultValue": "false"
+                        },
+                        {
+                            "type": "text",
+                            "name": "archivePath",
+                            "title": {
+                                "ja": "archivePath: zipまたはlzhファイル内の場所（ファイルのコピー元）"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "paneldynamic",
+                    "name": "question1"
                 }
             ]
         }
