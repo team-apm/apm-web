@@ -11,8 +11,9 @@
       "ja": "id"
      },
      "description": {
-      "ja": "【超重要】作者名(半角英数)/パッケージ名(半角英数)　例：amate/InputPipePlugin"
-     }
+      "ja": "【重要】作者名(半角英数)/パッケージ名(半角英数)　例：amate/InputPipePlugin"
+     },
+     "isRequired": true
     },
     {
      "type": "text",
@@ -21,8 +22,9 @@
       "ja": "name"
      },
      "description": {
-      "ja": "パッケージ名(25文字以内)　例：InputPipePlugin"
-     }
+      "ja": "【重要】パッケージ名(25文字以内)　例：InputPipePlugin"
+     },
+     "isRequired": true
     },
     {
      "type": "text",
@@ -51,8 +53,9 @@
       "ja": "developer"
      },
      "description": {
-      "ja": "作者名"
-     }
+      "ja": "【重要】作者名"
+     },
+     "isRequired": true
     },
     {
      "type": "text",
@@ -62,7 +65,8 @@
      },
      "description": {
       "ja": "紹介ページのURL"
-     }
+     },
+     "inputType": "url"
     },
     {
      "type": "text",
@@ -71,8 +75,10 @@
       "ja": "downloadURL"
      },
      "description": {
-      "ja": "【超重要】ダウンロードページのURL"
-     }
+      "ja": "【重要】ダウンロードページのURL"
+     },
+     "isRequired": true,
+     "inputType": "url"
     },
     {
      "type": "text",
