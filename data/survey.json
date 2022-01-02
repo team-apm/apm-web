@@ -1,103 +1,103 @@
 {
- "locale": "ja",
- "pages": [
-  {
-   "name": "packages",
-   "elements": [
-    {
-     "type": "text",
-     "name": "question1",
-     "title": {
-      "ja": "id"
-     },
-     "description": {
-      "ja": "【重要】作者名(半角英数)/パッケージ名(半角英数)　例：amate/InputPipePlugin"
-     },
-     "isRequired": true
-    },
-    {
-     "type": "text",
-     "name": "question2",
-     "title": {
-      "ja": "name"
-     },
-     "description": {
-      "ja": "【重要】パッケージ名(25文字以内)　例：InputPipePlugin"
-     },
-     "isRequired": true
-    },
-    {
-     "type": "text",
-     "name": "question6",
-     "title": {
-      "ja": "overview"
-     },
-     "description": {
-      "ja": "概要（35文字以内）"
-     }
-    },
-    {
-     "type": "text",
-     "name": "question5",
-     "title": {
-      "ja": "description"
-     },
-     "description": {
-      "ja": "説明"
-     }
-    },
-    {
-     "type": "text",
-     "name": "question4",
-     "title": {
-      "ja": "developer"
-     },
-     "description": {
-      "ja": "【重要】作者名"
-     },
-     "isRequired": true
-    },
-    {
-     "type": "text",
-     "name": "question3",
-     "title": {
-      "ja": "pageURL"
-     },
-     "description": {
-      "ja": "紹介ページのURL"
-     },
-     "inputType": "url"
-    },
-    {
-     "type": "text",
-     "name": "question9",
-     "title": {
-      "ja": "downloadURL"
-     },
-     "description": {
-      "ja": "【重要】ダウンロードページのURL"
-     },
-     "isRequired": true,
-     "inputType": "url"
-    },
-    {
-     "type": "text",
-     "name": "question8",
-     "title": {
-      "ja": "lataestVersion"
-     },
-     "description": {
-      "ja": "パッケージの最新バージョン"
-     }
-    },
-    {
-     "type": "text",
-     "name": "question7",
-     "title": {
-      "ja": "pageURL"
-     }
-    }
-   ]
-  }
- ]
+    "locale": "ja",
+    "pages": [
+        {
+            "name": "packages",
+            "elements": [
+                {
+                    "type": "text",
+                    "name": "question1",
+                    "title": {
+                        "ja": "id"
+                    },
+                    "description": {
+                        "ja": "【重要】作者名(半角英数)/パッケージ名(半角英数)　例：amate/InputPipePlugin"
+                    },
+                    "isRequired": true
+                },
+                {
+                    "type": "text",
+                    "name": "question2",
+                    "title": {
+                        "ja": "name"
+                    },
+                    "description": {
+                        "ja": "【重要】パッケージ名(25文字以内)　例：InputPipePlugin"
+                    },
+                    "isRequired": true
+                },
+                {
+                    "type": "text",
+                    "name": "question6",
+                    "title": {
+                        "ja": "overview"
+                    },
+                    "description": {
+                        "ja": "概要（35文字以内）"
+                    }
+                },
+                {
+                    "type": "text",
+                    "name": "question5",
+                    "title": {
+                        "ja": "description"
+                    },
+                    "description": {
+                        "ja": "説明"
+                    }
+                },
+                {
+                    "type": "text",
+                    "name": "question4",
+                    "title": {
+                        "ja": "developer"
+                    },
+                    "description": {
+                        "ja": "【重要】作者名"
+                    },
+                    "isRequired": true
+                },
+                {
+                    "type": "text",
+                    "name": "question3",
+                    "title": {
+                        "ja": "pageURL"
+                    },
+                    "description": {
+                        "ja": "紹介ページのURL"
+                    },
+                    "inputType": "url"
+                },
+                {
+                    "type": "text",
+                    "name": "question9",
+                    "title": {
+                        "ja": "downloadURL"
+                    },
+                    "description": {
+                        "ja": "【重要】ダウンロードページのURL"
+                    },
+                    "isRequired": true,
+                    "inputType": "url"
+                },
+                {
+                    "type": "text",
+                    "name": "question8",
+                    "title": {
+                        "ja": "lataestVersion"
+                    },
+                    "description": {
+                        "ja": "パッケージの最新バージョン"
+                    }
+                },
+                {
+                    "type": "text",
+                    "name": "question7",
+                    "title": {
+                        "ja": "pageURL"
+                    }
+                }
+            ]
+        }
+    ]
 }
