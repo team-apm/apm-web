@@ -14,12 +14,21 @@
                     "type": "text",
                     "name": "id",
                     "title": {
-                        "ja": "【重要】id: 作者名/パッケージ名"
+                        "ja": "【重要】id: 作者名(半角英数)/パッケージ名(半角英数)"
                     },
                     "description": {
                         "ja": "かな・漢字・記号は入力できません；データ修正の際はidを変えずに送信してください"
                     },
                     "isRequired": true,
+                    "validators": [
+                        {
+                            "type": "regex",
+                            "text": {
+                                "ja": "idは\"作者名(半角英数)/プラグイン名(半角英数)\"の形式です"
+                            },
+                            "regex": "^[A-Za-z0-9]+\\/[A-Za-z0-9]+$"
+                        }
+                    ],
                     "placeHolder": {
                         "ja": "amate/InputPipePlugin"
                     }
@@ -34,6 +43,15 @@
                         "ja": "プラグイン名やスクリプト名をそのまま書いてOK"
                     },
                     "isRequired": true,
+                    "validators": [
+                        {
+                            "type": "text",
+                            "text": {
+                                "ja": "名前は25文字以内である必要があります"
+                            },
+                            "maxLength": 25
+                        }
+                    ],
                     "placeHolder": {
                         "ja": "InputPipePlugin"
                     }
@@ -44,6 +62,15 @@
                     "title": {
                         "ja": "概要（35文字以内）"
                     },
+                    "validators": [
+                        {
+                            "type": "text",
+                            "text": {
+                                "ja": "概要は35文字以内である必要があります"
+                            },
+                            "maxLength": 35
+                        }
+                    ],
                     "placeHolder": {
                         "ja": "AviUtlのメモリ使用量を減らす"
                     }
@@ -135,9 +162,6 @@
                         {
                             "type": "text",
                             "name": "filename",
-                            "title": {
-                                "ja": "filename"
-                            },
                             "description": {
                                 "ja": "ファイル名とその置き場所（ファイルのコピー先）"
                             }
@@ -145,9 +169,6 @@
                         {
                             "type": "boolean",
                             "name": "isOptional",
-                            "title": {
-                                "ja": "isOptional"
-                            },
                             "description": {
                                 "ja": "インストール時には存在せず、アンインストール時に存在するファイル（一時ファイル）であるならYes"
                             },
@@ -156,9 +177,6 @@
                         {
                             "type": "boolean",
                             "name": "isDirectory",
-                            "title": {
-                                "ja": "isDirectory"
-                            },
                             "description": {
                                 "ja": "ファイルならNo、フォルダならYes"
                             },
@@ -167,9 +185,6 @@
                         {
                             "type": "text",
                             "name": "archivePath",
-                            "title": {
-                                "ja": "archivePath"
-                            },
                             "description": {
                                 "ja": "zipまたはlzhファイル内の場所（ファイルのコピー元）"
                             }
@@ -197,9 +212,6 @@
                         {
                             "type": "paneldynamic",
                             "name": "integrities",
-                            "title": {
-                                "ja": "integrities"
-                            },
                             "description": {
                                 "ja": "ファイルの整合性を確認するための情報"
                             },
@@ -207,9 +219,6 @@
                                 {
                                     "type": "text",
                                     "name": "target",
-                                    "title": {
-                                        "ja": "target"
-                                    },
                                     "description": {
                                         "ja": "ファイルの場所"
                                     }
@@ -217,9 +226,6 @@
                                 {
                                     "type": "text",
                                     "name": "targetIntegrity",
-                                    "title": {
-                                        "ja": "targetIntegrity"
-                                    },
                                     "description": {
                                         "ja": "ファイルのハッシュ値"
                                     }
