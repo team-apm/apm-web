@@ -128,21 +128,28 @@
                         "ja": "ファイルの一覧"
                     },
                     "description": {
-                        "ja": "インストール時にコピーするファイルの一覧　※この欄を手動で変更しないでください。"
+                        "ja": "インストール時にコピーするファイルの一覧　※この欄は手動で変更できません"
                     },
+                    "readOnly": true,
                     "templateElements": [
                         {
                             "type": "text",
                             "name": "filename",
                             "title": {
-                                "ja": "filename: ファイル名とその置き場所（ファイルのコピー先）"
+                                "ja": "filename"
+                            },
+                            "description": {
+                                "ja": "ファイル名とその置き場所（ファイルのコピー先）"
                             }
                         },
                         {
                             "type": "boolean",
                             "name": "isOptional",
                             "title": {
-                                "ja": "isOptional: インストール時には存在せず、アンインストール時に存在するファイル（一時ファイル）であるならYes"
+                                "ja": "isOptional"
+                            },
+                            "description": {
+                                "ja": "インストール時には存在せず、アンインストール時に存在するファイル（一時ファイル）であるならYes"
                             },
                             "defaultValue": "false"
                         },
@@ -150,7 +157,10 @@
                             "type": "boolean",
                             "name": "isDirectory",
                             "title": {
-                                "ja": "isDirectory: ファイルならNo、フォルダならYes"
+                                "ja": "isDirectory"
+                            },
+                            "description": {
+                                "ja": "ファイルならNo、フォルダならYes"
                             },
                             "defaultValue": "false"
                         },
@@ -158,14 +168,65 @@
                             "type": "text",
                             "name": "archivePath",
                             "title": {
-                                "ja": "archivePath: zipまたはlzhファイル内の場所（ファイルのコピー元）"
+                                "ja": "archivePath"
+                            },
+                            "description": {
+                                "ja": "zipまたはlzhファイル内の場所（ファイルのコピー元）"
                             }
                         }
                     ]
                 },
                 {
                     "type": "paneldynamic",
-                    "name": "question1"
+                    "name": "releases",
+                    "title": {
+                        "ja": "リリース一覧"
+                    },
+                    "description": {
+                        "ja": "バージョンごとの補足情報　※この欄は手動で変更できません"
+                    },
+                    "readOnly": true,
+                    "templateElements": [
+                        {
+                            "type": "text",
+                            "name": "version",
+                            "title": {
+                                "ja": "パッケージのバージョン"
+                            }
+                        },
+                        {
+                            "type": "paneldynamic",
+                            "name": "integrities",
+                            "title": {
+                                "ja": "integrities"
+                            },
+                            "description": {
+                                "ja": "ファイルの整合性を確認するための情報"
+                            },
+                            "templateElements": [
+                                {
+                                    "type": "text",
+                                    "name": "target",
+                                    "title": {
+                                        "ja": "target"
+                                    },
+                                    "description": {
+                                        "ja": "ファイルの場所"
+                                    }
+                                },
+                                {
+                                    "type": "text",
+                                    "name": "targetIntegrity",
+                                    "title": {
+                                        "ja": "targetIntegrity"
+                                    },
+                                    "description": {
+                                        "ja": "ファイルのハッシュ値"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         }
