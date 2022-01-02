@@ -9,60 +9,78 @@ Survey.StylesManager.applyTheme("default");
 class SurveyComponent extends Component {
     render() {
         const preData = {
-            "id": "amate/InputPipePlugin",
-            "name": "InputPipePlugin",
-            "overview": "AviUtlのメモリ使用量を減らす",
-            "description": "このソフトは、L-SMASH_Works File Reader(lwinput.aui)を別プロセスで実行してあげることによって、Aviutlのメモリ使用量削減を目論む、aviutlの入力プラグインです",
-            "developer": "amate",
+            "id": "ePi/patch",
+            "name": "patch.aul",
+            "overview": "AviUtl ver.1.10や拡張編集Plugin ver.0.92のバグを修正する",
+            "description": "AviUtl ver.1.10や拡張編集Plugin ver.0.92に存在するバグを修正します。拡張編集Plugin ver.0.93rc1で修正されたバグも修正します。",
+            "developer": "ePi",
             "dependencies": {
                 "dependency": [
-                    "pop4bit/LSMASHWorks|VFRmaniac/LSMASHWorks|HolyWu/LSMASHWorks|MrOjii/LSMASHWorks"
+                    "aviutl1.10",
+                    "exedit0.92"
                 ]
             },
-            "pageURL": "https://www.nicovideo.jp/watch/sm35585310",
-            "downloadURL": "https://github.com/amate/InputPipePlugin/releases/latest",
-            "latestVersion": "v1.8",
+            "pageURL": "https://scrapbox.io/ePi5131/patch.aul",
+            "downloadURL": "https://scrapbox.io/ePi5131/patch.aul",
+            "latestVersion": "r8",
             "files": [
                 {
-                    "filename": "plugins/InputPipeMain.exe",
+                    "filename": "plugins/patch.aul",
                     "isOptional": false,
                     "isDirectory": false,
-                    "archivePath": "InputPipePlugin/"
+                    "archivePath": null
                 },
                 {
-                    "filename": "plugins/InputPipePlugin.aui",
-                    "isOptional": false,
-                    "isDirectory": false,
-                    "archivePath": "InputPipePlugin/"
-                },
-                {
-                    "filename": "plugins/InputPipePlugin.log",
+                    "filename": "plugins/patch.aul.json",
                     "isOptional": true,
                     "isDirectory": false,
                     "archivePath": null
                 }
             ],
             "releases": {
-                "v1.8": {
+                "r8": {
                     "integrities": [
                         {
-                            "target": "plugins/InputPipePlugin.aui",
-                            "targetIntegrity": "sha384-ujWRvgLYdr/2XKYMuzfkHSttfgJPXtXsH+StEkpPXj6cXTlJy2F3tha0sr0/lD14"
+                            "target": "plugins/patch.aul",
+                            "targetIntegrity": "sha384-Y5+kwXflyU0gp355bol79vADMCZVIZz0yV8mcPXB0lLxNRLxEzqfOJM8BpU1Td9Y"
                         }
                     ]
                 }
             },
             "type": [
-                "input"
+                "language"
             ]
         }
+
+        // convert
+        delete preData.type;
         preData.dependencies = preData?.dependencies.dependency.join('\r\n');
+        if (preData?.releases) {
+            const tmpReleases = [];
+            for (const [key, value] of Object.entries(preData.releases)) {
+                tmpReleases.push({ version: key, integrities: value.integrities });
+            }
+            preData.releases = tmpReleases;
+        }
+
 
         const survey = new Survey.Model(surveyJson);
         survey.data = preData;
         survey.onComplete.add((s, o) => {
             const newData = s.data;
-            newData.dependencies = newData?.dependencies.trim().split(/\n/);
+
+            // convert
+            if (newData?.dependencies)
+                newData.dependencies = { dependency: newData?.dependencies.trim().split(/\r\n/) };
+            if (newData?.releases) {
+                const tmpReleases = {};
+                for (const entry of newData.releases) {
+                    tmpReleases[entry.version] = { integrities: entry.integrities };
+                }
+                newData.releases = tmpReleases;
+            }
+
+
             console.log(newData);
         });
 
