@@ -109,7 +109,7 @@ class PackageInfo {
         }
       }
     }
-    Object.freeze(this);
+    // Object.freeze(this);
   }
 
   /**
