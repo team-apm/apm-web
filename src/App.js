@@ -1,24 +1,21 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import SurveyComponent from './SurveyComponent';
+import { PackagesList } from './parseXML';
 
 function App() {
+  const [packageItem, setPackageItem] = useState();
+
+  useEffect(() => {
+    async function fetchXML() {
+      const text = await (await fetch("https://cdn.jsdelivr.net/gh/hal-shu-sato/apm-data@main/v2/data/packages.xml")).text();
+      const packages = new PackagesList(text);
+      setPackageItem(packages['ePi/patch']);
+    }
+    fetchXML();
+  }, [])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <SurveyComponent packageItem={packageItem} />
   );
 }
 

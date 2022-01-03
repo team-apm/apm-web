@@ -1,19 +1,20 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import * as Survey from "survey-react";
 import "survey-react/survey.css";
 import "./index.css";
 import surveyJson from './data/survey.json';
-import { PackagesList } from './parseXML';
 
 Survey.StylesManager.applyTheme("default");
 
-class SurveyComponent extends Component {
-    render() {
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', "https://cdn.jsdelivr.net/gh/hal-shu-sato/apm-data@main/v2/data/packages.xml", false);
-        xhr.send();
-        const packages = new PackagesList(xhr.response);
-        const preData = packages['ePi/patch'];
+function SurveyComponent(props) {
+    const [survey, setSurvey] = useState();
+
+    useEffect(() => {
+        const preData = props.packageItem;
+        if (!preData) {
+            setSurvey();
+            return;
+        }
 
         // convert
         preData.dependencies = preData?.dependencies.dependency.join('\r\n');
@@ -24,7 +25,6 @@ class SurveyComponent extends Component {
             }
             preData.releases = tmpReleases;
         }
-
 
         const survey = new Survey.Model(surveyJson);
         survey.data = preData;
@@ -46,12 +46,16 @@ class SurveyComponent extends Component {
             console.log(newData);
         });
 
-        return (
+        setSurvey(survey);
+    }, [props.packageItem]);
+
+    return (
+        <div>{survey &&
             <Survey.Survey
                 model={survey}
-            />
-        );
-    }
+            />}
+        </div>
+    );
 }
 
 export default SurveyComponent;
