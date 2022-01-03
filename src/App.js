@@ -5,17 +5,32 @@ import { PackagesList } from './parseXML';
 
 function App() {
   const [packageItem, setPackageItem] = useState();
+  const [packages, setPackages] = useState([]);
 
   useEffect(() => {
     async function fetchXML() {
       const text = await (await fetch("https://cdn.jsdelivr.net/gh/hal-shu-sato/apm-data@main/v2/data/packages.xml")).text();
-      const packages = new PackagesList(text);
-      setPackageItem(packages['ePi/patch']);
+      const parsedPackages = new PackagesList(text);
+
+      const tmpPackages = [];
+      for (const value of Object.values(parsedPackages)) {
+        tmpPackages.push(value);
+      }
+      setPackages(tmpPackages);
     }
     fetchXML();
-  }, [])
+  }, []);
+
+  function complete(json) {
+    // Open google forms in a new tab instead
+    console.log(PackagesList.write([json]));
+  };
+
   return (
-    <SurveyComponent packageItem={packageItem} />
+    <div>
+      {packages.map(p => <div key={p.id} onClick={() => setPackageItem(p)}>{p.id}</div>)}
+      <SurveyComponent packageItem={packageItem} onComplete={complete} />
+    </div>
   );
 }
 

@@ -128,7 +128,8 @@ class PackageInfo {
           if (packageItem.isContinuous) tmpItem['@_continuous'] = true;
           newPackageItem[key] = tmpItem;
         } else if (key === 'releases') {
-          throw new Error('Writing sri is not implemented.');
+          newPackageItem[key] = 'Writing sri is not implemented.';
+          // throw new Error('Writing sri is not implemented.');
         } else {
           newPackageItem[key] = packageItem[key];
         }

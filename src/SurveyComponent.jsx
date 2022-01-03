@@ -10,14 +10,16 @@ function SurveyComponent(props) {
     const [survey, setSurvey] = useState();
 
     useEffect(() => {
-        const preData = props.packageItem;
-        if (!preData) {
+        if (!props.packageItem) {
             setSurvey();
             return;
         }
 
+        const preData = JSON.parse(JSON.stringify(props.packageItem));
+
         // convert
-        preData.dependencies = preData?.dependencies.dependency.join('\r\n');
+        if (preData?.dependencies)
+            preData.dependencies = preData.dependencies.dependency.join('\r\n');
         if (preData?.releases) {
             const tmpReleases = [];
             for (const [key, value] of Object.entries(preData.releases)) {
@@ -42,12 +44,11 @@ function SurveyComponent(props) {
                 newData.releases = tmpReleases;
             }
 
-
-            console.log(newData);
+            props.onComplete(newData);
         });
 
         setSurvey(survey);
-    }, [props.packageItem]);
+    }, [props, props.packageItem]);
 
     return (
         <div>{survey &&
