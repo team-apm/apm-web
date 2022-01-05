@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import 'bootstrap-dark-5/dist/css/bootstrap-dark.min.css';
+import './main.css';
 
 ReactDOM.render(
   <React.StrictMode>
