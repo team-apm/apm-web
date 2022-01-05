@@ -1,4 +1,4 @@
-import parser from "fast-xml-parser";
+import parser from 'fast-xml-parser';
 const J2xParser = parser.j2xParser;
 
 const defaultKeys = [
@@ -23,7 +23,7 @@ const defaultKeys = [
 
 /**
  * @param {object} parsedData - A object parsed from XML.
- * @returns {Array} An array of files.
+ * @return {Array} An array of files.
  */
 function parseFiles(parsedData) {
   const files = [];
@@ -52,7 +52,7 @@ function parseFiles(parsedData) {
 
 /**
  * @param {object} parsedData - An object to parse into XML.
- * @returns {Array} An array of files.
+ * @return {Array} An array of files.
  */
 function parseFilesInverse(parsedData) {
   const files = [];
@@ -115,7 +115,7 @@ class PackageInfo {
   /**
    *
    * @param {object} packageItem - An object to be parsed into xml
-   * @returns {object} package item ready to parse.
+   * @return {object} package item ready to parse.
    */
   static inverse(packageItem) {
     const newPackageItem = {};
@@ -156,7 +156,6 @@ export class PackagesList extends Object {
   /**
    *
    * @param {string} rawXML - The path of the XML file.
-   * @returns {PackagesList} A list of packages.
    */
   constructor(rawXML) {
     super();
@@ -178,8 +177,8 @@ export class PackagesList extends Object {
   /**
    *
    * @param {object} packages - A path of xml file.
-   * 
-   * @returns {string} The raw string of the XML.
+   *
+   * @return {string} The raw string of the XML.
    */
   static write(packages) {
     const xmlObject = [];

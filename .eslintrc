@@ -1,14 +1,20 @@
 {
   "root": true,
   "env": {
-    "browser" : true,
+    "browser": true,
     "es6": true
   },
   "parserOptions": {
     "ecmaVersion": 2020,
     "sourceType": "module"
   },
-  "extends": ["react-app", "react-app/jest", "eslint:recommended", "google", "prettier"],
+  "extends": [
+    "react-app",
+    "react-app/jest",
+    "eslint:recommended",
+    "google",
+    "prettier"
+  ],
   "rules": {
     "prefer-arrow-callback": "error",
     "require-jsdoc": "off"

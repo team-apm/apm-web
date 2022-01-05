@@ -1,241 +1,241 @@
 {
-    "locale": "ja",
-    "title": {
-        "ja": "apm用パッケージデータの編集"
-    },
-    "description": {
-        "ja": "送信したデータには\"CC BY-NC-SA 4.0\"ライセンスが適用されます。"
-    },
-    "pages": [
+  "locale": "ja",
+  "title": {
+    "ja": "apm用パッケージデータの編集"
+  },
+  "description": {
+    "ja": "送信したデータには\"CC BY-NC-SA 4.0\"ライセンスが適用されます。"
+  },
+  "pages": [
+    {
+      "name": "packages",
+      "elements": [
         {
-            "name": "packages",
-            "elements": [
+          "type": "text",
+          "name": "id",
+          "title": {
+            "ja": "【重要】id: 作者名(半角英数)/パッケージ名(半角英数)"
+          },
+          "description": {
+            "ja": "かな・漢字・記号は入力できません；データ修正の際はidを変えずに送信してください"
+          },
+          "isRequired": true,
+          "validators": [
+            {
+              "type": "regex",
+              "text": {
+                "ja": "idは\"作者名(半角英数)/プラグイン名(半角英数)\"の形式です"
+              },
+              "regex": "^[A-Za-z0-9]+\\/[A-Za-z0-9]+$"
+            }
+          ],
+          "placeHolder": {
+            "ja": "amate/InputPipePlugin"
+          }
+        },
+        {
+          "type": "text",
+          "name": "name",
+          "title": {
+            "ja": "【重要】パッケージ名（25文字以内）"
+          },
+          "description": {
+            "ja": "プラグイン名やスクリプト名をそのまま書いてOK"
+          },
+          "isRequired": true,
+          "validators": [
+            {
+              "type": "text",
+              "text": {
+                "ja": "名前は25文字以内である必要があります"
+              },
+              "maxLength": 25
+            }
+          ],
+          "placeHolder": {
+            "ja": "InputPipePlugin"
+          }
+        },
+        {
+          "type": "text",
+          "name": "overview",
+          "title": {
+            "ja": "概要（35文字以内）"
+          },
+          "validators": [
+            {
+              "type": "text",
+              "text": {
+                "ja": "概要は35文字以内である必要があります"
+              },
+              "maxLength": 35
+            }
+          ],
+          "placeHolder": {
+            "ja": "AviUtlのメモリ使用量を減らす"
+          }
+        },
+        {
+          "type": "text",
+          "name": "description",
+          "title": {
+            "ja": "説明（概要より詳細な説明）"
+          },
+          "placeHolder": {
+            "ja": "このソフトは、L-SMASH_Works File Reader(lwinput.aui)を別プロセスで実行してあげることによって、Aviutlのメモリ使用量削減を目論む、aviutlの入力プラグインです"
+          }
+        },
+        {
+          "type": "text",
+          "name": "developer",
+          "title": {
+            "ja": "【重要】作者名"
+          },
+          "isRequired": true,
+          "placeHolder": {
+            "ja": "amate"
+          }
+        },
+        {
+          "type": "comment",
+          "name": "dependencies",
+          "title": {
+            "ja": "依存パッケージ"
+          },
+          "description": {
+            "ja": "このパッケージを導入する前にインストールする必要があるパッケージのid。改行により複数入力、「|」によりor指定ができます。特定の拡張編集バージョンに依存する場合は「exedit0.93rc1」、特定のAviUtlバージョンに依存する場合は「aviutl1.10」等の方法で指定します。"
+          },
+          "placeHolder": {
+            "ja": "exedit0.92"
+          }
+        },
+        {
+          "type": "text",
+          "name": "pageURL",
+          "title": {
+            "ja": "紹介・解説ページのURL"
+          },
+          "description": {
+            "ja": "動画サイトのURLも可；ダウンロードページのURLと同一でも可"
+          },
+          "inputType": "url",
+          "placeHolder": {
+            "ja": "https://example.com/aviutl/解説.html"
+          }
+        },
+        {
+          "type": "text",
+          "name": "downloadURL",
+          "title": {
+            "ja": "【重要】ダウンロードページのURL"
+          },
+          "isRequired": true,
+          "inputType": "url",
+          "placeHolder": {
+            "ja": "https://example.com/aviutl/download.html"
+          }
+        },
+        {
+          "type": "text",
+          "name": "latestVersion",
+          "title": {
+            "ja": "パッケージの最新バージョン"
+          },
+          "description": {
+            "ja": "プラグインの場合、AviUtlの「その他→プラグイン情報」から確認できる場合があります"
+          },
+          "placeHolder": {
+            "ja": "v1.8"
+          }
+        },
+        {
+          "type": "paneldynamic",
+          "name": "files",
+          "title": {
+            "ja": "ファイルの一覧"
+          },
+          "description": {
+            "ja": "インストール時にコピーするファイルの一覧　※この欄は手動で変更できません"
+          },
+          "readOnly": true,
+          "templateElements": [
+            {
+              "type": "text",
+              "name": "filename",
+              "description": {
+                "ja": "ファイル名とその置き場所（ファイルのコピー先）"
+              }
+            },
+            {
+              "type": "boolean",
+              "name": "isOptional",
+              "description": {
+                "ja": "インストール時には存在せず、アンインストール時に存在するファイル（一時ファイル）であるならYes"
+              },
+              "defaultValue": "false"
+            },
+            {
+              "type": "boolean",
+              "name": "isDirectory",
+              "description": {
+                "ja": "ファイルならNo、フォルダならYes"
+              },
+              "defaultValue": "false"
+            },
+            {
+              "type": "text",
+              "name": "archivePath",
+              "description": {
+                "ja": "zipまたはlzhファイル内の場所（ファイルのコピー元）"
+              }
+            }
+          ]
+        },
+        {
+          "type": "paneldynamic",
+          "name": "releases",
+          "title": {
+            "ja": "リリース一覧"
+          },
+          "description": {
+            "ja": "バージョンごとの補足情報　※この欄は手動で変更できません"
+          },
+          "readOnly": true,
+          "templateElements": [
+            {
+              "type": "text",
+              "name": "version",
+              "title": {
+                "ja": "パッケージのバージョン"
+              }
+            },
+            {
+              "type": "paneldynamic",
+              "name": "integrities",
+              "description": {
+                "ja": "ファイルの整合性を確認するための情報"
+              },
+              "templateElements": [
                 {
-                    "type": "text",
-                    "name": "id",
-                    "title": {
-                        "ja": "【重要】id: 作者名(半角英数)/パッケージ名(半角英数)"
-                    },
-                    "description": {
-                        "ja": "かな・漢字・記号は入力できません；データ修正の際はidを変えずに送信してください"
-                    },
-                    "isRequired": true,
-                    "validators": [
-                        {
-                            "type": "regex",
-                            "text": {
-                                "ja": "idは\"作者名(半角英数)/プラグイン名(半角英数)\"の形式です"
-                            },
-                            "regex": "^[A-Za-z0-9]+\\/[A-Za-z0-9]+$"
-                        }
-                    ],
-                    "placeHolder": {
-                        "ja": "amate/InputPipePlugin"
-                    }
+                  "type": "text",
+                  "name": "target",
+                  "description": {
+                    "ja": "ファイルの場所"
+                  }
                 },
                 {
-                    "type": "text",
-                    "name": "name",
-                    "title": {
-                        "ja": "【重要】パッケージ名（25文字以内）"
-                    },
-                    "description": {
-                        "ja": "プラグイン名やスクリプト名をそのまま書いてOK"
-                    },
-                    "isRequired": true,
-                    "validators": [
-                        {
-                            "type": "text",
-                            "text": {
-                                "ja": "名前は25文字以内である必要があります"
-                            },
-                            "maxLength": 25
-                        }
-                    ],
-                    "placeHolder": {
-                        "ja": "InputPipePlugin"
-                    }
-                },
-                {
-                    "type": "text",
-                    "name": "overview",
-                    "title": {
-                        "ja": "概要（35文字以内）"
-                    },
-                    "validators": [
-                        {
-                            "type": "text",
-                            "text": {
-                                "ja": "概要は35文字以内である必要があります"
-                            },
-                            "maxLength": 35
-                        }
-                    ],
-                    "placeHolder": {
-                        "ja": "AviUtlのメモリ使用量を減らす"
-                    }
-                },
-                {
-                    "type": "text",
-                    "name": "description",
-                    "title": {
-                        "ja": "説明（概要より詳細な説明）"
-                    },
-                    "placeHolder": {
-                        "ja": "このソフトは、L-SMASH_Works File Reader(lwinput.aui)を別プロセスで実行してあげることによって、Aviutlのメモリ使用量削減を目論む、aviutlの入力プラグインです"
-                    }
-                },
-                {
-                    "type": "text",
-                    "name": "developer",
-                    "title": {
-                        "ja": "【重要】作者名"
-                    },
-                    "isRequired": true,
-                    "placeHolder": {
-                        "ja": "amate"
-                    }
-                },
-                {
-                    "type": "comment",
-                    "name": "dependencies",
-                    "title": {
-                        "ja": "依存パッケージ"
-                    },
-                    "description": {
-                        "ja": "このパッケージを導入する前にインストールする必要があるパッケージのid。改行により複数入力、「|」によりor指定ができます。特定の拡張編集バージョンに依存する場合は「exedit0.93rc1」、特定のAviUtlバージョンに依存する場合は「aviutl1.10」等の方法で指定します。"
-                    },
-                    "placeHolder": {
-                        "ja": "exedit0.92"
-                    }
-                },
-                {
-                    "type": "text",
-                    "name": "pageURL",
-                    "title": {
-                        "ja": "紹介・解説ページのURL"
-                    },
-                    "description": {
-                        "ja": "動画サイトのURLも可；ダウンロードページのURLと同一でも可"
-                    },
-                    "inputType": "url",
-                    "placeHolder": {
-                        "ja": "https://example.com/aviutl/解説.html"
-                    }
-                },
-                {
-                    "type": "text",
-                    "name": "downloadURL",
-                    "title": {
-                        "ja": "【重要】ダウンロードページのURL"
-                    },
-                    "isRequired": true,
-                    "inputType": "url",
-                    "placeHolder": {
-                        "ja": "https://example.com/aviutl/download.html"
-                    }
-                },
-                {
-                    "type": "text",
-                    "name": "latestVersion",
-                    "title": {
-                        "ja": "パッケージの最新バージョン"
-                    },
-                    "description": {
-                        "ja": "プラグインの場合、AviUtlの「その他→プラグイン情報」から確認できる場合があります"
-                    },
-                    "placeHolder": {
-                        "ja": "v1.8"
-                    }
-                },
-                {
-                    "type": "paneldynamic",
-                    "name": "files",
-                    "title": {
-                        "ja": "ファイルの一覧"
-                    },
-                    "description": {
-                        "ja": "インストール時にコピーするファイルの一覧　※この欄は手動で変更できません"
-                    },
-                    "readOnly": true,
-                    "templateElements": [
-                        {
-                            "type": "text",
-                            "name": "filename",
-                            "description": {
-                                "ja": "ファイル名とその置き場所（ファイルのコピー先）"
-                            }
-                        },
-                        {
-                            "type": "boolean",
-                            "name": "isOptional",
-                            "description": {
-                                "ja": "インストール時には存在せず、アンインストール時に存在するファイル（一時ファイル）であるならYes"
-                            },
-                            "defaultValue": "false"
-                        },
-                        {
-                            "type": "boolean",
-                            "name": "isDirectory",
-                            "description": {
-                                "ja": "ファイルならNo、フォルダならYes"
-                            },
-                            "defaultValue": "false"
-                        },
-                        {
-                            "type": "text",
-                            "name": "archivePath",
-                            "description": {
-                                "ja": "zipまたはlzhファイル内の場所（ファイルのコピー元）"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "type": "paneldynamic",
-                    "name": "releases",
-                    "title": {
-                        "ja": "リリース一覧"
-                    },
-                    "description": {
-                        "ja": "バージョンごとの補足情報　※この欄は手動で変更できません"
-                    },
-                    "readOnly": true,
-                    "templateElements": [
-                        {
-                            "type": "text",
-                            "name": "version",
-                            "title": {
-                                "ja": "パッケージのバージョン"
-                            }
-                        },
-                        {
-                            "type": "paneldynamic",
-                            "name": "integrities",
-                            "description": {
-                                "ja": "ファイルの整合性を確認するための情報"
-                            },
-                            "templateElements": [
-                                {
-                                    "type": "text",
-                                    "name": "target",
-                                    "description": {
-                                        "ja": "ファイルの場所"
-                                    }
-                                },
-                                {
-                                    "type": "text",
-                                    "name": "targetIntegrity",
-                                    "description": {
-                                        "ja": "ファイルのハッシュ値"
-                                    }
-                                }
-                            ]
-                        }
-                    ]
+                  "type": "text",
+                  "name": "targetIntegrity",
+                  "description": {
+                    "ja": "ファイルのハッシュ値"
+                  }
                 }
-            ]
+              ]
+            }
+          ]
         }
-    ],
-    "showPreviewBeforeComplete": "showAnsweredQuestions"
+      ]
+    }
+  ],
+  "showPreviewBeforeComplete": "showAnsweredQuestions"
 }
