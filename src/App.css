@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+
+html,
+body,
+#root,
+.bg-light,
+.container-xxl,
+.container-xxl > .card,
+.container-xxl > .card > .card-body,
+.container-xxl > .card > .card-body > div {
+  height: 100%;
+}

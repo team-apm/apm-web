@@ -35,28 +35,14 @@ function App() {
       <div className="container-xxl">
         <div className="row card border-top-0 border-bottom-0 rounded-0">
           <div className="row card-body py-2">
-            <div className="col-sm-3">
+            <div className="col-sm-3 overflow-auto">
               {packages.map((p) => (
                 <div key={p.id} onClick={() => setPackageItem(p)}>
-                  {p.id}
+                  {p?.name ? p.name : p.id}
                 </div>
               ))}
             </div>
-            <div className="col-sm-9">
-              {packageItem && (
-                <div>
-                  <div>{packageItem.name}</div>
-                  <div>{packageItem.overview}</div>
-                  <div>{packageItem.description}</div>
-                  <div>{packageItem.developer}</div>
-                  紹介ページ:{' '}
-                  <a href={packageItem.pageURL}>{packageItem.pageURL}</a>
-                  ダウンロードページ:{' '}
-                  <a href={packageItem.downloadURL}>
-                    {packageItem.downloadURL}
-                  </a>
-                </div>
-              )}
+            <div className="col-sm-9 overflow-auto">
               <SurveyComponent
                 packageItem={packageItem}
                 onComplete={complete}
