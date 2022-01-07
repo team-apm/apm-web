@@ -46,10 +46,16 @@ function App() {
   }
 
   function createItem(p, badge) {
+    function removeItem(id) {
+      const newPackages = { ...addedPackages };
+      delete newPackages[id];
+      setAddedPackages(newPackages);
+    }
+
     return (
       <div
         className={
-          'list-group-item list-group-item-action' +
+          'list-group-item list-group-item-action position-relative' +
           (p.id === packageItem?.id ? ' active' : '')
         }
         key={p.id}
@@ -60,6 +66,14 @@ function App() {
           <span className="badge bg-warning me-2">Edit</span>
         )}
         {p?.name ? p.name : p.id}
+        {['new', 'edit'].includes(badge) && (
+          <div
+            className="position-absolute top-50 end-0 translate-middle-y fs-4 px-3"
+            onClick={() => removeItem(p.id)}
+          >
+            ×
+          </div>
+        )}
       </div>
     );
   }
