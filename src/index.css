@@ -11,14 +11,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
-/* bootstrap dark 5 does not include these */
-.badge-success {
-  color: #fff;
-  background-color: #28a745;
-}
-
-.badge-warning {
-  color: #212529;
-  background-color: #ffc107;
-}

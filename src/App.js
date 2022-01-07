@@ -55,11 +55,9 @@ function App() {
         key={p.id}
         onClick={() => setPackageItem(p)}
       >
-        {badge === 'new' && (
-          <span className="badge badge-success me-2">New</span>
-        )}
+        {badge === 'new' && <span className="badge bg-success me-2">New</span>}
         {badge === 'edit' && (
-          <span className="badge badge-warning me-2">Edit</span>
+          <span className="badge bg-warning me-2">Edit</span>
         )}
         {p?.name ? p.name : p.id}
       </div>
