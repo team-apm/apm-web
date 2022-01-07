@@ -45,6 +45,27 @@ function App() {
     );
   }
 
+  function createItem(p, badge) {
+    return (
+      <div
+        className={
+          'list-group-item list-group-item-action' +
+          (p.id === packageItem?.id ? ' active' : '')
+        }
+        key={p.id}
+        onClick={() => setPackageItem(p)}
+      >
+        {badge === 'new' && (
+          <span className="badge badge-success me-2">New</span>
+        )}
+        {badge === 'edit' && (
+          <span className="badge badge-warning me-2">Edit</span>
+        )}
+        {p?.name ? p.name : p.id}
+      </div>
+    );
+  }
+
   return (
     <div className="bg-light">
       <div className="d-flex flex-column h-100">
@@ -67,18 +88,22 @@ function App() {
           <div className="row g-0 h-100 card border-top-0 border-bottom-0 rounded-0">
             <div className="row g-0 h-100 card-body p-0">
               <div className="col-sm-3 overflow-auto h-100 list-group list-group-flush user-select-none">
-                {Object.values(packages).map((p) => (
-                  <div
-                    className={
-                      'list-group-item list-group-item-action' +
-                      (p.id === packageItem?.id ? ' active' : '')
-                    }
-                    key={p.id}
-                    onClick={() => setPackageItem(p)}
-                  >
-                    {p?.name ? p.name : p.id}
-                  </div>
-                ))}
+                {Object.values(addedPackages)
+                  .filter(
+                    (p) => !Object.prototype.hasOwnProperty.call(packages, p.id)
+                  )
+                  .map((p) => createItem(p, 'new'))}
+                {Object.values(addedPackages)
+                  .filter((p) =>
+                    Object.prototype.hasOwnProperty.call(packages, p.id)
+                  )
+                  .map((p) => createItem(p, 'edit'))}
+                {Object.values(packages)
+                  .filter(
+                    (p) =>
+                      !Object.prototype.hasOwnProperty.call(addedPackages, p.id)
+                  )
+                  .map((p) => createItem(p))}
               </div>
               <div className="col-sm-9 overflow-auto h-100">
                 <SurveyComponent
