@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/apm-web/static/css/main.f03b22b6.css",
+    "main.js": "/apm-web/static/js/main.f48efb04.js",
+    "static/js/787.d4dc8c82.chunk.js": "/apm-web/static/js/787.d4dc8c82.chunk.js",
+    "index.html": "/apm-web/index.html",
+    "main.f03b22b6.css.map": "/apm-web/static/css/main.f03b22b6.css.map",
+    "main.f48efb04.js.map": "/apm-web/static/js/main.f48efb04.js.map",
+    "787.d4dc8c82.chunk.js.map": "/apm-web/static/js/787.d4dc8c82.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f03b22b6.css",
+    "static/js/main.f48efb04.js"
+  ]
+}
