@@ -32,21 +32,39 @@ function App() {
 
   return (
     <div className="bg-light">
-      <div className="container-xxl">
-        <div className="row card border-top-0 border-bottom-0 rounded-0">
-          <div className="row card-body py-2">
-            <div className="col-sm-3 overflow-auto">
-              {packages.map((p) => (
-                <div key={p.id} onClick={() => setPackageItem(p)}>
-                  {p?.name ? p.name : p.id}
-                </div>
-              ))}
-            </div>
-            <div className="col-sm-9 overflow-auto">
-              <SurveyComponent
-                packageItem={packageItem}
-                onComplete={complete}
-              />
+      <div className="d-flex flex-column h-100">
+        <nav class="container-fluid navbar navbar-light">
+          <span class="navbar-brand">
+            <img src="../icon/apm32.png" alt="" class="d-inline-block" />
+            <span class="align-middle">AviUtl Package Manager</span>
+          </span>
+          <form class="d-flex">
+            <button class="btn btn-outline-success">💬送信</button>
+          </form>
+        </nav>
+        <div className="flex-grow-1 overflow-auto">
+          <div className="row g-0 h-100 card border-top-0 border-bottom-0 rounded-0">
+            <div className="row g-0 h-100 card-body p-0">
+              <div className="col-sm-3 overflow-auto h-100 list-group list-group-flush user-select-none">
+                {packages.map((p) => (
+                  <div
+                    className={
+                      'list-group-item list-group-item-action' +
+                      (p.id === packageItem?.id ? ' active' : '')
+                    }
+                    key={p.id}
+                    onClick={() => setPackageItem(p)}
+                  >
+                    {p?.name ? p.name : p.id}
+                  </div>
+                ))}
+              </div>
+              <div className="col-sm-9 overflow-auto h-100">
+                <SurveyComponent
+                  packageItem={packageItem}
+                  onComplete={complete}
+                />
+              </div>
             </div>
           </div>
         </div>
