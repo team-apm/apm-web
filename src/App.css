@@ -43,3 +43,17 @@ body,
 .bg-light {
   height: 100%;
 }
+
+/* for dark mode */
+.sv_main,
+.sv_main .sv_custom_header,
+.sv_main
+  input:not([type='button']):not([type='reset']):not([type='submit']):not([type='image']):not([type='checkbox']):not([type='radio']),
+.sv_main textarea {
+  background-color: transparent !important ;
+}
+@media (prefers-color-scheme: dark) {
+  .sv_main .sv_container {
+    color: var(--bs-body-color) !important;
+  }
+}

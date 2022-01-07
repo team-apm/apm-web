@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import * as Survey from 'survey-react';
 import 'survey-react/survey.css';
-import './index.css';
 import surveyJson from './data/survey.json';
 
-Survey.StylesManager.applyTheme('default');
+Survey.StylesManager.applyTheme("bootstrap");
 
 function SurveyComponent(props) {
   const [survey, setSurvey] = useState();

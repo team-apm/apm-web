@@ -85,7 +85,7 @@ function App() {
           </form>
         </nav>
         <div className="flex-grow-1 overflow-auto">
-          <div className="row g-0 h-100 card border-top-0 border-bottom-0 rounded-0">
+          <div className="row g-0 h-100 card border-0 rounded-0">
             <div className="row g-0 h-100 card-body p-0">
               <div className="col-sm-3 overflow-auto h-100 list-group list-group-flush user-select-none">
                 {Object.values(addedPackages)
