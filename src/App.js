@@ -3,9 +3,23 @@ import './App.css';
 import SurveyComponent from './SurveyComponent';
 import { PackagesList } from './parseXML';
 
+const formsUrl =
+  'https://docs.google.com/forms/d/e/1FAIpQLSfxQWxsCp9QQYHpe9oxL4gZEdJmMVQxFZijXKI1NmygeHgHkg/viewform?usp=pp_url';
+const formsAttribute = { name: 'entry.1336975935', data: 'entry.447338863' };
+
+function makeFormsUrl(data) {
+  let url = formsUrl;
+  for (const key of Object.keys(formsAttribute)) {
+    if (Object.prototype.hasOwnProperty.call(data, key))
+      url += '&' + formsAttribute[key] + '=' + encodeURIComponent(data[key]);
+  }
+  return url;
+}
+
 function App() {
   const [packageItem, setPackageItem] = useState();
-  const [packages, setPackages] = useState([]);
+  const [packages, setPackages] = useState({});
+  const [addedPackages, setAddedPackages] = useState({});
 
   useEffect(() => {
     async function fetchXML() {
@@ -14,39 +28,46 @@ function App() {
           'https://cdn.jsdelivr.net/gh/hal-shu-sato/apm-data@main/v2/data/packages.xml'
         )
       ).text();
-      const parsedPackages = new PackagesList(text);
-
-      const tmpPackages = [];
-      for (const value of Object.values(parsedPackages)) {
-        tmpPackages.push(value);
-      }
-      setPackages(tmpPackages);
+      setPackages(new PackagesList(text));
     }
     fetchXML();
   }, []);
 
   function complete(json) {
-    // Open google forms in a new tab instead
-    console.log(PackagesList.write([json]));
+    const newPackages = { ...addedPackages };
+    newPackages[json.id] = json;
+    setAddedPackages(newPackages);
+  }
+
+  function submit() {
+    window.open(
+      makeFormsUrl({ data: PackagesList.write(Object.values(addedPackages)) })
+    );
   }
 
   return (
     <div className="bg-light">
       <div className="d-flex flex-column h-100">
-        <nav class="container-fluid navbar navbar-light">
-          <span class="navbar-brand">
-            <img src="../icon/apm32.png" alt="" class="d-inline-block" />
-            <span class="align-middle">AviUtl Package Manager</span>
+        <nav className="container-fluid navbar navbar-light">
+          <span className="navbar-brand">
+            <img src="../icon/apm32.png" alt="" className="d-inline-block" />
+            <span className="align-middle">AviUtl Package Manager</span>
           </span>
-          <form class="d-flex">
-            <button class="btn btn-outline-success">💬送信</button>
+          <form className="d-flex">
+            <button
+              className="btn btn-outline-success"
+              onClick={submit}
+              type="button"
+            >
+              💬送信
+            </button>
           </form>
         </nav>
         <div className="flex-grow-1 overflow-auto">
           <div className="row g-0 h-100 card border-top-0 border-bottom-0 rounded-0">
             <div className="row g-0 h-100 card-body p-0">
               <div className="col-sm-3 overflow-auto h-100 list-group list-group-flush user-select-none">
-                {packages.map((p) => (
+                {Object.values(packages).map((p) => (
                   <div
                     className={
                       'list-group-item list-group-item-action' +
