@@ -84,7 +84,7 @@ function App() {
         <nav className="container-fluid navbar navbar-light">
           <span className="navbar-brand">
             <img src="../icon/apm32.png" alt="" className="d-inline-block" />
-            <span className="align-middle">AviUtl Package Manager</span>
+            <span className="align-middle">apm-web</span>
           </span>
           <form class="d-flex">
             <ul class="navbar-nav">
