@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/apm-web/static/css/main.f03b22b6.css",
-    "main.js": "/apm-web/static/js/main.f48efb04.js",
+    "main.css": "/apm-web/static/css/main.7411f7ae.css",
+    "main.js": "/apm-web/static/js/main.7e9f0ec0.js",
     "static/js/787.d4dc8c82.chunk.js": "/apm-web/static/js/787.d4dc8c82.chunk.js",
     "index.html": "/apm-web/index.html",
-    "main.f03b22b6.css.map": "/apm-web/static/css/main.f03b22b6.css.map",
-    "main.f48efb04.js.map": "/apm-web/static/js/main.f48efb04.js.map",
+    "main.7411f7ae.css.map": "/apm-web/static/css/main.7411f7ae.css.map",
+    "main.7e9f0ec0.js.map": "/apm-web/static/js/main.7e9f0ec0.js.map",
     "787.d4dc8c82.chunk.js.map": "/apm-web/static/js/787.d4dc8c82.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f03b22b6.css",
-    "static/js/main.f48efb04.js"
+    "static/css/main.7411f7ae.css",
+    "static/js/main.7e9f0ec0.js"
   ]
 }
