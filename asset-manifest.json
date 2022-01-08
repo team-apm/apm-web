@@ -1,15 +1,17 @@
 {
   "files": {
-    "main.css": "/apm-web/static/css/main.7411f7ae.css",
-    "main.js": "/apm-web/static/js/main.7e9f0ec0.js",
+    "main.css": "/apm-web/static/css/main.6b678400.css",
+    "main.js": "/apm-web/static/js/main.a81ce30a.js",
     "static/js/787.d4dc8c82.chunk.js": "/apm-web/static/js/787.d4dc8c82.chunk.js",
+    "static/media/bootstrap-icons.woff?": "/apm-web/static/media/bootstrap-icons.38c4d2499557ae0379fd.woff",
+    "static/media/bootstrap-icons.woff2?": "/apm-web/static/media/bootstrap-icons.2b56e79ae5013246de29.woff2",
     "index.html": "/apm-web/index.html",
-    "main.7411f7ae.css.map": "/apm-web/static/css/main.7411f7ae.css.map",
-    "main.7e9f0ec0.js.map": "/apm-web/static/js/main.7e9f0ec0.js.map",
+    "main.6b678400.css.map": "/apm-web/static/css/main.6b678400.css.map",
+    "main.a81ce30a.js.map": "/apm-web/static/js/main.a81ce30a.js.map",
     "787.d4dc8c82.chunk.js.map": "/apm-web/static/js/787.d4dc8c82.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7411f7ae.css",
-    "static/js/main.7e9f0ec0.js"
+    "static/css/main.6b678400.css",
+    "static/js/main.a81ce30a.js"
   ]
 }
