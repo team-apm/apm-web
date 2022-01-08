@@ -86,7 +86,19 @@ function App() {
             <img src="../icon/apm32.png" alt="" className="d-inline-block" />
             <span className="align-middle">AviUtl Package Manager</span>
           </span>
-          <form className="d-flex">
+          <form class="d-flex">
+            <ul class="navbar-nav">
+              <li class="nav-item me-3">
+                <a
+                  className="nav-link"
+                  href="https://github.com/hal-shu-sato/apm-data/issues"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  最新のリクエスト状況を確認する
+                </a>
+              </li>
+            </ul>
             <button
               className="btn btn-outline-success"
               onClick={submit}
