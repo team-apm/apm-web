@@ -29,6 +29,8 @@ function App() {
         )
       ).text();
       setPackages(new PackagesList(text));
+
+      setAddedPackages(JSON.parse(localStorage.getItem('packages')) ?? {});
     }
     fetchXML();
   }, []);
@@ -37,6 +39,7 @@ function App() {
     const newPackages = { ...addedPackages };
     newPackages[json.id] = json;
     setAddedPackages(newPackages);
+    localStorage.setItem('packages', JSON.stringify(newPackages));
   }
 
   function submit() {
