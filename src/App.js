@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import SurveyComponent from './SurveyComponent';
 import { PackagesList } from './parseXML';
+import Fuse from 'fuse.js';
 
 const formsUrl =
   'https://docs.google.com/forms/d/e/1FAIpQLSfxQWxsCp9QQYHpe9oxL4gZEdJmMVQxFZijXKI1NmygeHgHkg/viewform?usp=pp_url';
@@ -20,6 +21,7 @@ function App() {
   const [packageItem, setPackageItem] = useState();
   const [packages, setPackages] = useState({});
   const [addedPackages, setAddedPackages] = useState({});
+  const [searchString, setSearchString] = useState('');
 
   useEffect(() => {
     async function fetchXML() {
@@ -48,6 +50,15 @@ function App() {
     );
   }
 
+  const options = {
+    threshold: 0.1,
+    keys: ['id', 'name', 'overview', 'description', 'developer'],
+  };
+
+  const merged = Object.values(Object.assign({}, packages, addedPackages));
+  const ps = searchString
+    ? new Fuse(merged, options).search(searchString).map((p) => p.item)
+    : merged;
   function createItem(p, badge) {
     function removeItem(id) {
       const newPackages = { ...addedPackages };
@@ -59,7 +70,8 @@ function App() {
       <div
         className={
           'list-group-item list-group-item-action position-relative' +
-          (p.id === packageItem?.id ? ' active' : '')
+          (p.id === packageItem?.id ? ' active' : '') +
+          (ps.filter((pp) => pp.id === p.id).length > 0 ? '' : ' d-none')
         }
         key={p.id}
         onClick={() => setPackageItem(p)}
@@ -140,23 +152,39 @@ function App() {
         <div className="flex-grow-1 overflow-auto">
           <div className="row g-0 h-100 card border-0 rounded-0">
             <div className="row g-0 h-100 card-body p-0">
-              <div className="col-sm-3 overflow-auto h-100 list-group list-group-flush user-select-none">
-                {Object.values(addedPackages)
-                  .filter(
-                    (p) => !Object.prototype.hasOwnProperty.call(packages, p.id)
-                  )
-                  .map((p) => createItem(p, 'new'))}
-                {Object.values(addedPackages)
-                  .filter((p) =>
-                    Object.prototype.hasOwnProperty.call(packages, p.id)
-                  )
-                  .map((p) => createItem(p, 'edit'))}
-                {Object.values(packages)
-                  .filter(
-                    (p) =>
-                      !Object.prototype.hasOwnProperty.call(addedPackages, p.id)
-                  )
-                  .map((p) => createItem(p))}
+              <div className="col-sm-3 d-flex flex-column h-100">
+                <div className="input-group p-2">
+                  <input
+                    className="form-control shadow-none"
+                    type="text"
+                    name="name"
+                    value={searchString}
+                    placeholder="🔍search"
+                    onChange={(e) => setSearchString(e.target.value)}
+                  />
+                </div>
+                <div className="overflow-auto h-100 list-group list-group-flush user-select-none">
+                  {Object.values(addedPackages)
+                    .filter(
+                      (p) =>
+                        !Object.prototype.hasOwnProperty.call(packages, p.id)
+                    )
+                    .map((p) => createItem(p, 'new'))}
+                  {Object.values(addedPackages)
+                    .filter((p) =>
+                      Object.prototype.hasOwnProperty.call(packages, p.id)
+                    )
+                    .map((p) => createItem(p, 'edit'))}
+                  {Object.values(packages)
+                    .filter(
+                      (p) =>
+                        !Object.prototype.hasOwnProperty.call(
+                          addedPackages,
+                          p.id
+                        )
+                    )
+                    .map((p) => createItem(p))}
+                </div>
               </div>
               <div className="col-sm-9 overflow-auto h-100">
                 <SurveyComponent
