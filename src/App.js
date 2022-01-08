@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
 import SurveyComponent from './SurveyComponent';
 import { PackagesList } from './parseXML';
@@ -37,12 +37,16 @@ function App() {
     fetchXML();
   }, []);
 
-  function complete(json) {
-    const newPackages = { ...addedPackages };
-    newPackages[json.id] = json;
-    setAddedPackages(newPackages);
-    localStorage.setItem('packages', JSON.stringify(newPackages));
-  }
+  const complete = useCallback(
+    (json) => {
+      const newPackages = { ...addedPackages };
+      newPackages[json.id] = json;
+      setAddedPackages(newPackages);
+      setPackageItem(json);
+      localStorage.setItem('packages', JSON.stringify(newPackages));
+    },
+    [addedPackages]
+  );
 
   function submit() {
     window.open(

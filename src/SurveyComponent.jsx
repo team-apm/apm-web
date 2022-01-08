@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo  } from 'react';
 import * as Survey from 'survey-react';
 import 'survey-react/survey.css';
 import surveyJson from './data/survey.json';
 
 Survey.StylesManager.applyTheme("bootstrap");
 
-function SurveyComponent(props) {
+const SurveyComponent = memo((props) => {
+
   const [survey, setSurvey] = useState();
 
   useEffect(() => {
@@ -52,6 +53,6 @@ function SurveyComponent(props) {
   }, [props, props.packageItem]);
 
   return <div>{survey && <Survey.Survey model={survey} />}</div>;
-}
+});
 
 export default SurveyComponent;
