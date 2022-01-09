@@ -196,6 +196,7 @@ function App() {
                   packageItem={packageItem}
                   onComplete={complete}
                 />
+                <h4>SRIデータの設定</h4>
                 {packageItem?.downloadURL && (
                   <a
                     className=""
@@ -203,7 +204,7 @@ function App() {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    ファイルのダウンロード
+                    ダウンロードURLを新しいタブで開く
                   </a>
                 )}
                 <ArchiveComponent />
