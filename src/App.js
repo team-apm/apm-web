@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
 import SurveyComponent from './SurveyComponent';
+import ArchiveComponent from './ArchiveComponent';
 import { PackagesList } from './parseXML';
 import Fuse from 'fuse.js';
 
@@ -195,6 +196,17 @@ function App() {
                   packageItem={packageItem}
                   onComplete={complete}
                 />
+                {packageItem?.downloadURL && (
+                  <a
+                    className=""
+                    href={packageItem.downloadURL}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    ファイルのダウンロード
+                  </a>
+                )}
+                <ArchiveComponent />
               </div>
             </div>
           </div>
