@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import path from 'path-browserify';
 import Sortable from 'sortablejs';
 
@@ -19,7 +19,6 @@ path.resolve = (a) => '/' + a;
 
 const pathRelated = (pathA, pathB) => {
   const isParent = (parent, child) => {
-    console.log(parent + ";" + child);
     const relative = path.relative(parent, child);
     return relative && relative !== '' && !relative.startsWith('..');
   };
@@ -31,6 +30,8 @@ function VirtualInstallation(props) {
   const listAviutl = useRef(null);
   const listPlugins = useRef(null);
   const listScript = useRef(null);
+
+  const [sortables, setSortables] = useState({});
 
   const clearList = () => {
     if (listDownload.current)
@@ -48,7 +49,7 @@ function VirtualInstallation(props) {
   clearList();
   const filesWirhSri = Object.entries(props.files).map(([k, v]) => { return { name: k, sri: v, folder: false } });
   const folders = [...new Set(filesWirhSri.map(f => path.dirname(f.name)))].map(n => { return { name: n, folder: true } });
-  // const entries = Object.assign({}, filesWirhSri, folders);
+  const dirEntries = [].concat(filesWirhSri, folders);
 
   // folder
   folders
@@ -78,6 +79,66 @@ function VirtualInstallation(props) {
       listDownload.current.appendChild(entry);
     });
 
+  // output
+  const makeXML = () => {
+    const files = []
+      .concat(
+        sortables.sortAviutl
+          .toArray()
+          .filter((i) => i !== 'exclude')
+          .map((i) => {
+            return {
+              id: i,
+              archivePath: path.dirname(i),
+              targetPath: path.basename(i)
+            }
+          }),
+        sortables.sortPlugins
+          .toArray()
+          .map((i) => {
+            return {
+              id: i,
+              archivePath: path.dirname(i),
+              targetPath: path.join('plugins', path.basename(i))
+            }
+          }),
+        sortables.sortScript
+          .toArray()
+          .map((i) => {
+            return {
+              id: i,
+              archivePath: path.dirname(i),
+              targetPath: path.join('script', path.basename(i))
+            }
+          })
+      );
+    const filesJson = files
+      .map((i) => {
+        const ret = { '#text': i.targetPath };
+        if (i.archivePath !== '.')
+          ret['@_archivePath'] = i.archivePath;
+        if (dirEntries.find(e => e.name === i.id).folder)
+          ret['@_directory'] = true;
+        return ret;
+      });
+    const integrities = files
+      .flatMap((i) => {
+        const fileEntry = dirEntries.find(e => e.name === i.id);
+        if (fileEntry.folder) return [];
+        return [{
+          '#text': fileEntry.sri,
+          '@_target': i.targetPath
+        }];
+      });
+    console.log(filesJson);
+    console.log(integrities);
+  };
+  if (sortables?.sortAviutl)
+    sortables.sortAviutl.options.onSort = makeXML;
+  if (sortables?.sortPlugins)
+    sortables.sortPlugins.options.onSort = makeXML;
+  if (sortables?.sortScript)
+    sortables.sortScript.options.onSort = makeXML;
 
   useEffect(() => {
     const usedPath = new Set();
@@ -120,8 +181,7 @@ function VirtualInstallation(props) {
       },
     });
 
-    // const [sortAviutl, sortPlugins, sortScript] = [
-    [
+    const [sortAviutl, sortPlugins, sortScript] = [
       listAviutl.current,
       listPlugins.current,
       listScript.current,
@@ -135,12 +195,16 @@ function VirtualInstallation(props) {
           invertSwap: true,
           invertedSwapThreshold: 0.6,
           emptyInsertThreshold: 8,
-          onSort: () => { },
         })
     );
-  }, []);
 
-
+    setSortables({
+      usedPath: usedPath,
+      sortAviutl: sortAviutl,
+      sortPlugins: sortPlugins,
+      sortScript: sortScript
+    });
+  }, [setSortables]);
 
   return (
     <div className="d-flex my-2">
