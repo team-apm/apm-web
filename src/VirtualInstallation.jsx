@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect, useState, memo } from 'react'
 import path from 'path-browserify';
 import Sortable from 'sortablejs';
 
@@ -25,7 +25,7 @@ const pathRelated = (pathA, pathB) => {
   return isParent(pathA, pathB) || isParent(pathB, pathA);
 };
 
-function VirtualInstallation(props) {
+const VirtualInstallation = memo((props) => {
   const listDownload = useRef(null);
   const listAviutl = useRef(null);
   const listPlugins = useRef(null);
@@ -114,11 +114,11 @@ function VirtualInstallation(props) {
       );
     const filesJson = files
       .map((i) => {
-        const ret = { '#text': i.targetPath };
+        const ret = { 'filename': i.targetPath };
         if (i.archivePath !== '.')
-          ret['@_archivePath'] = i.archivePath;
+          ret['archivePath'] = i.archivePath;
         if (dirEntries.find(e => e.name === i.id).folder)
-          ret['@_directory'] = true;
+          ret['isDirectory'] = true;
         return ret;
       });
     const integrities = files
@@ -126,12 +126,11 @@ function VirtualInstallation(props) {
         const fileEntry = dirEntries.find(e => e.name === i.id);
         if (fileEntry.folder) return [];
         return [{
-          '#text': fileEntry.sri,
-          '@_target': i.targetPath
+          'targetIntegrity': fileEntry.sri,
+          'target': i.targetPath
         }];
       });
-    console.log(filesJson);
-    console.log(integrities);
+    props.onChange(filesJson, integrities);
   };
   if (sortables?.sortAviutl)
     sortables.sortAviutl.options.onSort = makeXML;
@@ -237,6 +236,6 @@ function VirtualInstallation(props) {
       </div>
     </div>
   );
-}
+});
 
 export default VirtualInstallation;
