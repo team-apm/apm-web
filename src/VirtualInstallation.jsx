@@ -49,7 +49,7 @@ const VirtualInstallation = memo((props) => {
 
     clearList();
     const filesWirhSri = Object.entries(props.files).map(([k, v]) => { return { name: k, sri: v, folder: false } });
-    const folders = [...new Set(filesWirhSri.map(f => path.dirname(f.name)))].map(n => { return { name: n, folder: true } });
+    const folders = [...new Set(filesWirhSri.map(f => path.dirname(f.name)))].filter(n => n !== '.').map(n => { return { name: n, folder: true } });
 
     // folder
     folders
@@ -82,7 +82,7 @@ const VirtualInstallation = memo((props) => {
 
   useEffect(() => {
     const filesWirhSri = Object.entries(props.files).map(([k, v]) => { return { name: k, sri: v, folder: false } });
-    const folders = [...new Set(filesWirhSri.map(f => path.dirname(f.name)))].map(n => { return { name: n, folder: true } });
+    const folders = [...new Set(filesWirhSri.map(f => path.dirname(f.name)))].filter(n => n !== '.').map(n => { return { name: n, folder: true } });
     const dirEntries = [].concat(filesWirhSri, folders);
 
     const makeXML = () => {
