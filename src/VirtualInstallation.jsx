@@ -116,7 +116,7 @@ const VirtualInstallation = memo((props) => {
       .map((i) => {
         const ret = { 'filename': i.targetPath };
         ret['archivePath'] = (i.archivePath === '.') ? null : i.archivePath;
-        ret['isDirectory'] = dirEntries.find(e => e.name === i.id).folder === true;
+        ret['isDirectory'] = !!dirEntries.find(e => e.name === i.id).folder;
         ret['isOptional'] = false;
         return ret;
       });
