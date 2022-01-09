@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 import JSZip from 'jszip';
+import VirtualInstallation from './VirtualInstallation';
 
 function ArchiveComponent() {
   const [sri, setSri] = useState({});
@@ -31,7 +32,7 @@ function ArchiveComponent() {
             <p>ここにプラグイン・スクリプトのzipファイルをドラッグアンドドロップ</p>
         }
       </div>
-      {Object.entries(sri).map(([k, v]) => <div key={k}>{`${k}: ${v}`}</div>)}
+      <VirtualInstallation files={sri}></VirtualInstallation>
     </>
   )
 }
