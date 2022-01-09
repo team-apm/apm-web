@@ -33,110 +33,116 @@ const VirtualInstallation = memo((props) => {
 
   const [sortables, setSortables] = useState({});
 
-  const clearList = () => {
-    if (listDownload.current)
-      listDownload.current.innerHTML = null;
-    if (listAviutl.current)
-      [...listAviutl.current.children]
-        .filter((e) => e.dataset.id !== 'exclude')
-        .forEach((e) => e.parentNode.removeChild(e));
-    if (listPlugins.current)
-      listPlugins.current.innerHTML = null;
-    if (listScript.current)
-      listScript.current.innerHTML = null;
-  };
+  useEffect(() => {
+    const clearList = () => {
+      if (listDownload.current)
+        listDownload.current.innerHTML = null;
+      if (listAviutl.current)
+        [...listAviutl.current.children]
+          .filter((e) => e.dataset.id !== 'exclude')
+          .forEach((e) => e.parentNode.removeChild(e));
+      if (listPlugins.current)
+        listPlugins.current.innerHTML = null;
+      if (listScript.current)
+        listScript.current.innerHTML = null;
+    };
 
-  clearList();
-  const filesWirhSri = Object.entries(props.files).map(([k, v]) => { return { name: k, sri: v, folder: false } });
-  const folders = [...new Set(filesWirhSri.map(f => path.dirname(f.name)))].map(n => { return { name: n, folder: true } });
-  const dirEntries = [].concat(filesWirhSri, folders);
+    clearList();
+    const filesWirhSri = Object.entries(props.files).map(([k, v]) => { return { name: k, sri: v, folder: false } });
+    const folders = [...new Set(filesWirhSri.map(f => path.dirname(f.name)))].map(n => { return { name: n, folder: true } });
 
-  // folder
-  folders
-    .forEach((f) => {
-      const entry = document.createElement('div');
-      entry.innerText = f.name;
-      entry.dataset.id = f.name;
-      entry.classList.add('list-group-item');
-      if (['plugins', 'script'].includes(path.basename(f.name))) {
-        entry.classList.add('list-group-item-dark');
-        entry.classList.add('ignore-elements');
-      } else {
-        entry.classList.add('list-group-item-warning');
-      }
+    // folder
+    folders
+      .forEach((f) => {
+        const entry = document.createElement('div');
+        entry.innerText = f.name;
+        entry.dataset.id = f.name;
+        entry.classList.add('list-group-item');
+        if (['plugins', 'script'].includes(path.basename(f.name))) {
+          entry.classList.add('list-group-item-dark');
+          entry.classList.add('ignore-elements');
+        } else {
+          entry.classList.add('list-group-item-warning');
+        }
 
-      listDownload.current.appendChild(entry);
-    });
-
-  // file
-  filesWirhSri
-    .forEach((f) => {
-      const entry = document.createElement('div');
-      entry.innerText = f.name;
-      entry.dataset.id = f.name;
-      entry.classList.add('list-group-item');
-
-      listDownload.current.appendChild(entry);
-    });
-
-  // output
-  const makeXML = () => {
-    const files = []
-      .concat(
-        sortables.sortAviutl
-          .toArray()
-          .filter((i) => i !== 'exclude')
-          .map((i) => {
-            return {
-              id: i,
-              archivePath: path.dirname(i),
-              targetPath: path.basename(i)
-            }
-          }),
-        sortables.sortPlugins
-          .toArray()
-          .map((i) => {
-            return {
-              id: i,
-              archivePath: path.dirname(i),
-              targetPath: path.join('plugins', path.basename(i))
-            }
-          }),
-        sortables.sortScript
-          .toArray()
-          .map((i) => {
-            return {
-              id: i,
-              archivePath: path.dirname(i),
-              targetPath: path.join('script', path.basename(i))
-            }
-          })
-      );
-    const filesJson = files
-      .map((i) => {
-        const ret = { 'filename': i.targetPath };
-        ret['archivePath'] = (i.archivePath === '.') ? null : i.archivePath;
-        ret['isDirectory'] = !!dirEntries.find(e => e.name === i.id).folder;
-        ret['isOptional'] = false;
-        return ret;
+        listDownload.current.appendChild(entry);
       });
-    const integrities = files
-      .flatMap((i) => {
-        const fileEntry = dirEntries.find(e => e.name === i.id);
-        if (fileEntry.folder) return [];
-        return [{
-          'targetIntegrity': fileEntry.sri,
-          'target': i.targetPath
-        }];
+
+    // file
+    filesWirhSri
+      .forEach((f) => {
+        const entry = document.createElement('div');
+        entry.innerText = f.name;
+        entry.dataset.id = f.name;
+        entry.classList.add('list-group-item');
+
+        listDownload.current.appendChild(entry);
       });
-    props.onChange(filesJson, integrities);
-  };
-  if (sortables?.sortAviutl)
-    sortables.sortAviutl.options.onSort = makeXML;
-  if (sortables?.sortPlugins)
-    sortables.sortPlugins.options.onSort = makeXML;
-  if (sortables?.sortScript)
-    sortables.sortScript.options.onSort = makeXML;
+  }, [props.files, sortables]);
+
+  useEffect(() => {
+    const filesWirhSri = Object.entries(props.files).map(([k, v]) => { return { name: k, sri: v, folder: false } });
+    const folders = [...new Set(filesWirhSri.map(f => path.dirname(f.name)))].map(n => { return { name: n, folder: true } });
+    const dirEntries = [].concat(filesWirhSri, folders);
+
+    const makeXML = () => {
+      const files = []
+        .concat(
+          sortables.sortAviutl
+            .toArray()
+            .filter((i) => i !== 'exclude')
+            .map((i) => {
+              return {
+                id: i,
+                archivePath: path.dirname(i),
+                targetPath: path.basename(i)
+              }
+            }),
+          sortables.sortPlugins
+            .toArray()
+            .map((i) => {
+              return {
+                id: i,
+                archivePath: path.dirname(i),
+                targetPath: path.join('plugins', path.basename(i))
+              }
+            }),
+          sortables.sortScript
+            .toArray()
+            .map((i) => {
+              return {
+                id: i,
+                archivePath: path.dirname(i),
+                targetPath: path.join('script', path.basename(i))
+              }
+            })
+        );
+      const filesJson = files
+        .map((i) => {
+          const ret = { 'filename': i.targetPath };
+          ret['archivePath'] = (i.archivePath === '.') ? null : i.archivePath;
+          ret['isDirectory'] = !!dirEntries.find(e => e.name === i.id).folder;
+          ret['isOptional'] = false;
+          return ret;
+        });
+      const integrities = files
+        .flatMap((i) => {
+          const fileEntry = dirEntries.find(e => e.name === i.id);
+          if (fileEntry.folder) return [];
+          return [{
+            'targetIntegrity': fileEntry.sri,
+            'target': i.targetPath
+          }];
+        });
+      props.onChange(filesJson, integrities);
+    };
+    if (sortables?.sortAviutl)
+      sortables.sortAviutl.options.onSort = makeXML;
+    if (sortables?.sortPlugins)
+      sortables.sortPlugins.options.onSort = makeXML;
+    if (sortables?.sortScript)
+      sortables.sortScript.options.onSort = makeXML;
+  }, [props, sortables]);
 
   useEffect(() => {
     const usedPath = new Set();

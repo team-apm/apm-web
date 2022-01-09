@@ -62,7 +62,6 @@ const SurveyComponent = memo((props) => {
         packageItem.releases = packageItem.releases.filter(r => r.version !== packageItem.latestVersion);
         packageItem.releases.push({ ...release, version: packageItem.latestVersion });
       }
-      console.log(JSON.stringify(packageItem));
       survey.data = packageItem;
     },
     [survey]
