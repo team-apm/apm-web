@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
 import SurveyComponent from './SurveyComponent';
-import ArchiveComponent from './ArchiveComponent';
 import { PackagesList } from './parseXML';
 import Fuse from 'fuse.js';
 
@@ -38,7 +37,7 @@ function App() {
     fetchXML();
   }, []);
 
-  const complete = useCallback(
+  const surveyComplete = useCallback(
     (json) => {
       const newPackages = { ...addedPackages };
       newPackages[json.id] = json;
@@ -192,22 +191,12 @@ function App() {
                 </div>
               </div>
               <div className="col-sm-9 overflow-auto h-100">
-                <SurveyComponent
-                  packageItem={packageItem}
-                  onComplete={complete}
-                />
-                <h4>SRIデータの設定</h4>
-                {packageItem?.downloadURL && (
-                  <a
-                    className=""
-                    href={packageItem.downloadURL}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    ダウンロードURLを新しいタブで開く
-                  </a>
+                {packageItem && (
+                  <SurveyComponent
+                    packageItem={packageItem}
+                    onComplete={surveyComplete}
+                  />
                 )}
-                <ArchiveComponent />
               </div>
             </div>
           </div>

@@ -8,7 +8,7 @@ async function getSriFromArrayBuffer(buffer) {
   return 'sha384-' + window.btoa(String.fromCharCode(...new Uint8Array(hash)));
 }
 
-function ArchiveComponent() {
+function ArchiveComponent(props) {
   const [sri, setSri] = useState({});
   const [archiveSri, setArchiveSri] = useState({});
 
@@ -44,9 +44,9 @@ function ArchiveComponent() {
   }, [setSri])
 
   const setData = useCallback((filesJson, integrities) => {
-    console.log(filesJson);
-    console.log({ archiveIntegrity: archiveSri, integrities: integrities });
-  }, [archiveSri]);
+    props.onComplete(filesJson,
+      { archiveIntegrity: archiveSri, integrities: integrities });
+  }, [archiveSri, props]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 

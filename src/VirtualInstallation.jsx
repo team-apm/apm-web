@@ -115,10 +115,9 @@ const VirtualInstallation = memo((props) => {
     const filesJson = files
       .map((i) => {
         const ret = { 'filename': i.targetPath };
-        if (i.archivePath !== '.')
-          ret['archivePath'] = i.archivePath;
-        if (dirEntries.find(e => e.name === i.id).folder)
-          ret['isDirectory'] = true;
+        ret['archivePath'] = (i.archivePath === '.') ? null : i.archivePath;
+        ret['isDirectory'] = dirEntries.find(e => e.name === i.id).folder === true;
+        ret['isOptional'] = false;
         return ret;
       });
     const integrities = files

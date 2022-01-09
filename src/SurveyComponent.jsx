@@ -1,7 +1,8 @@
-import React, { useState, useEffect, memo  } from 'react';
+import React, { useState, useEffect, useCallback, memo } from 'react';
 import * as Survey from 'survey-react';
 import 'survey-react/survey.css';
 import surveyJson from './data/survey.json';
+import ArchiveComponent from './ArchiveComponent';
 
 Survey.StylesManager.applyTheme("bootstrap");
 
@@ -52,7 +53,36 @@ const SurveyComponent = memo((props) => {
     setSurvey(survey);
   }, [props, props.packageItem]);
 
-  return <div>{survey && <Survey.Survey model={survey} />}</div>;
+  const archiveComplete = useCallback(
+    (filesJson, release) => {
+      const packageItem = { ...survey.data };
+      packageItem.files = filesJson;
+      if (packageItem?.latestVersion) {
+        if (!packageItem?.releases) packageItem.releases = [];
+        packageItem.releases = packageItem.releases.filter(r => r.version !== packageItem.latestVersion);
+        packageItem.releases.push({ ...release, version: packageItem.latestVersion });
+      }
+      console.log(JSON.stringify(packageItem));
+      survey.data = packageItem;
+    },
+    [survey]
+  );
+
+  return <div>
+    {survey && <Survey.Survey model={survey} />}
+    <h4>SRIデータの設定</h4>
+    {survey?.data?.downloadURL && (
+      <a
+        className=""
+        href={survey.data.downloadURL}
+        target="_blank"
+        rel="noreferrer"
+      >
+        ダウンロードURLを新しいタブで開く
+      </a>
+    )}
+    <ArchiveComponent onComplete={archiveComplete} />
+  </div>;
 });
 
 export default SurveyComponent;
