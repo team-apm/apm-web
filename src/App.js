@@ -68,6 +68,7 @@ function App() {
       const newPackages = { ...addedPackages };
       delete newPackages[id];
       setAddedPackages(newPackages);
+      localStorage.setItem('packages', JSON.stringify(newPackages));
     }
 
     return (
