@@ -7,9 +7,6 @@
         {
           "type": "text",
           "name": "id",
-          "title": {
-            "ja": "id"
-          },
           "description": {
             "ja": "作者名(半角英数)/パッケージ名(半角英数)　かな・漢字・記号は入力できません；基本的に変更することはありません"
           },
@@ -27,7 +24,7 @@
             }
           ],
           "placeHolder": {
-            "ja": "amate/InputPipePlugin"
+            "ja": "○○/○○"
           }
         },
         {
@@ -39,9 +36,6 @@
           "isRequired": true,
           "requiredErrorText": {
             "ja": "このフィールドを入力してください"
-          },
-          "placeHolder": {
-            "ja": "amate"
           }
         },
         {
@@ -66,7 +60,7 @@
           ],
           "inputType": "url",
           "placeHolder": {
-            "ja": "https://example.com/aviutl/download.html"
+            "ja": "https://"
           }
         },
         {
@@ -90,10 +84,7 @@
               },
               "maxLength": 25
             }
-          ],
-          "placeHolder": {
-            "ja": "InputPipePlugin"
-          }
+          ]
         },
         {
           "type": "text",
@@ -116,7 +107,7 @@
           ],
           "inputType": "url",
           "placeHolder": {
-            "ja": "https://example.com/aviutl/解説.html"
+            "ja": "https://"
           }
         },
         {
@@ -133,19 +124,13 @@
               },
               "maxLength": 35
             }
-          ],
-          "placeHolder": {
-            "ja": "AviUtlのメモリ使用量を減らす"
-          }
+          ]
         },
         {
           "type": "text",
           "name": "description",
           "title": {
             "ja": "説明（概要より詳細な説明）"
-          },
-          "placeHolder": {
-            "ja": "このソフトは、L-SMASH_Works File Reader(lwinput.aui)を別プロセスで実行してあげることによって、Aviutlのメモリ使用量削減を目論む、aviutlの入力プラグインです"
           }
         },
         {
@@ -156,9 +141,6 @@
           },
           "description": {
             "ja": "プラグインの場合、AviUtlの「その他→プラグイン情報」からも確認できます"
-          },
-          "placeHolder": {
-            "ja": "v1.8"
           }
         },
         {
@@ -170,9 +152,6 @@
           },
           "description": {
             "ja": "このパッケージを導入する前にインストールする必要があるパッケージのidです。改行により複数入力、「|」によりor指定ができます。特定の拡張編集バージョンに依存する場合は「exedit0.93rc1」、特定のAviUtlバージョンに依存する場合は「aviutl1.10」等の方法で指定します。"
-          },
-          "placeHolder": {
-            "ja": "exedit0.92"
           }
         },
         {
@@ -285,6 +264,8 @@
   "showQuestionNumbers": "off",
   "checkErrorsMode": "onValueChanged",
   "textUpdateMode": "onTyping",
-  "questionTitlePattern": "numRequireTitle",
-  "showPreviewBeforeComplete": "showAnsweredQuestions"
+  "completeText": {
+    "ja": "保存"
+  },
+  "questionTitlePattern": "numRequireTitle"
 }

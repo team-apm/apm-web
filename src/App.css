@@ -5,6 +5,11 @@ body,
   height: 100%;
 }
 
+/* SurveyJS */
+span.sv_q_required_text {
+  color: red;
+}
+
 /* for dark mode */
 .sv_main,
 .sv_main .sv_custom_header,

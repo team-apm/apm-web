@@ -126,7 +126,7 @@ function App() {
                 <li className="nav-item me-3">
                   <div className="nav-link" onClick={() => setPackageItem({})}>
                     <i className="bi bi-plus-square me-2"></i>
-                    新規パッケージ
+                    パッケージの追加
                   </div>
                 </li>
                 <li className="nav-item me-3">
@@ -137,7 +137,7 @@ function App() {
                     rel="noreferrer"
                   >
                     <i className="bi bi-github me-2"></i>
-                    最新のリクエスト状況を確認する
+                    みんなの送信パッケージを見る
                   </a>
                 </li>
               </ul>
@@ -148,7 +148,7 @@ function App() {
                   type="button"
                 >
                   <i className="bi bi-send me-2"></i>
-                  パッケージを送信
+                  プレビューと送信
                 </button>
               </form>
             </div>
