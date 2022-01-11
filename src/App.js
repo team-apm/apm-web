@@ -132,7 +132,7 @@ function App() {
                 <li className="nav-item me-3">
                   <a
                     className="nav-link"
-                    href="https://github.com/hal-shu-sato/apm-data/issues"
+                    href="https://github.com/hal-shu-sato/apm-data/issues?q=is%3Aissue+%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8"
                     target="_blank"
                     rel="noreferrer"
                   >
