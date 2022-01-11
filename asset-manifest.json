@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/apm-web/static/css/main.6b678400.css",
-    "main.js": "/apm-web/static/js/main.b65bd948.js",
+    "main.css": "/apm-web/static/css/main.0df018a1.css",
+    "main.js": "/apm-web/static/js/main.0518ee3b.js",
     "static/js/787.d4dc8c82.chunk.js": "/apm-web/static/js/787.d4dc8c82.chunk.js",
     "static/media/bootstrap-icons.woff?": "/apm-web/static/media/bootstrap-icons.38c4d2499557ae0379fd.woff",
     "static/media/bootstrap-icons.woff2?": "/apm-web/static/media/bootstrap-icons.2b56e79ae5013246de29.woff2",
     "index.html": "/apm-web/index.html",
-    "main.6b678400.css.map": "/apm-web/static/css/main.6b678400.css.map",
-    "main.b65bd948.js.map": "/apm-web/static/js/main.b65bd948.js.map",
+    "main.0df018a1.css.map": "/apm-web/static/css/main.0df018a1.css.map",
+    "main.0518ee3b.js.map": "/apm-web/static/js/main.0518ee3b.js.map",
     "787.d4dc8c82.chunk.js.map": "/apm-web/static/js/787.d4dc8c82.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.6b678400.css",
-    "static/js/main.b65bd948.js"
+    "static/css/main.0df018a1.css",
+    "static/js/main.0518ee3b.js"
   ]
 }
