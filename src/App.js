@@ -55,7 +55,7 @@ function App() {
   }
 
   const options = {
-    threshold: 0.1,
+    threshold: 0.3,
     keys: ['id', 'name', 'overview', 'description', 'developer'],
   };
 
@@ -103,10 +103,15 @@ function App() {
       <div className="d-flex flex-column h-100">
         <nav className="navbar navbar-expand-lg navbar-light">
           <div className="container-fluid">
-            <span className="navbar-brand">
+            <a
+              className="navbar-brand"
+              href="https://hal-shu-sato.github.io/apm/"
+              target="_blank"
+              rel="noreferrer"
+            >
               <img src="../icon/apm32.png" alt="" className="d-inline-block" />
               <span className="align-middle">apm-web</span>
-            </span>
+            </a>
             <button
               className="navbar-toggler"
               type="button"
@@ -124,10 +129,10 @@ function App() {
             >
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item me-3">
-                  <div className="nav-link" onClick={() => setPackageItem({})}>
+                  <span className="nav-link" onClick={() => setPackageItem({})}>
                     <i className="bi bi-plus-square me-2"></i>
                     パッケージの追加
-                  </div>
+                  </span>
                 </li>
                 <li className="nav-item me-3">
                   <a
@@ -164,7 +169,7 @@ function App() {
                     type="text"
                     name="name"
                     value={searchString}
-                    placeholder="🔍search"
+                    placeholder="🔍検索"
                     onChange={(e) => setSearchString(e.target.value)}
                   />
                 </div>

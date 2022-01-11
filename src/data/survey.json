@@ -152,7 +152,16 @@
           },
           "description": {
             "ja": "このパッケージを導入する前にインストールする必要があるパッケージのidです。改行により複数入力、「|」によりor指定ができます。特定の拡張編集バージョンに依存する場合は「exedit0.93rc1」、特定のAviUtlバージョンに依存する場合は「aviutl1.10」等の方法で指定します。"
-          }
+          },
+          "validators": [
+            {
+              "type": "regex",
+              "text": {
+                "ja": "有効な形式ではありません"
+              },
+              "regex": "^(([A-Za-z0-9]+\\/[A-Za-z0-9]+)|(aviutl[A-Za-z0-9.]+)|(exedit[A-Za-z0-9.]+))((\\n|\\|)(([A-Za-z0-9]+\\/[A-Za-z0-9]+)|(aviutl[A-Za-z0-9.]+)|(exedit[A-Za-z0-9.]+)))*$"
+            }
+          ]
         },
         {
           "type": "paneldynamic",
