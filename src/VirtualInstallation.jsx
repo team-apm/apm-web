@@ -41,7 +41,6 @@ const VirtualInstallation = memo((props) => {
     if (listAviutl.current)
       listAviutl.current.innerHTML = null;
 
-    // This should be recursive
     setSortables(defaultFolders
       .map((f) => {
         const entry = document.createElement('div');
@@ -103,7 +102,7 @@ const VirtualInstallation = memo((props) => {
       sortable.toArray()
         .flatMap((i) => {
           const fullPath = path.join(currentDir, path.basename(i));
-          const childSortable = sortables.find(s => s.id === fullPath);
+          const childSortable = sortables.find(s => s.id === path.basename(i));
           if (childSortable) {
             return getEntries(childSortable.sortable, fullPath);
           } else {
@@ -188,6 +187,38 @@ const VirtualInstallation = memo((props) => {
     );
   }, [setRootSortable]);
 
+  const addFolder = (name) => {
+    if (sortables.find(s => s.id === name)) return;
+
+    setSortables([].concat(sortables, [name]
+      .map((f) => {
+        const entry = document.createElement('div');
+        entry.innerText = f;
+        entry.dataset.id = f;
+        entry.classList.add('list-group-item');
+
+        const entry2 = document.createElement('div');
+        entry2.classList.add('list-group');
+        entry2.classList.add('nested-sortable');
+        entry.appendChild(entry2);
+
+        listAviutl.current.appendChild(entry);
+
+        return {
+          id: f,
+          sortable: new Sortable(entry2, {
+            group: 'nested',
+            animation: 150,
+            filter: '.ignore-elements',
+            fallbackOnBody: true,
+            invertSwap: true,
+            invertedSwapThreshold: 0.6,
+            emptyInsertThreshold: 8,
+          })
+        };
+      })));
+  };
+
   return (
     <div className="row my-2">
       <div className="col">
@@ -201,6 +232,7 @@ const VirtualInstallation = memo((props) => {
       <div className="col">
         <div className="card">
           <div className="card-body">
+            <div onClick={() => addFolder('new')}>plus</div>
             Aviutl
             <div ref={listAviutl} className="list-group nested-sortable">
             </div>
