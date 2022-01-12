@@ -25,26 +25,52 @@ const pathRelated = (pathA, pathB) => {
   return isParent(pathA, pathB) || isParent(pathB, pathA);
 };
 
+const defaultFolders = ['plugins', 'script'];
+
 const VirtualInstallation = memo((props) => {
   const listDownload = useRef(null);
   const listAviutl = useRef(null);
-  const listPlugins = useRef(null);
-  const listScript = useRef(null);
 
-  const [sortables, setSortables] = useState({});
+  const [rootSortable, setRootSortable] = useState();
+  const [sortables, setSortables] = useState([]);
 
   useEffect(() => {
     // clearList
     if (listDownload.current)
       listDownload.current.innerHTML = null;
     if (listAviutl.current)
-      [...listAviutl.current.children]
-        .filter((e) => e.dataset.id !== 'exclude')
-        .forEach((e) => e.parentNode.removeChild(e));
-    if (listPlugins.current)
-      listPlugins.current.innerHTML = null;
-    if (listScript.current)
-      listScript.current.innerHTML = null;
+      listAviutl.current.innerHTML = null;
+
+    // This should be recursive
+    setSortables(defaultFolders
+      .map((f) => {
+        const entry = document.createElement('div');
+        entry.innerText = f;
+        entry.dataset.id = f;
+        entry.classList.add('list-group-item');
+        entry.classList.add('list-group-item-dark');
+        entry.classList.add('ignore-elements');
+
+        const entry2 = document.createElement('div');
+        entry2.classList.add('list-group');
+        entry2.classList.add('nested-sortable');
+        entry.appendChild(entry2);
+
+        listAviutl.current.appendChild(entry);
+
+        return {
+          id: f,
+          sortable: new Sortable(entry2, {
+            group: 'nested',
+            animation: 150,
+            filter: '.ignore-elements',
+            fallbackOnBody: true,
+            invertSwap: true,
+            invertedSwapThreshold: 0.6,
+            emptyInsertThreshold: 8,
+          })
+        };
+      }));
 
     const filesWirhSri = Object.entries(props.files).map(([k, v]) => { return { name: k, sri: v, folder: false } });
     const folders = [...new Set(filesWirhSri.map(f => path.dirname(f.name)))].filter(n => n !== '.').map(n => { return { name: n, folder: true } });
@@ -73,38 +99,24 @@ const VirtualInstallation = memo((props) => {
     const folders = [...new Set(filesWirhSri.map(f => path.dirname(f.name)))].filter(n => n !== '.').map(n => { return { name: n, folder: true } });
     const dirEntries = [].concat(filesWirhSri, folders);
 
+    const getEntries = (sortable, currentDir) =>
+      sortable.toArray()
+        .flatMap((i) => {
+          const fullPath = path.join(currentDir, path.basename(i));
+          const childSortable = sortables.find(s => s.id === fullPath);
+          if (childSortable) {
+            return getEntries(childSortable.sortable, fullPath);
+          } else {
+            return [{
+              id: i,
+              archivePath: path.dirname(i),
+              targetPath: fullPath
+            }];
+          }
+        });
+
     const makeXML = () => {
-      const files = []
-        .concat(
-          sortables.sortAviutl
-            .toArray()
-            .filter((i) => i !== 'exclude')
-            .map((i) => {
-              return {
-                id: i,
-                archivePath: path.dirname(i),
-                targetPath: path.basename(i)
-              }
-            }),
-          sortables.sortPlugins
-            .toArray()
-            .map((i) => {
-              return {
-                id: i,
-                archivePath: path.dirname(i),
-                targetPath: path.join('plugins', path.basename(i))
-              }
-            }),
-          sortables.sortScript
-            .toArray()
-            .map((i) => {
-              return {
-                id: i,
-                archivePath: path.dirname(i),
-                targetPath: path.join('script', path.basename(i))
-              }
-            })
-        );
+      const files = getEntries(rootSortable, '');
       const filesJson = files
         .map((i) => {
           const ret = { 'filename': i.targetPath };
@@ -124,34 +136,24 @@ const VirtualInstallation = memo((props) => {
         });
       props.onChange(filesJson, integrities);
     };
-    if (sortables?.sortAviutl)
-      sortables.sortAviutl.options.onSort = makeXML;
-    if (sortables?.sortPlugins)
-      sortables.sortPlugins.options.onSort = makeXML;
-    if (sortables?.sortScript)
-      sortables.sortScript.options.onSort = makeXML;
-  }, [props, sortables]);
+    if (rootSortable)
+      rootSortable.options.onSort = makeXML;
+    sortables.forEach(s => s.sortable.options.onSort = makeXML);
+  }, [props, rootSortable, sortables]);
 
   useEffect(() => {
     const usedPath = new Set();
 
     const updateMovableEntry = () => {
       for (const node of listDownload.current.children) {
-        const nodePath = node.dataset.id;
-        if (!['plugins', 'script'].includes(path.basename(nodePath))) {
-          node.classList.remove('list-group-item-dark');
-          node.classList.remove('ignore-elements');
-        }
-      }
+        node.classList.remove('list-group-item-dark');
+        node.classList.remove('ignore-elements');
 
-      for (const node of listDownload.current.children) {
         const nodePath = node.dataset.id;
-        usedPath.forEach((used) => {
-          if (pathRelated(nodePath, used)) {
-            node.classList.add('list-group-item-dark');
-            node.classList.add('ignore-elements');
-          }
-        });
+        if (defaultFolders.includes(path.basename(nodePath)) || Array.from(usedPath).find(used => pathRelated(nodePath, used))) {
+          node.classList.add('list-group-item-dark');
+          node.classList.add('ignore-elements');
+        }
       }
     };
 
@@ -173,29 +175,18 @@ const VirtualInstallation = memo((props) => {
       },
     });
 
-    const [sortAviutl, sortPlugins, sortScript] = [
-      listAviutl.current,
-      listPlugins.current,
-      listScript.current,
-    ].map(
-      (i) =>
-        new Sortable(i, {
-          group: 'nested',
-          animation: 150,
-          filter: '.ignore-elements',
-          fallbackOnBody: true,
-          invertSwap: true,
-          invertedSwapThreshold: 0.6,
-          emptyInsertThreshold: 8,
-        })
+    setRootSortable(
+      new Sortable(listAviutl.current, {
+        group: 'nested',
+        animation: 150,
+        filter: '.ignore-elements',
+        fallbackOnBody: true,
+        invertSwap: true,
+        invertedSwapThreshold: 0.6,
+        emptyInsertThreshold: 8,
+      })
     );
-
-    setSortables({
-      sortAviutl: sortAviutl,
-      sortPlugins: sortPlugins,
-      sortScript: sortScript
-    });
-  }, [setSortables]);
+  }, [setRootSortable]);
 
   return (
     <div className="row my-2">
@@ -212,20 +203,6 @@ const VirtualInstallation = memo((props) => {
           <div className="card-body">
             Aviutl
             <div ref={listAviutl} className="list-group nested-sortable">
-              <div
-                className="list-group-item list-group-item-dark ignore-elements"
-                data-id="exclude"
-              >
-                plugins
-                <div ref={listPlugins} className="list-group nested-sortable"></div>
-              </div>
-              <div
-                className="list-group-item list-group-item-dark ignore-elements"
-                data-id="exclude"
-              >
-                script
-                <div ref={listScript} className="list-group nested-sortable"></div>
-              </div>
             </div>
           </div>
         </div>
