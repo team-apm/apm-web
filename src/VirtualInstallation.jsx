@@ -211,30 +211,34 @@ const VirtualInstallation = memo((props) => {
   }, [setSortables]);
 
   return (
-    <div className="d-flex my-2">
-      <div className="col card">
-        <div className="card-body">
-          Download
-          <div ref={listDownload} className="list-group"></div>
+    <div className="row my-2">
+      <div className="col">
+        <div className="card">
+          <div className="card-body">
+            Zipファイル
+            <div ref={listDownload} className="list-group"></div>
+          </div>
         </div>
       </div>
-      <div className="col card">
-        <div className="card-body">
-          Aviutl
-          <div ref={listAviutl} className="list-group nested-sortable">
-            <div
-              className="list-group-item list-group-item-dark ignore-elements"
-              data-id="exclude"
-            >
-              plugins
-              <div ref={listPlugins} className="list-group nested-sortable"></div>
-            </div>
-            <div
-              className="list-group-item list-group-item-dark ignore-elements"
-              data-id="exclude"
-            >
-              script
-              <div ref={listScript} className="list-group nested-sortable"></div>
+      <div className="col">
+        <div className="card">
+          <div className="card-body">
+            Aviutl
+            <div ref={listAviutl} className="list-group nested-sortable">
+              <div
+                className="list-group-item list-group-item-dark ignore-elements"
+                data-id="exclude"
+              >
+                plugins
+                <div ref={listPlugins} className="list-group nested-sortable"></div>
+              </div>
+              <div
+                className="list-group-item list-group-item-dark ignore-elements"
+                data-id="exclude"
+              >
+                script
+                <div ref={listScript} className="list-group nested-sortable"></div>
+              </div>
             </div>
           </div>
         </div>

@@ -9,6 +9,10 @@ body,
   cursor: pointer;
 }
 
+.dropZone {
+  border: 2px dashed var(--bs-body-color);
+}
+
 /* SurveyJS */
 span.sv_q_required_text {
   color: red;

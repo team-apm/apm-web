@@ -69,18 +69,23 @@ const SurveyComponent = memo((props) => {
 
   return <div>
     {survey && <Survey.Survey model={survey} />}
-    <h4>SRIデータの設定</h4>
-    {survey?.data?.downloadURL && (
-      <a
-        className=""
-        href={survey.data.downloadURL}
-        target="_blank"
-        rel="noreferrer"
-      >
-        ダウンロードURLを新しいタブで開く
-      </a>
-    )}
-    <ArchiveComponent onComplete={archiveComplete} />
+    <div className='p-3'>
+      <h5>インストール時にコピーするファイルの指定</h5>
+      <div>
+        <p>「パッケージの最新バージョン」に指定したバージョンのzipファイルを{survey?.data?.downloadURL && (
+          <a
+            className=""
+            href={survey.data.downloadURL}
+            target="_blank"
+            rel="noreferrer"
+          >
+            ダウンロードして
+          </a>
+        )}点線の欄にドロップします。左の欄に追加されたファイルを右の欄へ移動することでコピーするファイルを指定できます。</p>
+
+      </div>
+      <ArchiveComponent onComplete={archiveComplete} />
+    </div>
   </div>;
 });
 

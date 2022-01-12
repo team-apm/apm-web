@@ -56,8 +56,8 @@ function ArchiveComponent(props) {
         <input {...getInputProps()} />
         {
           isDragActive ?
-            <p>ここにファイルをドロップ ...</p> :
-            <p>ここにプラグイン・スクリプトのzipファイルをドラッグアンドドロップ</p>
+            <p className="dropZone rounded p-4">ここにファイルをドロップ ...</p> :
+            <p className="dropZone rounded p-4">ここにプラグイン・スクリプトのzipファイルをドラッグアンドドロップ</p>
         }
       </div>
       <VirtualInstallation files={sri} onChange={setData}></VirtualInstallation>
