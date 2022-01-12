@@ -34,51 +34,39 @@ const VirtualInstallation = memo((props) => {
   const [sortables, setSortables] = useState({});
 
   useEffect(() => {
-    const clearList = () => {
-      if (listDownload.current)
-        listDownload.current.innerHTML = null;
-      if (listAviutl.current)
-        [...listAviutl.current.children]
-          .filter((e) => e.dataset.id !== 'exclude')
-          .forEach((e) => e.parentNode.removeChild(e));
-      if (listPlugins.current)
-        listPlugins.current.innerHTML = null;
-      if (listScript.current)
-        listScript.current.innerHTML = null;
-    };
+    // clearList
+    if (listDownload.current)
+      listDownload.current.innerHTML = null;
+    if (listAviutl.current)
+      [...listAviutl.current.children]
+        .filter((e) => e.dataset.id !== 'exclude')
+        .forEach((e) => e.parentNode.removeChild(e));
+    if (listPlugins.current)
+      listPlugins.current.innerHTML = null;
+    if (listScript.current)
+      listScript.current.innerHTML = null;
 
-    clearList();
     const filesWirhSri = Object.entries(props.files).map(([k, v]) => { return { name: k, sri: v, folder: false } });
     const folders = [...new Set(filesWirhSri.map(f => path.dirname(f.name)))].filter(n => n !== '.').map(n => { return { name: n, folder: true } });
+    const dirEntries = [].concat(filesWirhSri, folders);
 
-    // folder
-    folders
+    dirEntries
       .forEach((f) => {
         const entry = document.createElement('div');
         entry.innerText = f.name;
         entry.dataset.id = f.name;
         entry.classList.add('list-group-item');
-        if (['plugins', 'script'].includes(path.basename(f.name))) {
-          entry.classList.add('list-group-item-dark');
-          entry.classList.add('ignore-elements');
-        } else {
-          entry.classList.add('list-group-item-warning');
+        if (f.folder) {
+          if (['plugins', 'script'].includes(path.basename(f.name))) {
+            entry.classList.add('list-group-item-dark');
+            entry.classList.add('ignore-elements');
+          } else {
+            entry.classList.add('list-group-item-warning');
+          }
         }
-
         listDownload.current.appendChild(entry);
       });
-
-    // file
-    filesWirhSri
-      .forEach((f) => {
-        const entry = document.createElement('div');
-        entry.innerText = f.name;
-        entry.dataset.id = f.name;
-        entry.classList.add('list-group-item');
-
-        listDownload.current.appendChild(entry);
-      });
-  }, [props.files, sortables]);
+  }, [props.files]);
 
   useEffect(() => {
     const filesWirhSri = Object.entries(props.files).map(([k, v]) => { return { name: k, sri: v, folder: false } });
@@ -203,7 +191,6 @@ const VirtualInstallation = memo((props) => {
     );
 
     setSortables({
-      usedPath: usedPath,
       sortAviutl: sortAviutl,
       sortPlugins: sortPlugins,
       sortScript: sortScript
