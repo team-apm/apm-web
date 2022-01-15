@@ -20,7 +20,7 @@ const SurveyComponent = memo((props) => {
 
     // convert
     if (preData?.dependencies)
-      preData.dependencies = preData.dependencies.dependency.join('\r\n');
+      preData.dependencies = preData.dependencies.dependency.join('\n');
     if (preData?.releases) {
       const tmpReleases = [];
       for (const [key, value] of Object.entries(preData.releases)) {
@@ -37,7 +37,7 @@ const SurveyComponent = memo((props) => {
       // convert
       if (newData?.dependencies)
         newData.dependencies = {
-          dependency: newData?.dependencies.trim().split(/\r\n/),
+          dependency: newData?.dependencies.trim().split(/\n/),
         };
       if (newData?.releases) {
         const tmpReleases = {};
