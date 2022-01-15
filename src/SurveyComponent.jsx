@@ -24,7 +24,7 @@ const SurveyComponent = memo((props) => {
     if (preData?.releases) {
       const tmpReleases = [];
       for (const [key, value] of Object.entries(preData.releases)) {
-        tmpReleases.push({ version: key, integrities: value.integrities });
+        tmpReleases.push({ version: key, ...value });
       }
       preData.releases = tmpReleases;
     }
@@ -42,7 +42,9 @@ const SurveyComponent = memo((props) => {
       if (newData?.releases) {
         const tmpReleases = {};
         for (const entry of newData.releases) {
-          tmpReleases[entry.version] = { integrities: entry.integrities };
+          const tmpEntry = { ...entry };
+          delete tmpEntry.version;
+          tmpReleases[entry.version] = tmpEntry;
         }
         newData.releases = tmpReleases;
       }

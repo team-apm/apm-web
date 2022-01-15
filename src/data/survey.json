@@ -241,6 +241,14 @@
               }
             },
             {
+              "type": "text",
+              "name": "archiveIntegrity",
+              "startWithNewLine": false,
+              "title": {
+                "ja": "圧縮ファイルのハッシュ値"
+              }
+            },
+            {
               "type": "paneldynamic",
               "name": "integrities",
               "description": {
