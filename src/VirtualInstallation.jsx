@@ -34,6 +34,8 @@ const VirtualInstallation = memo((props) => {
   const [rootSortable, setRootSortable] = useState();
   const [sortables, setSortables] = useState([]);
 
+  const [inputFolderName, setInputFolderName] = useState('');
+
   useEffect(() => {
     // clearList
     if (listDownload.current)
@@ -44,22 +46,26 @@ const VirtualInstallation = memo((props) => {
     setSortables(defaultFolders
       .map((f) => {
         const entry = document.createElement('div');
-        entry.innerText = f;
         entry.dataset.id = f;
         entry.classList.add('list-group-item');
         entry.classList.add('list-group-item-dark');
         entry.classList.add('ignore-elements');
 
-        const entry2 = document.createElement('div');
-        entry2.classList.add('list-group');
-        entry2.classList.add('nested-sortable');
-        entry.appendChild(entry2);
+        const descText = document.createElement('p');
+        descText.innerText = f;
+        entry.appendChild(descText);
+
+        const nestedEntry = document.createElement('div');
+        nestedEntry.classList.add('list-group');
+        nestedEntry.classList.add('mt-3');
+        nestedEntry.classList.add('nested-sortable');
+        entry.appendChild(nestedEntry);
 
         listAviutl.current.appendChild(entry);
 
         return {
           id: f,
-          sortable: new Sortable(entry2, {
+          sortable: new Sortable(nestedEntry, {
             group: 'nested',
             animation: 150,
             filter: '.ignore-elements',
@@ -188,6 +194,8 @@ const VirtualInstallation = memo((props) => {
   }, [setRootSortable]);
 
   const addFolder = (name) => {
+    name = name.trim();
+    if (!name) return;
     if (sortables.find(s => s.id === name)) return;
 
     setSortables([].concat(sortables, [name]
@@ -197,16 +205,17 @@ const VirtualInstallation = memo((props) => {
         entry.dataset.id = f;
         entry.classList.add('list-group-item');
 
-        const entry2 = document.createElement('div');
-        entry2.classList.add('list-group');
-        entry2.classList.add('nested-sortable');
-        entry.appendChild(entry2);
+        const nestedEntry = document.createElement('div');
+        nestedEntry.classList.add('list-group');
+        nestedEntry.classList.add('mt-3');
+        nestedEntry.classList.add('nested-sortable');
+        entry.appendChild(nestedEntry);
 
         listAviutl.current.appendChild(entry);
 
         return {
           id: f,
-          sortable: new Sortable(entry2, {
+          sortable: new Sortable(nestedEntry, {
             group: 'nested',
             animation: 150,
             filter: '.ignore-elements',
@@ -225,16 +234,23 @@ const VirtualInstallation = memo((props) => {
         <div className="card">
           <div className="card-body">
             Zipファイル
-            <div ref={listDownload} className="list-group"></div>
+            <div ref={listDownload} className="list-group mt-3"></div>
           </div>
         </div>
       </div>
       <div className="col">
         <div className="card">
           <div className="card-body">
-            <div onClick={() => addFolder('new')}>plus</div>
             Aviutl
-            <div ref={listAviutl} className="list-group nested-sortable">
+            <div ref={listAviutl} className="list-group mt-3 nested-sortable">
+            </div>
+            <div className="input-group mt-3">
+              <input type="text" className="form-control"
+                value={inputFolderName}
+                onChange={(e) => setInputFolderName(e.target.value)}
+                placeholder="フォルダ名"
+              ></input>
+              <button className="btn btn-outline-secondary" type="button" onClick={() => addFolder(inputFolderName)}><i className="bi bi-folder-plus me-2"></i>追加</button>
             </div>
           </div>
         </div>
