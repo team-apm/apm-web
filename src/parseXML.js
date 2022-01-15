@@ -10,7 +10,11 @@ const parser = new XMLParser({
   isArray: () => true,
 });
 
-const builder = new XMLBuilder({ ignoreAttributes: false, format: true });
+const builder = new XMLBuilder({
+  ignoreAttributes: false,
+  format: true,
+  suppressBooleanAttributes: false,
+});
 
 const defaultKeys = [
   'id',
@@ -104,7 +108,8 @@ class PackageInfo {
           this.releases = {};
           for (const release of parsedPackage[key][0].release) {
             this.releases[release.$version[0]] = {
-              integrities: release.integrities
+              archiveIntegrity: release?.archiveIntegrity?.[0],
+              integrities: release?.integrities
                 ? release.integrities[0].integrity.map((integrity) => {
                     return {
                       target: integrity.$target[0],
@@ -138,8 +143,24 @@ class PackageInfo {
           if (packageItem.isContinuous) tmpItem['@_continuous'] = true;
           newPackageItem[key] = tmpItem;
         } else if (key === 'releases') {
-          newPackageItem[key] = 'Writing sri is not implemented.';
-          // throw new Error('Writing sri is not implemented.');
+          newPackageItem.releases = {
+            release: Object.entries(packageItem[key]).map(([id, release]) => {
+              return {
+                '@_version': id,
+                archiveIntegrity: release?.archiveIntegrity,
+                integrities: release?.integrities
+                  ? {
+                      integrity: release.integrities.map((i) => {
+                        return {
+                          '@_target': i.target,
+                          '#text': i.targetIntegrity,
+                        };
+                      }),
+                    }
+                  : undefined,
+              };
+            }),
+          };
         } else {
           newPackageItem[key] = packageItem[key];
         }
