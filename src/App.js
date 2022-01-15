@@ -166,7 +166,7 @@ function App() {
                 <div className="input-group p-2">
                   <input
                     className="form-control shadow-none"
-                    type="text"
+                    type="search"
                     name="name"
                     value={searchString}
                     placeholder="🔍検索"
