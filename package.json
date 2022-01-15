@@ -1,7 +1,29 @@
 {
   "name": "apm-web",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
+  "description": "apm-web is a web-based tool to edit package data of AviUtl Package Manager.",
+  "keywords": [
+    "aviutl",
+    "aviutl-package-manager"
+  ],
+  "homepage": "http://mitosagi.github.io/apm-web",
+  "license": "MIT",
+  "author": "Mitosagi",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "run-s lint:prettier lint:eslint",
+    "lint:prettier": "prettier --check .",
+    "lint:eslint": "eslint --fix-dry-run .",
+    "fix": "run-s fix:prettier fix:eslint",
+    "fix:prettier": "prettier --write .",
+    "fix:eslint": "eslint --fix .",
+    "prepare": "husky install",
+    "predeploy": "run-s build",
+    "deploy": "gh-pages -d build"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
@@ -32,21 +54,7 @@
     "prettier": "^2.5.1",
     "prettier-plugin-md-nocjsp": "^1.1.1"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "lint": "run-s lint:prettier lint:eslint",
-    "lint:prettier": "prettier --check .",
-    "lint:eslint": "eslint --fix-dry-run .",
-    "fix": "run-s fix:prettier fix:eslint",
-    "fix:prettier": "prettier --write .",
-    "fix:eslint": "eslint --fix .",
-    "prepare": "husky install",
-    "predeploy": "run-s build",
-    "deploy": "gh-pages -d build"
-  },
+  "private": true,
   "browserslist": {
     "production": [
       ">0.2%",
@@ -65,6 +73,5 @@
       "eslint --fix"
     ],
     "*.{json,html,css,md,xml,xsd}": "prettier --write"
-  },
-  "homepage": "http://mitosagi.github.io/apm-web"
+  }
 }
