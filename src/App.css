@@ -10,10 +10,13 @@ body,
 }
 
 .dropZone {
-  border: 2px dashed var(--bs-body-color);
+  border: 2px dashed var(--bs-secondary);
 }
 
 /* SurveyJS */
+.sv_main .sv_container {
+  color: inherit !important;
+}
 span.sv_q_required_text {
   color: red;
 }
@@ -25,9 +28,4 @@ span.sv_q_required_text {
   input:not([type='button']):not([type='reset']):not([type='submit']):not([type='image']):not([type='checkbox']):not([type='radio']),
 .sv_main textarea {
   background-color: transparent !important ;
-}
-@media (prefers-color-scheme: dark) {
-  .sv_main .sv_container {
-    color: var(--bs-body-color) !important;
-  }
 }
