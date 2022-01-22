@@ -21,6 +21,10 @@ span.sv_q_required_text {
   color: red;
 }
 
+.small > .sv-string-viewer {
+  padding: 0.5em 1em 1.5em;
+}
+
 /* for dark mode */
 .sv_main,
 .sv_main .sv_custom_header,
