@@ -72,7 +72,7 @@ const VirtualInstallation = memo((props) => {
             fallbackOnBody: true,
             invertSwap: true,
             invertedSwapThreshold: 0.6,
-            emptyInsertThreshold: 8,
+            emptyInsertThreshold: 16,
           })
         };
       }));
@@ -188,7 +188,7 @@ const VirtualInstallation = memo((props) => {
         fallbackOnBody: true,
         invertSwap: true,
         invertedSwapThreshold: 0.6,
-        emptyInsertThreshold: 8,
+        emptyInsertThreshold: 16,
       })
     );
   }, [setRootSortable]);
@@ -222,7 +222,7 @@ const VirtualInstallation = memo((props) => {
             fallbackOnBody: true,
             invertSwap: true,
             invertedSwapThreshold: 0.6,
-            emptyInsertThreshold: 8,
+            emptyInsertThreshold: 16,
           })
         };
       })));
