@@ -74,7 +74,7 @@ const SurveyComponent = memo((props) => {
     <div className='p-3'>
       <h5>インストール時にコピーするファイルの指定</h5>
       <div>
-        <p>「パッケージの最新バージョン」に指定したバージョンのzipファイルを{survey?.data?.downloadURL && (
+        <p>「パッケージの最新バージョン」に指定したバージョンのzipファイル（またはファイル）を{survey?.data?.downloadURL && (
           <a
             className=""
             href={survey.data.downloadURL}
