@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 import JSZip from 'jszip';
 import VirtualInstallation from './VirtualInstallation';
+import Encoding from 'encoding-japanese';
 
 async function getSriFromArrayBuffer(buffer) {
   const hash = await crypto.subtle.digest('SHA-384', buffer);
@@ -15,7 +16,15 @@ function ArchiveComponent(props) {
   const onDrop = useCallback(acceptedFiles => {
     async function onDropAsync(acceptedFiles) {
       // unzip
-      const zip = await JSZip.loadAsync(acceptedFiles[0]);
+      const zip = await JSZip.loadAsync(acceptedFiles[0], {
+        decodeFileName: function (bytes) {
+          return Encoding.convert(bytes, {
+            to: 'UNICODE',
+            from: 'SJIS',
+            type: 'string'
+          });
+        }
+      });
       const files = {};
       for (const file of Object.values(zip.files)) {
         const buffer = await zip.file(file.name).async("arraybuffer");
