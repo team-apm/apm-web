@@ -50,6 +50,7 @@ function ArchiveComponent(props) {
         });
         const files = {};
         for (const file of Object.values(zip.files)) {
+          if (file.dir) continue;
           const buffer = await zip.file(file.name).async("arraybuffer");
           files[file.name] = await getSriFromArrayBuffer(buffer);
         }
