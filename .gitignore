@@ -119,3 +119,4 @@ dist
 
 .vscode/
 /build
+!/public/dist
