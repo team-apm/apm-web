@@ -5,8 +5,10 @@ import VirtualInstallation from './VirtualInstallation';
 import Encoding from 'encoding-japanese';
 import { Archive } from 'libarchive.js/main.js';
 
+const splitUrl = window.location.href.split('/');
+const workerBaseUrl = (splitUrl[splitUrl.length - 1] === '') ? '' : splitUrl[splitUrl.length - 1] + '/';
 Archive.init({
-  workerUrl: 'worker-bundle.js'
+  workerUrl: workerBaseUrl + 'dist/worker-bundle.js'
 });
 
 async function getSriFromArrayBuffer(buffer) {
