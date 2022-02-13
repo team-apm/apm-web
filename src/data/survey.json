@@ -127,7 +127,7 @@
           ]
         },
         {
-          "type": "text",
+          "type": "comment",
           "name": "description",
           "title": {
             "ja": "説明（概要より詳細な説明）"
