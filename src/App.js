@@ -3,6 +3,7 @@ import './App.css';
 import SurveyComponent from './SurveyComponent';
 import { PackagesList } from './parseXML';
 import Fuse from 'fuse.js';
+import { Modal } from 'bootstrap';
 
 const formsUrl =
   'https://docs.google.com/forms/d/e/1FAIpQLSfxQWxsCp9QQYHpe9oxL4gZEdJmMVQxFZijXKI1NmygeHgHkg/viewform?usp=pp_url';
@@ -49,9 +50,17 @@ function App() {
   );
 
   function submit() {
-    window.open(
-      makeFormsUrl({ data: PackagesList.write(Object.values(addedPackages)) })
-    );
+    const formsUrl = makeFormsUrl({
+      data: PackagesList.write(Object.values(addedPackages)),
+    });
+
+    if (formsUrl.length < 8000) {
+      window.open(formsUrl);
+    } else {
+      const myModalEl = document.querySelector('#sendModal');
+      const modal = Modal.getOrCreateInstance(myModalEl);
+      modal.show();
+    }
   }
 
   const options = {
@@ -100,6 +109,61 @@ function App() {
 
   return (
     <div className="bg-light">
+      <div
+        class="modal fade"
+        id="sendModal"
+        tabindex="-1"
+        aria-labelledby="sendModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="sendModalLabel">
+                <i className="bi bi-send me-2"></i>プレビューと送信
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="mb-3">
+                  <label for="message-text" class="col-form-label">
+                    以下の文字列を送信ページのデータ欄にコピーアンドペーストしてください。
+                  </label>
+                  <textarea
+                    class="form-control"
+                    id="message-text"
+                    value={PackagesList.write(Object.values(addedPackages))}
+                    rows="6"
+                    readonly
+                  ></textarea>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                閉じる
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                onClick={() => window.open(makeFormsUrl({}))}
+              >
+                送信ページを開く
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="d-flex flex-column h-100">
         <nav className="navbar navbar-expand-lg navbar-light">
           <div className="container-fluid">

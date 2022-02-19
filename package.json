@@ -26,6 +26,7 @@
     "prepare:libarchive": "cp -rf ./node_modules/libarchive.js/dist ./public/"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.2",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.1",
