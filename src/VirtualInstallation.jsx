@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, memo } from 'react'
+import React, { useRef, useEffect, useState, memo } from 'react';
 import path from 'path-browserify';
 import Sortable from 'sortablejs';
 
@@ -38,13 +38,11 @@ const VirtualInstallation = memo((props) => {
 
   useEffect(() => {
     // clearList
-    if (listDownload.current)
-      listDownload.current.innerHTML = null;
-    if (listAviutl.current)
-      listAviutl.current.innerHTML = null;
+    if (listDownload.current) listDownload.current.innerHTML = null;
+    if (listAviutl.current) listAviutl.current.innerHTML = null;
 
-    setSortables(defaultFolders
-      .map((f) => {
+    setSortables(
+      defaultFolders.map((f) => {
         const entry = document.createElement('div');
         entry.dataset.id = f;
         entry.classList.add('list-group-item');
@@ -73,77 +71,89 @@ const VirtualInstallation = memo((props) => {
             invertSwap: true,
             invertedSwapThreshold: 0.6,
             emptyInsertThreshold: 16,
-          })
+          }),
         };
-      }));
+      })
+    );
 
-    const filesWirhSri = Object.entries(props.files).map(([k, v]) => { return { name: k, sri: v, folder: false } });
-    const folders = [...new Set(filesWirhSri.map(f => path.dirname(f.name)))].filter(n => n !== '.').map(n => { return { name: n, folder: true } });
+    const filesWirhSri = Object.entries(props.files).map(([k, v]) => {
+      return { name: k, sri: v, folder: false };
+    });
+    const folders = [...new Set(filesWirhSri.map((f) => path.dirname(f.name)))]
+      .filter((n) => n !== '.')
+      .map((n) => {
+        return { name: n, folder: true };
+      });
     const dirEntries = [].concat(filesWirhSri, folders);
 
-    dirEntries
-      .forEach((f) => {
-        const entry = document.createElement('div');
-        entry.innerText = f.name;
-        entry.dataset.id = f.name;
-        entry.classList.add('list-group-item');
-        if (f.folder) {
-          if (['plugins', 'script'].includes(path.basename(f.name))) {
-            entry.classList.add('list-group-item-dark');
-            entry.classList.add('ignore-elements');
-          } else {
-            entry.classList.add('list-group-item-warning');
-          }
+    dirEntries.forEach((f) => {
+      const entry = document.createElement('div');
+      entry.innerText = f.name;
+      entry.dataset.id = f.name;
+      entry.classList.add('list-group-item');
+      if (f.folder) {
+        if (['plugins', 'script'].includes(path.basename(f.name))) {
+          entry.classList.add('list-group-item-dark');
+          entry.classList.add('ignore-elements');
+        } else {
+          entry.classList.add('list-group-item-warning');
         }
-        listDownload.current.appendChild(entry);
-      });
+      }
+      listDownload.current.appendChild(entry);
+    });
   }, [props.files]);
 
   useEffect(() => {
-    const filesWirhSri = Object.entries(props.files).map(([k, v]) => { return { name: k, sri: v, folder: false } });
-    const folders = [...new Set(filesWirhSri.map(f => path.dirname(f.name)))].filter(n => n !== '.').map(n => { return { name: n, folder: true } });
+    const filesWirhSri = Object.entries(props.files).map(([k, v]) => {
+      return { name: k, sri: v, folder: false };
+    });
+    const folders = [...new Set(filesWirhSri.map((f) => path.dirname(f.name)))]
+      .filter((n) => n !== '.')
+      .map((n) => {
+        return { name: n, folder: true };
+      });
     const dirEntries = [].concat(filesWirhSri, folders);
 
     const getEntries = (sortable, currentDir) =>
-      sortable.toArray()
-        .flatMap((i) => {
-          const fullPath = path.join(currentDir, path.basename(i));
-          const childSortable = sortables.find(s => s.id === path.basename(i));
-          if (childSortable) {
-            return getEntries(childSortable.sortable, fullPath);
-          } else {
-            return [{
+      sortable.toArray().flatMap((i) => {
+        const fullPath = path.join(currentDir, path.basename(i));
+        const childSortable = sortables.find((s) => s.id === path.basename(i));
+        if (childSortable) {
+          return getEntries(childSortable.sortable, fullPath);
+        } else {
+          return [
+            {
               id: i,
               archivePath: path.dirname(i),
-              targetPath: fullPath
-            }];
-          }
-        });
+              targetPath: fullPath,
+            },
+          ];
+        }
+      });
 
     const makeXML = () => {
       const files = getEntries(rootSortable, '');
-      const filesJson = files
-        .map((i) => {
-          const ret = { 'filename': i.targetPath };
-          ret['archivePath'] = (i.archivePath === '.') ? null : i.archivePath;
-          ret['isDirectory'] = !!dirEntries.find(e => e.name === i.id).folder;
-          ret['isOptional'] = false;
-          return ret;
-        });
-      const integrities = files
-        .flatMap((i) => {
-          const fileEntry = dirEntries.find(e => e.name === i.id);
-          if (fileEntry.folder) return [];
-          return [{
-            'targetIntegrity': fileEntry.sri,
-            'target': i.targetPath
-          }];
-        });
+      const filesJson = files.map((i) => {
+        const ret = { filename: i.targetPath };
+        ret['archivePath'] = i.archivePath === '.' ? null : i.archivePath;
+        ret['isDirectory'] = !!dirEntries.find((e) => e.name === i.id).folder;
+        ret['isOptional'] = false;
+        return ret;
+      });
+      const integrities = files.flatMap((i) => {
+        const fileEntry = dirEntries.find((e) => e.name === i.id);
+        if (fileEntry.folder) return [];
+        return [
+          {
+            targetIntegrity: fileEntry.sri,
+            target: i.targetPath,
+          },
+        ];
+      });
       props.onChange(filesJson, integrities);
     };
-    if (rootSortable)
-      rootSortable.options.onSort = makeXML;
-    sortables.forEach(s => s.sortable.options.onSort = makeXML);
+    if (rootSortable) rootSortable.options.onSort = makeXML;
+    sortables.forEach((s) => (s.sortable.options.onSort = makeXML));
   }, [props, rootSortable, sortables]);
 
   useEffect(() => {
@@ -155,7 +165,10 @@ const VirtualInstallation = memo((props) => {
         node.classList.remove('ignore-elements');
 
         const nodePath = node.dataset.id;
-        if (defaultFolders.includes(path.basename(nodePath)) || Array.from(usedPath).find(used => pathRelated(nodePath, used))) {
+        if (
+          defaultFolders.includes(path.basename(nodePath)) ||
+          Array.from(usedPath).find((used) => pathRelated(nodePath, used))
+        ) {
           node.classList.add('list-group-item-dark');
           node.classList.add('ignore-elements');
         }
@@ -196,36 +209,40 @@ const VirtualInstallation = memo((props) => {
   const addFolder = (name) => {
     name = name.trim();
     if (!name) return;
-    if (sortables.find(s => s.id === name)) return;
+    if (sortables.find((s) => s.id === name)) return;
 
-    setSortables([].concat(sortables, [name]
-      .map((f) => {
-        const entry = document.createElement('div');
-        entry.innerText = f;
-        entry.dataset.id = f;
-        entry.classList.add('list-group-item');
+    setSortables(
+      [].concat(
+        sortables,
+        [name].map((f) => {
+          const entry = document.createElement('div');
+          entry.innerText = f;
+          entry.dataset.id = f;
+          entry.classList.add('list-group-item');
 
-        const nestedEntry = document.createElement('div');
-        nestedEntry.classList.add('list-group');
-        nestedEntry.classList.add('mt-3');
-        nestedEntry.classList.add('nested-sortable');
-        entry.appendChild(nestedEntry);
+          const nestedEntry = document.createElement('div');
+          nestedEntry.classList.add('list-group');
+          nestedEntry.classList.add('mt-3');
+          nestedEntry.classList.add('nested-sortable');
+          entry.appendChild(nestedEntry);
 
-        listAviutl.current.appendChild(entry);
+          listAviutl.current.appendChild(entry);
 
-        return {
-          id: f,
-          sortable: new Sortable(nestedEntry, {
-            group: 'nested',
-            animation: 150,
-            filter: '.ignore-elements',
-            fallbackOnBody: true,
-            invertSwap: true,
-            invertedSwapThreshold: 0.6,
-            emptyInsertThreshold: 16,
-          })
-        };
-      })));
+          return {
+            id: f,
+            sortable: new Sortable(nestedEntry, {
+              group: 'nested',
+              animation: 150,
+              filter: '.ignore-elements',
+              fallbackOnBody: true,
+              invertSwap: true,
+              invertedSwapThreshold: 0.6,
+              emptyInsertThreshold: 16,
+            }),
+          };
+        })
+      )
+    );
   };
 
   return (
@@ -242,15 +259,25 @@ const VirtualInstallation = memo((props) => {
         <div className="card">
           <div className="card-body">
             Aviutl
-            <div ref={listAviutl} className="list-group mt-3 nested-sortable">
-            </div>
+            <div
+              ref={listAviutl}
+              className="list-group mt-3 nested-sortable"
+            ></div>
             <div className="input-group mt-3">
-              <input type="text" className="form-control"
+              <input
+                type="text"
+                className="form-control"
                 value={inputFolderName}
                 onChange={(e) => setInputFolderName(e.target.value)}
                 placeholder="フォルダ名"
               ></input>
-              <button className="btn btn-outline-secondary" type="button" onClick={() => addFolder(inputFolderName)}><i className="bi bi-folder-plus me-2"></i>追加</button>
+              <button
+                className="btn btn-outline-secondary"
+                type="button"
+                onClick={() => addFolder(inputFolderName)}
+              >
+                <i className="bi bi-folder-plus me-2"></i>追加
+              </button>
             </div>
           </div>
         </div>
