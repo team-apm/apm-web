@@ -4,10 +4,9 @@ import 'survey-react/survey.css';
 import surveyJson from './data/survey.json';
 import ArchiveComponent from './ArchiveComponent';
 
-Survey.StylesManager.applyTheme("bootstrap");
+Survey.StylesManager.applyTheme('bootstrap');
 
 const SurveyComponent = memo((props) => {
-
   const [survey, setSurvey] = useState();
 
   useEffect(() => {
@@ -61,34 +60,44 @@ const SurveyComponent = memo((props) => {
       packageItem.files = filesJson;
       if (packageItem?.latestVersion) {
         if (!packageItem?.releases) packageItem.releases = [];
-        packageItem.releases = packageItem.releases.filter(r => r.version !== packageItem.latestVersion);
-        packageItem.releases.push({ ...release, version: packageItem.latestVersion });
+        packageItem.releases = packageItem.releases.filter(
+          (r) => r.version !== packageItem.latestVersion
+        );
+        packageItem.releases.push({
+          ...release,
+          version: packageItem.latestVersion,
+        });
       }
       survey.data = packageItem;
     },
     [survey]
   );
 
-  return <div>
-    {survey && <Survey.Survey model={survey} />}
-    <div className='p-3'>
-      <h5>インストール時にコピーするファイルの指定</h5>
-      <div>
-        <p>「パッケージの最新バージョン」に指定したバージョンのzipファイル（またはファイル）を{survey?.data?.downloadURL && (
-          <a
-            className=""
-            href={survey.data.downloadURL}
-            target="_blank"
-            rel="noreferrer"
-          >
-            ダウンロードして
-          </a>
-        )}点線の欄にドロップします。左の欄に追加されたファイルを右の欄へ移動することでコピーするファイルを指定できます。</p>
-
+  return (
+    <div>
+      {survey && <Survey.Survey model={survey} />}
+      <div className="p-3">
+        <h5>インストール時にコピーするファイルの指定</h5>
+        <div>
+          <p>
+            「パッケージの最新バージョン」に指定したバージョンのzipファイル（またはファイル）を
+            {survey?.data?.downloadURL && (
+              <a
+                className=""
+                href={survey.data.downloadURL}
+                target="_blank"
+                rel="noreferrer"
+              >
+                ダウンロードして
+              </a>
+            )}
+            点線の欄にドロップします。左の欄に追加されたファイルを右の欄へ移動することでコピーするファイルを指定できます。
+          </p>
+        </div>
+        <ArchiveComponent onComplete={archiveComplete} />
       </div>
-      <ArchiveComponent onComplete={archiveComplete} />
     </div>
-  </div>;
+  );
 });
 
 export default SurveyComponent;
