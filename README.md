@@ -4,7 +4,7 @@ AviUtl Package Manager (apm) のパッケージデータを編集するための
 
 このツールからプラグインやスクリプトの追加依頼を簡単に送信できます
 
-### 🔗[mitosagi.github.io/apm-web/](https://mitosagi.github.io/apm-web/)
+### 🔗[team-apm.github.io/apm-web/](https://team-apm.github.io/apm-web/)
 
 <br>
 
