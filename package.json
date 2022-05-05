@@ -44,7 +44,7 @@
     "react-dropzone": "^14.1.1",
     "react-scripts": "5.0.1",
     "sortablejs": "^1.15.0",
-    "survey-react": "^1.9.27",
+    "survey-react": "^1.9.28",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
