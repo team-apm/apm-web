@@ -48,7 +48,7 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "eslint": "^8.14.0",
+    "eslint": "^8.15.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.5.0",
     "gh-pages": "^3.2.3",
