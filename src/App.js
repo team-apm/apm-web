@@ -28,7 +28,7 @@ function App() {
     async function fetchXML() {
       const text = await (
         await fetch(
-          'https://cdn.jsdelivr.net/gh/hal-shu-sato/apm-data@main/v2/data/packages.xml'
+          'https://cdn.jsdelivr.net/gh/team-apm/apm-data@main/v2/data/packages.xml'
         )
       ).text();
       setPackages(new PackagesList(text));
@@ -169,7 +169,7 @@ function App() {
           <div className="container-fluid">
             <a
               className="navbar-brand"
-              href="https://hal-shu-sato.github.io/apm/"
+              href="https://team-apm.github.io/apm/"
               target="_blank"
               rel="noreferrer"
             >
@@ -201,7 +201,7 @@ function App() {
                 <li className="nav-item me-3">
                   <a
                     className="nav-link"
-                    href="https://github.com/hal-shu-sato/apm-data/issues?q=is%3Aissue+%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8"
+                    href="https://github.com/team-apm/apm-data/issues?q=is%3Aissue+%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8"
                     target="_blank"
                     rel="noreferrer"
                   >
