@@ -17,7 +17,7 @@ AviUtl Package Manager (apm) のパッケージデータを編集するための
 ### デバッグ
 
 ```powershell
-git clone https://github.com/***/apm-web.git
+git clone https://github.com/team-apm/apm-web.git
 cd apm-web
 yarn
 yarn prepare:libarchive # Copying WASM
