@@ -201,7 +201,7 @@ function App() {
                 <li className="nav-item me-3">
                   <a
                     className="nav-link"
-                    href="https://github.com/team-apm/apm-data/issues?q=is%3Aissue+%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8"
+                    href="https://github.com/team-apm/apm-data/issues?q=is%3Aissue+label%3Aplugin%2Cscript"
                     target="_blank"
                     rel="noreferrer"
                   >
