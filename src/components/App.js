@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
 import SurveyComponent from './SurveyComponent';
-import { PackagesList } from './parseXML';
+import { PackagesList } from '../lib/parseXML';
 import Fuse from 'fuse.js';
 import { Modal } from 'bootstrap';
 

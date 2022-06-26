@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, memo } from 'react';
 import * as Survey from 'survey-react';
 import 'survey-react/survey.css';
-import surveyJson from './data/survey.json';
+import surveyJson from '../data/survey.json';
 import ArchiveComponent from './ArchiveComponent';
 
 Survey.StylesManager.applyTheme('bootstrap');
