@@ -23,7 +23,7 @@
     "prepare": "husky install",
     "predeploy": "run-s build",
     "deploy": "gh-pages -d build",
-    "prepare:libarchive": "cp -rf ./node_modules/libarchive.js/dist ./public/"
+    "prepare:libarchive": "cpx ./node_modules/libarchive.js/dist/** ./public/dist/"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.5",
@@ -48,6 +48,7 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
+    "cpx": "^1.5.0",
     "eslint": "^8.18.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.5.0",
