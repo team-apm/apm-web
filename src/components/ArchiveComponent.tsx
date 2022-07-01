@@ -4,6 +4,7 @@ import JSZip from 'jszip';
 import VirtualInstallation from './VirtualInstallation';
 import Encoding from 'encoding-japanese';
 import { Archive } from 'libarchive.js/main.js';
+import { CompressedFile } from 'libarchive.js/src/compressed-file';
 
 const splitUrl = window.location.href.split('/');
 const workerBaseUrl =
@@ -19,9 +20,21 @@ async function getSriFromArrayBuffer(buffer) {
   return 'sha384-' + window.btoa(String.fromCharCode(...new Uint8Array(hash)));
 }
 
-function ArchiveComponent(props) {
+function ArchiveComponent(props: {
+  onComplete: (
+    filesJson: {
+      filename: string;
+      archivePath: string | undefined;
+      isDirectory: boolean | undefined;
+    }[],
+    release: {
+      archiveIntegrity: string;
+      integrities: { targetIntegrity: string | null; target: string }[];
+    }
+  ) => void;
+}) {
   const [sri, setSri] = useState({});
-  const [archiveSri, setArchiveSri] = useState({});
+  const [archiveSri, setArchiveSri] = useState<string>('');
 
   const onDrop = useCallback(
     (acceptedFiles) => {
@@ -54,7 +67,7 @@ function ArchiveComponent(props) {
             // JSZip
             const zip = await JSZip.loadAsync(acceptedFiles[0], {
               decodeFileName: function (bytes) {
-                return Encoding.convert(bytes, {
+                return Encoding.convert(bytes as Uint8Array, {
                   to: 'UNICODE',
                   from: 'SJIS',
                   type: 'string',
@@ -64,7 +77,7 @@ function ArchiveComponent(props) {
             const files = {};
             for (const file of Object.values(zip.files)) {
               if (file.dir) continue;
-              const buffer = await zip.file(file.name).async('arraybuffer');
+              const buffer = await zip.file(file.name)!.async('arraybuffer');
               files[file.name] = await getSriFromArrayBuffer(buffer);
             }
             setSri(files);
@@ -78,14 +91,18 @@ function ArchiveComponent(props) {
               // L-SMASH_Works_r940_plugins can't be extracted, but the file list can be read.
               // Therefore, loading is done in two steps.
               for (const file of await archive.getFilesArray()) {
-                files[file.file._path] = '';
+                const compressedFile = file.file as CompressedFile;
+                files[compressedFile._path] = '';
               }
               try {
                 for (const file of await archive.getFilesArray()) {
+                  const compressedFile = file.file as CompressedFile;
                   const buffer = await arrayBufferFromFile(
-                    await file.file.extract()
+                    await compressedFile.extract()
                   );
-                  files[file.file._path] = await getSriFromArrayBuffer(buffer);
+                  files[compressedFile._path] = await getSriFromArrayBuffer(
+                    buffer
+                  );
                 }
               } catch (e) {
                 console.log('SRI calculations are not performed.');

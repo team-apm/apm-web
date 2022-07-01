@@ -19,9 +19,9 @@ function makeFormsUrl(data) {
 }
 
 function App() {
-  const [packageItem, setPackageItem] = useState();
-  const [packages, setPackages] = useState({});
-  const [addedPackages, setAddedPackages] = useState({});
+  const [packageItem, setPackageItem] = useState<{ id?: number }>();
+  const [packages, setPackages] = useState<PackagesList>({});
+  const [addedPackages, setAddedPackages] = useState<PackagesList>({});
   const [searchString, setSearchString] = useState('');
 
   useEffect(() => {
@@ -33,7 +33,9 @@ function App() {
       ).text();
       setPackages(new PackagesList(text));
 
-      setAddedPackages(JSON.parse(localStorage.getItem('packages')) ?? {});
+      setAddedPackages(
+        JSON.parse(localStorage.getItem('packages') ?? '{}') ?? {}
+      );
     }
     fetchXML();
   }, []);
@@ -57,7 +59,7 @@ function App() {
     if (formsUrl.length < 8000) {
       window.open(formsUrl);
     } else {
-      const myModalEl = document.querySelector('#sendModal');
+      const myModalEl = document.querySelector('#sendModal')!;
       const modal = Modal.getOrCreateInstance(myModalEl);
       modal.show();
     }
@@ -72,7 +74,7 @@ function App() {
   const ps = searchString
     ? new Fuse(merged, options).search(searchString).map((p) => p.item)
     : merged;
-  function createItem(p, badge) {
+  function createItem(p, badge?) {
     function removeItem(id) {
       const newPackages = { ...addedPackages };
       delete newPackages[id];
@@ -110,52 +112,52 @@ function App() {
   return (
     <div className="bg-light">
       <div
-        class="modal fade"
+        className="modal fade"
         id="sendModal"
-        tabindex="-1"
+        tabIndex={-1}
         aria-labelledby="sendModalLabel"
         aria-hidden="true"
       >
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="sendModalLabel">
+        <div className="modal-dialog modal-lg modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="sendModalLabel">
                 <i className="bi bi-send me-2"></i>プレビューと送信
               </h5>
               <button
                 type="button"
-                class="btn-close"
+                className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
               <form>
-                <div class="mb-3">
-                  <label for="message-text" class="col-form-label">
+                <div className="mb-3">
+                  <label htmlFor="message-text" className="col-form-label">
                     以下の文字列を送信ページのデータ欄にコピーアンドペーストしてください。
                   </label>
                   <textarea
-                    class="form-control"
+                    className="form-control"
                     id="message-text"
                     value={PackagesList.write(Object.values(addedPackages))}
-                    rows="6"
-                    readonly
+                    rows={6}
+                    readOnly
                   ></textarea>
                 </div>
               </form>
             </div>
-            <div class="modal-footer">
+            <div className="modal-footer">
               <button
                 type="button"
-                class="btn btn-secondary"
+                className="btn btn-secondary"
                 data-bs-dismiss="modal"
               >
                 閉じる
               </button>
               <button
                 type="button"
-                class="btn btn-primary"
+                className="btn btn-primary"
                 onClick={() => window.open(makeFormsUrl({}))}
               >
                 送信ページを開く
