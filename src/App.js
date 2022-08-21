@@ -215,6 +215,7 @@ function App() {
                   className="btn btn-success"
                   onClick={submit}
                   type="button"
+                  disabled={Object.values(addedPackages).length === 0}
                 >
                   <i className="bi bi-send me-2"></i>
                   プレビューと送信
