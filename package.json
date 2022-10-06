@@ -45,7 +45,7 @@
     "react-scripts": "5.0.1",
     "sortablejs": "^1.15.0",
     "survey-react": "^1.9.52",
-    "web-vitals": "^3.0.2"
+    "web-vitals": "^3.0.3"
   },
   "devDependencies": {
     "cpx": "^1.5.0",
