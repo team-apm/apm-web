@@ -84,7 +84,7 @@ function parseFilesInverse(parsedData) {
 /**
  *
  */
-class PackageInfo {
+export class PackageInfo {
   /**
    * Returns the package's information.
    *
