@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Packages } from 'apm-schema';
 import './App.css';
 import SurveyComponent from './SurveyComponent';
-import { PackagesList } from '../lib/parseXML';
 import Fuse from 'fuse.js';
 import { Modal } from 'bootstrap';
 
@@ -19,25 +19,35 @@ function makeFormsUrl(data) {
 }
 
 function App() {
-  const [packageItem, setPackageItem] = useState<{ id?: number }>();
-  const [packages, setPackages] = useState<PackagesList>({});
-  const [addedPackages, setAddedPackages] = useState<PackagesList>({});
+  const [packageItem, setPackageItem] = useState<
+    Packages['packages'][number] | null
+  >();
+  const [packages, setPackages] = useState<{
+    [name: string]: Packages['packages'][number];
+  }>({});
+  const [addedPackages, setAddedPackages] = useState<{
+    [name: string]: Packages['packages'][number];
+  }>({});
   const [searchString, setSearchString] = useState('');
 
   useEffect(() => {
-    async function fetchXML() {
+    async function fetchJson() {
       const text = await (
         await fetch(
-          'https://cdn.jsdelivr.net/gh/team-apm/apm-data@main/v2/data/packages.xml'
+          'https://cdn.jsdelivr.net/gh/team-apm/apm-data@main/v3/packages.json'
         )
       ).text();
-      setPackages(new PackagesList(text));
-
+      setPackages(
+        Object.assign(
+          {},
+          ...(JSON.parse(text) as Packages).packages.map((x) => ({ [x.id]: x }))
+        )
+      );
       setAddedPackages(
-        JSON.parse(localStorage.getItem('packages') ?? '{}') ?? {}
+        JSON.parse(localStorage.getItem('v3-packages') ?? '{}') ?? {}
       );
     }
-    fetchXML();
+    fetchJson();
   }, []);
 
   const surveyComplete = useCallback(
@@ -46,14 +56,14 @@ function App() {
       newPackages[json.id] = json;
       setAddedPackages(newPackages);
       setPackageItem(json);
-      localStorage.setItem('packages', JSON.stringify(newPackages));
+      localStorage.setItem('v3-packages', JSON.stringify(newPackages));
     },
     [addedPackages]
   );
 
   function submit() {
     const formsUrl = makeFormsUrl({
-      data: PackagesList.write(Object.values(addedPackages)),
+      data: JSON.stringify(Object.values(addedPackages), null, '  '),
     });
 
     if (formsUrl.length < 8000) {
@@ -79,7 +89,7 @@ function App() {
       const newPackages = { ...addedPackages };
       delete newPackages[id];
       setAddedPackages(newPackages);
-      localStorage.setItem('packages', JSON.stringify(newPackages));
+      localStorage.setItem('v3-packages', JSON.stringify(newPackages));
     }
 
     return (
@@ -140,7 +150,11 @@ function App() {
                   <textarea
                     className="form-control"
                     id="message-text"
-                    value={PackagesList.write(Object.values(addedPackages))}
+                    value={JSON.stringify(
+                      Object.values(addedPackages),
+                      null,
+                      '  '
+                    )}
                     rows={6}
                     readOnly
                   ></textarea>
@@ -195,7 +209,10 @@ function App() {
             >
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item me-3">
-                  <span className="nav-link" onClick={() => setPackageItem({})}>
+                  <span
+                    className="nav-link"
+                    onClick={() => setPackageItem(null)}
+                  >
                     <i className="bi bi-plus-square me-2"></i>
                     パッケージの追加
                   </span>

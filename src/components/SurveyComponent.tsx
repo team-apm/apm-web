@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, memo } from 'react';
+import { Packages } from 'apm-schema';
 import * as Survey from 'survey-react';
 import 'survey-react/survey.css';
 import surveyJson from '../data/survey.json';
@@ -8,8 +9,8 @@ Survey.StylesManager.applyTheme('bootstrap');
 
 const SurveyComponent = memo(
   (props: {
-    packageItem: Object;
-    onComplete: (jsonObject: Object) => void;
+    packageItem: Packages['packages'][number];
+    onComplete: (jsonObject: Packages['packages'][number]) => void;
   }) => {
     const [survey, setSurvey] = useState<Survey.SurveyModel>();
 
@@ -19,38 +20,34 @@ const SurveyComponent = memo(
         return;
       }
 
-      const preData = JSON.parse(JSON.stringify(props.packageItem));
+      const preData = JSON.parse(
+        JSON.stringify(props.packageItem)
+      ) as Packages['packages'][number];
 
       // convert
-      if (preData?.dependencies)
-        preData.dependencies = preData.dependencies.dependency.join('\n');
-      if (preData?.releases) {
-        const tmpReleases: any[] = [];
-        for (const [key, value] of Object.entries(preData.releases)) {
-          tmpReleases.push({ version: key, ...(value as Object) });
-        }
-        preData.releases = tmpReleases;
-      }
-
       const survey = new Survey.Model(surveyJson);
-      survey.data = preData;
+      survey.data = {
+        ...preData,
+        dependencies: preData.dependencies?.join('\n'),
+        downloadURLs: preData.downloadURLs.join('\n'),
+        releases: preData.releases?.map((release) => {
+          return { version: release.version, ...release.integrity };
+        }),
+      };
       survey.onComplete.add((s, o) => {
         const newData = s.data;
 
         // convert
-        if (newData?.dependencies)
-          newData.dependencies = {
-            dependency: newData?.dependencies.trim().split(/\n/),
-          };
-        if (newData?.releases) {
-          const tmpReleases = {};
-          for (const entry of newData.releases) {
-            const tmpEntry = { ...entry };
-            delete tmpEntry.version;
-            tmpReleases[entry.version] = tmpEntry;
-          }
-          newData.releases = tmpReleases;
-        }
+        if (newData.dependencies)
+          newData.dependencies = newData.dependencies.trim().split(/\n/);
+        newData.downloadURLs = newData.downloadURLs.trim().split(/\n/);
+        if (newData.releases)
+          newData.releases = newData.releases.map((release) => {
+            return {
+              version: release.version,
+              integrity: { archive: release.archive, file: release.file },
+            };
+          });
 
         props.onComplete(newData);
       });

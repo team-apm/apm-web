@@ -39,11 +39,14 @@
           }
         },
         {
-          "type": "text",
-          "name": "downloadURL",
+          "type": "comment",
+          "name": "downloadURLs",
           "startWithNewLine": false,
           "title": {
             "ja": "ダウンロードページのURL"
+          },
+          "description": {
+            "ja": "改行により複数入力できます；現在のところ1行目のみ有効です"
           },
           "isRequired": true,
           "requiredErrorText": {
@@ -242,7 +245,7 @@
             },
             {
               "type": "text",
-              "name": "archiveIntegrity",
+              "name": "archive",
               "startWithNewLine": false,
               "title": {
                 "ja": "圧縮ファイルのハッシュ値"
@@ -250,7 +253,7 @@
             },
             {
               "type": "paneldynamic",
-              "name": "integrities",
+              "name": "file",
               "description": {
                 "ja": "ファイルの整合性を確認するための情報"
               },
@@ -264,7 +267,7 @@
                 },
                 {
                   "type": "text",
-                  "name": "targetIntegrity",
+                  "name": "hash",
                   "startWithNewLine": false,
                   "description": {
                     "ja": "ファイルのハッシュ値"
