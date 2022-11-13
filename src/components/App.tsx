@@ -43,9 +43,29 @@ function App() {
           ...(JSON.parse(text) as Packages).packages.map((x) => ({ [x.id]: x }))
         )
       );
-      setAddedPackages(
-        JSON.parse(localStorage.getItem('v3-packages') ?? '{}') ?? {}
-      );
+
+      const tmpAddedPackges =
+        JSON.parse(localStorage.getItem('v3-packages') ?? '{}') ?? {};
+
+      // migration v2 to v3
+      const v2Data = JSON.parse(localStorage.getItem('packages') ?? '{}') ?? {};
+      if (Object.keys(v2Data).length !== 0) {
+        tmpAddedPackges['_notify/update-v3'] = {
+          id: '_notify/update-v3',
+          developer: 'apm-web',
+          name: '【お知らせ】apm-webの更新',
+          overview:
+            'パッケージデータの形式が変わりました。これまでのデータは下の説明欄にあります。お手数ですが必要な場合は再度入力をお願いします。',
+          downloadURLs: [],
+          description: JSON.stringify(Object.values(v2Data), null, '  '),
+        };
+
+        localStorage.setItem('v3-packages', JSON.stringify(tmpAddedPackges));
+        localStorage.removeItem('packages');
+      }
+      // end migration
+
+      setAddedPackages(tmpAddedPackges);
     }
     fetchJson();
   }, []);
