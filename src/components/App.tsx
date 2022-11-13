@@ -20,7 +20,7 @@ function makeFormsUrl(data) {
 
 function App() {
   const [packageItem, setPackageItem] = useState<
-    Packages['packages'][number] | null
+    Packages['packages'][number] | {}
   >();
   const [packages, setPackages] = useState<{
     [name: string]: Packages['packages'][number];
@@ -116,7 +116,11 @@ function App() {
       <div
         className={
           'list-group-item list-group-item-action position-relative' +
-          (p.id === packageItem?.id ? ' active' : '') +
+          (packageItem &&
+          Object.hasOwn(packageItem, 'id') &&
+          p.id === (packageItem as { id: string }).id
+            ? ' active'
+            : '') +
           (ps.filter((pp) => pp.id === p.id).length > 0 ? '' : ' d-none')
         }
         key={p.id}
@@ -229,10 +233,7 @@ function App() {
             >
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item me-3">
-                  <span
-                    className="nav-link"
-                    onClick={() => setPackageItem(null)}
-                  >
+                  <span className="nav-link" onClick={() => setPackageItem({})}>
                     <i className="bi bi-plus-square me-2"></i>
                     パッケージの追加
                   </span>

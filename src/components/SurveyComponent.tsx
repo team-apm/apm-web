@@ -9,7 +9,7 @@ Survey.StylesManager.applyTheme('bootstrap');
 
 const SurveyComponent = memo(
   (props: {
-    packageItem: Packages['packages'][number];
+    packageItem: Packages['packages'][number] | {};
     onComplete: (jsonObject: Packages['packages'][number]) => void;
   }) => {
     const [survey, setSurvey] = useState<Survey.SurveyModel>();
@@ -20,20 +20,23 @@ const SurveyComponent = memo(
         return;
       }
 
-      const preData = JSON.parse(
-        JSON.stringify(props.packageItem)
-      ) as Packages['packages'][number];
-
-      // convert
       const survey = new Survey.Model(surveyJson);
-      survey.data = {
-        ...preData,
-        dependencies: preData.dependencies?.join('\n'),
-        downloadURLs: preData.downloadURLs.join('\n'),
-        releases: preData.releases?.map((release) => {
-          return { version: release.version, ...release.integrity };
-        }),
-      };
+      if (Object.keys(props.packageItem).length === 0) {
+        survey.data = {};
+      } else {
+        const preData = JSON.parse(JSON.stringify(props.packageItem)) as
+          | Packages['packages'][number];
+
+        // convert
+        survey.data = {
+          ...preData,
+          dependencies: preData.dependencies?.join('\n'),
+          downloadURLs: preData.downloadURLs.join('\n'),
+          releases: preData.releases?.map((release) => {
+            return { version: release.version, ...release.integrity };
+          }),
+        };
+      }
       survey.onComplete.add((s, o) => {
         const newData = s.data;
 
