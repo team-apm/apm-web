@@ -36,7 +36,7 @@ const VirtualInstallation = memo(
         archivePath: string | undefined;
         isDirectory: boolean | undefined;
       }[],
-      integrities: { targetIntegrity: string | null; target: string }[]
+      integrities: { hash: string | null; target: string }[]
     ) => void;
   }) => {
     const listDownload = useRef<HTMLDivElement>(null);
@@ -176,7 +176,7 @@ const VirtualInstallation = memo(
           if (fileEntry?.folder) return [];
           return [
             {
-              targetIntegrity: fileEntry.sri,
+              hash: fileEntry.sri,
               target: i.targetPath,
             },
           ];

@@ -28,8 +28,10 @@ function ArchiveComponent(props: {
       isDirectory: boolean | undefined;
     }[],
     release: {
-      archiveIntegrity: string;
-      integrities: { targetIntegrity: string | null; target: string }[];
+      integrity: {
+        archive: string;
+        file: { hash: string | null; target: string }[];
+      };
     }
   ) => void;
 }) {
@@ -127,8 +129,10 @@ function ArchiveComponent(props: {
   const setData = useCallback(
     (filesJson, integrities) => {
       props.onComplete(filesJson, {
-        archiveIntegrity: archiveSri,
-        integrities: integrities,
+        integrity: {
+          archive: archiveSri,
+          file: integrities,
+        },
       });
     },
     [archiveSri, props]

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Packages } from 'apm-schema';
 import './App.css';
 import SurveyComponent from './SurveyComponent';
-import { PackagesList } from '../lib/parseXML';
 import Fuse from 'fuse.js';
 import { Modal } from 'bootstrap';
 
@@ -19,25 +19,55 @@ function makeFormsUrl(data) {
 }
 
 function App() {
-  const [packageItem, setPackageItem] = useState<{ id?: number }>();
-  const [packages, setPackages] = useState<PackagesList>({});
-  const [addedPackages, setAddedPackages] = useState<PackagesList>({});
+  const [packageItem, setPackageItem] = useState<
+    Packages['packages'][number] | {}
+  >();
+  const [packages, setPackages] = useState<{
+    [name: string]: Packages['packages'][number];
+  }>({});
+  const [addedPackages, setAddedPackages] = useState<{
+    [name: string]: Packages['packages'][number];
+  }>({});
   const [searchString, setSearchString] = useState('');
 
   useEffect(() => {
-    async function fetchXML() {
+    async function fetchJson() {
       const text = await (
         await fetch(
-          'https://cdn.jsdelivr.net/gh/team-apm/apm-data@main/v2/data/packages.xml'
+          'https://cdn.jsdelivr.net/gh/team-apm/apm-data@main/v3/packages.json'
         )
       ).text();
-      setPackages(new PackagesList(text));
-
-      setAddedPackages(
-        JSON.parse(localStorage.getItem('packages') ?? '{}') ?? {}
+      setPackages(
+        Object.assign(
+          {},
+          ...(JSON.parse(text) as Packages).packages.map((x) => ({ [x.id]: x }))
+        )
       );
+
+      const tmpAddedPackges =
+        JSON.parse(localStorage.getItem('v3-packages') ?? '{}') ?? {};
+
+      // migration v2 to v3
+      const v2Data = JSON.parse(localStorage.getItem('packages') ?? '{}') ?? {};
+      if (Object.keys(v2Data).length !== 0) {
+        tmpAddedPackges['_notify/update-v3'] = {
+          id: '_notify/update-v3',
+          developer: 'apm-web',
+          name: '【お知らせ】apm-webの更新',
+          overview:
+            'パッケージデータの形式が変わりました。これまでのデータは下の説明欄にあります。お手数ですが必要な場合は再度入力をお願いします。',
+          downloadURLs: [],
+          description: JSON.stringify(Object.values(v2Data), null, '  '),
+        };
+
+        localStorage.setItem('v3-packages', JSON.stringify(tmpAddedPackges));
+        localStorage.removeItem('packages');
+      }
+      // end migration
+
+      setAddedPackages(tmpAddedPackges);
     }
-    fetchXML();
+    fetchJson();
   }, []);
 
   const surveyComplete = useCallback(
@@ -46,14 +76,14 @@ function App() {
       newPackages[json.id] = json;
       setAddedPackages(newPackages);
       setPackageItem(json);
-      localStorage.setItem('packages', JSON.stringify(newPackages));
+      localStorage.setItem('v3-packages', JSON.stringify(newPackages));
     },
     [addedPackages]
   );
 
   function submit() {
     const formsUrl = makeFormsUrl({
-      data: PackagesList.write(Object.values(addedPackages)),
+      data: JSON.stringify(Object.values(addedPackages), null, '  '),
     });
 
     if (formsUrl.length < 8000) {
@@ -79,14 +109,18 @@ function App() {
       const newPackages = { ...addedPackages };
       delete newPackages[id];
       setAddedPackages(newPackages);
-      localStorage.setItem('packages', JSON.stringify(newPackages));
+      localStorage.setItem('v3-packages', JSON.stringify(newPackages));
     }
 
     return (
       <div
         className={
           'list-group-item list-group-item-action position-relative' +
-          (p.id === packageItem?.id ? ' active' : '') +
+          (packageItem &&
+          Object.hasOwn(packageItem, 'id') &&
+          p.id === (packageItem as { id: string }).id
+            ? ' active'
+            : '') +
           (ps.filter((pp) => pp.id === p.id).length > 0 ? '' : ' d-none')
         }
         key={p.id}
@@ -140,7 +174,11 @@ function App() {
                   <textarea
                     className="form-control"
                     id="message-text"
-                    value={PackagesList.write(Object.values(addedPackages))}
+                    value={JSON.stringify(
+                      Object.values(addedPackages),
+                      null,
+                      '  '
+                    )}
                     rows={6}
                     readOnly
                   ></textarea>
