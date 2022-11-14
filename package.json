@@ -45,7 +45,7 @@
     "react-scripts": "5.0.1",
     "sortablejs": "^1.15.0",
     "survey-react": "^1.9.57",
-    "typescript": "^4.7.4",
+    "typescript": "^4.8.4",
     "web-vitals": "^3.0.4"
   },
   "devDependencies": {
