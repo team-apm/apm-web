@@ -29,7 +29,9 @@ span.sv_q_required_text {
 .sv_main,
 .sv_main .sv_custom_header,
 .sv_main
-  input:not([type='button']):not([type='reset']):not([type='submit']):not([type='image']):not([type='checkbox']):not([type='radio']),
+  input:not([type='button']):not([type='reset']):not([type='submit']):not(
+    [type='image']
+  ):not([type='checkbox']):not([type='radio']),
 .sv_main textarea {
   background-color: transparent !important ;
 }
