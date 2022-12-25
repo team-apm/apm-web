@@ -68,7 +68,7 @@ const SurveyComponent = memo(
             (r) => r.version !== packageItem.latestVersion
           );
           packageItem.releases.push({
-            ...release,
+            ...release.integrity,
             version: packageItem.latestVersion,
           });
         }
@@ -85,10 +85,10 @@ const SurveyComponent = memo(
           <div>
             <p>
               「パッケージの最新バージョン」に指定したバージョンのzipファイル（またはファイル）を
-              {survey?.data?.downloadURL && (
+              {survey?.data?.downloadURLs?.trim().split(/\n/)[0] && (
                 <a
                   className=""
-                  href={survey.data.downloadURL}
+                  href={survey.data.downloadURLs.trim().split(/\n/)[0]}
                   target="_blank"
                   rel="noreferrer"
                 >
