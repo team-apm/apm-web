@@ -20,10 +20,11 @@
     "fix": "run-s fix:prettier fix:eslint",
     "fix:prettier": "prettier --write .",
     "fix:eslint": "eslint --fix .",
-    "prepare": "husky install",
-    "predeploy": "run-s build",
-    "deploy": "gh-pages -d build",
-    "prepare:libarchive": "cpx ./node_modules/libarchive.js/dist/** ./public/dist/"
+    "prepare": "run-s prepare:husky prepare:libarchive",
+    "prepare:husky": "husky install",
+    "prepare:libarchive": "cpx \"./node_modules/libarchive.js/dist/**\" ./public/dist/",
+    "deploy": "run-s build deploy:gh-pages",
+    "deploy:gh-pages": "gh-pages -d build"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.6",

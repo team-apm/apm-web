@@ -20,7 +20,6 @@ AviUtl Package Manager (apm) のパッケージデータを編集するための
 git clone https://github.com/team-apm/apm-web.git
 cd apm-web
 yarn
-yarn prepare:libarchive # Copying WASM
 yarn start
 ```
 
