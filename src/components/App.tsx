@@ -29,6 +29,8 @@ function App() {
     [name: string]: Packages['packages'][number];
   }>({});
   const [searchString, setSearchString] = useState('');
+  const [loadModalString, setLoadModalString] = useState<string>('');
+  const [loadModalStringIsValid, setLoadModalStringIsValid] = useState(false);
 
   useEffect(() => {
     async function fetchJson() {
@@ -80,6 +82,29 @@ function App() {
     },
     [addedPackages]
   );
+
+  function loadModalStringChange(strJson: string) {
+    try {
+      const _json = JSON.parse(strJson);
+      const json = Array.isArray(_json) ? _json : [_json];
+      setLoadModalStringIsValid(json.some((p) => Object.hasOwn(p, 'id')));
+    } catch {
+      setLoadModalStringIsValid(false);
+    }
+    setLoadModalString(strJson);
+  }
+
+  const loadModalComplete = (strJson: string) => {
+    const _json = JSON.parse(strJson);
+    const json = Array.isArray(_json) ? _json : [_json];
+    const newPackages = { ...addedPackages };
+
+    json
+      .filter((p) => Object.hasOwn(p, 'id'))
+      .map((p) => (newPackages[p.id] = p));
+    setAddedPackages(newPackages);
+    localStorage.setItem('v3-packages', JSON.stringify(newPackages));
+  };
 
   function submit() {
     const formsUrl = makeFormsUrl({
@@ -204,6 +229,70 @@ function App() {
           </div>
         </div>
       </div>
+      <div
+        className="modal fade"
+        id="loadModal"
+        tabIndex={-1}
+        aria-labelledby="loadModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-lg modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="loadModalLabel">
+                <i className="bi bi-send me-2"></i>パッケージデータの読み込み
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <form>
+                <div className="mb-3">
+                  <label htmlFor="loadModalText" className="col-form-label">
+                    パッケージデータを以下の欄にコピーアンドペーストしてください。
+                  </label>
+                  <textarea
+                    className={
+                      'form-control' +
+                      (loadModalStringIsValid ? '' : ' is-invalid')
+                    }
+                    id="loadModalText"
+                    value={loadModalString}
+                    onChange={(e) => loadModalStringChange(e.target.value)}
+                    rows={6}
+                    placeholder={
+                      '例：\r\n' +
+                      JSON.stringify([packages['aoytsk/easymp4']], null, '  ')
+                    }
+                  ></textarea>
+                </div>
+              </form>
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                閉じる
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary"
+                data-bs-dismiss="modal"
+                disabled={!loadModalStringIsValid}
+                onClick={() => loadModalComplete(loadModalString)}
+              >
+                読み込む
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="d-flex flex-column h-100">
         <nav className="navbar navbar-expand-lg navbar-light">
           <div className="container-fluid">
@@ -235,7 +324,21 @@ function App() {
                 <li className="nav-item me-3">
                   <span className="nav-link" onClick={() => setPackageItem({})}>
                     <i className="bi bi-plus-square me-2"></i>
-                    パッケージの追加
+                    パッケージを作る
+                  </span>
+                </li>
+                <li className="nav-item me-3">
+                  <span
+                    className="nav-link"
+                    onClick={() => {
+                      loadModalStringChange('');
+                      Modal.getOrCreateInstance(
+                        document.querySelector('#loadModal')!
+                      ).show();
+                    }}
+                  >
+                    <i className="bi bi-filetype-json me-2"></i>
+                    パッケージを読み込む
                   </span>
                 </li>
                 <li className="nav-item me-3">
