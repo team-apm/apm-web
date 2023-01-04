@@ -58,7 +58,7 @@
     "cpx": "^1.5.0",
     "eslint": "^8.31.0",
     "eslint-config-google": "^0.14.0",
-    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-prettier": "^8.6.0",
     "gh-pages": "^4.0.0",
     "husky": "^8.0.2",
     "lint-staged": "^13.1.0",
