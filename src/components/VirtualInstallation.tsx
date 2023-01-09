@@ -133,7 +133,7 @@ const VirtualInstallation = memo(
           return { name: n, sri: null, folder: true };
         });
       const dirEntries = filesWirhSri.concat(folders);
-      type DirEntry = typeof dirEntries[number];
+      type DirEntry = (typeof dirEntries)[number];
 
       const getEntries = (
         sortable: Sortable | undefined,
