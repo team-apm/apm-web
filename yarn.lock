@@ -7998,10 +7998,10 @@ preserve@^0.2.0:
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
   integrity sha512-s/46sYeylUfHNjI+sA/78FAHlmIuKqI9wNnzEOGehAlUUYeObv5C2mOinXBjyUyWmJ2SfcS2/ydApH4hTF4WXQ==
 
-prettier-plugin-md-nocjsp@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/prettier-plugin-md-nocjsp/-/prettier-plugin-md-nocjsp-1.5.0.tgz#8f2b4b0751a36e44c0b906db0a12cb5825f0ca10"
-  integrity sha512-rrGFV1cOSz9P0cM1GeD0LYEJ92ptq2qlTngTRS+k22CFRgh+06HHfKy0uhb38Xtr6yLiFwXFCoXrlhS483bqqg==
+prettier-plugin-md-nocjsp@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-md-nocjsp/-/prettier-plugin-md-nocjsp-1.5.1.tgz#7400f4ac7575d1a1810f0ccf3ef9a19d1b972a0f"
+  integrity sha512-qJyt8otPPNetQEcsZEaS4BGSgGfrhX9CfvcUUauvHewaMMZDxWDU8GB1VkWHwhLZ4W9nDTfWxGPBce8Ot4Jaxg==
 
 prettier@^2.8.3:
   version "2.8.3"
