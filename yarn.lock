@@ -9324,10 +9324,10 @@ supports-preserve-symlinks-flag@^1.0.0:
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
-survey-react@^1.9.69:
-  version "1.9.69"
-  resolved "https://registry.yarnpkg.com/survey-react/-/survey-react-1.9.69.tgz#f60ded03d1dd8bc8ee3d40db9a838a1909cb7123"
-  integrity sha512-JV0qVfKWQiWnAidhK4VoSGOHwxJPBvx+4M1A8FNaEPx4TlqcVb88c6n9N8Rbl1fqagQsLNdh1Y6cJyRjsGWwHA==
+survey-react@^1.9.70:
+  version "1.9.70"
+  resolved "https://registry.yarnpkg.com/survey-react/-/survey-react-1.9.70.tgz#958b3500094b0a4140ea2ea65fa75ffb44005027"
+  integrity sha512-JFscdwCaLH2S8wFiWZzusbPWuAl6JD9TUWO5cUB5OEyiPE5Qo7se0DqTPAtGWt/5Ou25aldPR45mNp9s9VbeyA==
 
 svg-parser@^2.0.2:
   version "2.0.4"
