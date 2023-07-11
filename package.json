@@ -46,7 +46,7 @@
     "sortablejs": "^1.15.0",
     "survey-react": "^1.9.96",
     "typescript": "^5.1.6",
-    "web-vitals": "^3.3.2"
+    "web-vitals": "^3.4.0"
   },
   "devDependencies": {
     "@types/bootstrap": "^5.2.6",
