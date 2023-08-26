@@ -36,14 +36,16 @@ function App() {
     async function fetchJson() {
       const text = await (
         await fetch(
-          'https://cdn.jsdelivr.net/gh/team-apm/apm-data@main/v3/packages.json'
+          'https://cdn.jsdelivr.net/gh/team-apm/apm-data@main/v3/packages.json',
         )
       ).text();
       setPackages(
         Object.assign(
           {},
-          ...(JSON.parse(text) as Packages).packages.map((x) => ({ [x.id]: x }))
-        )
+          ...(JSON.parse(text) as Packages).packages.map((x) => ({
+            [x.id]: x,
+          })),
+        ),
       );
 
       const tmpAddedPackges =
@@ -80,7 +82,7 @@ function App() {
       setPackageItem(json);
       localStorage.setItem('v3-packages', JSON.stringify(newPackages));
     },
-    [addedPackages]
+    [addedPackages],
   );
 
   function loadModalStringChange(strJson: string) {
@@ -202,7 +204,7 @@ function App() {
                     value={JSON.stringify(
                       Object.values(addedPackages),
                       null,
-                      '  '
+                      '  ',
                     )}
                     rows={6}
                     readOnly
@@ -333,7 +335,7 @@ function App() {
                     onClick={() => {
                       loadModalStringChange('');
                       Modal.getOrCreateInstance(
-                        document.querySelector('#loadModal')!
+                        document.querySelector('#loadModal')!,
                       ).show();
                     }}
                   >
@@ -385,12 +387,12 @@ function App() {
                   {Object.values(addedPackages)
                     .filter(
                       (p) =>
-                        !Object.prototype.hasOwnProperty.call(packages, p.id)
+                        !Object.prototype.hasOwnProperty.call(packages, p.id),
                     )
                     .map((p) => createItem(p, 'new'))}
                   {Object.values(addedPackages)
                     .filter((p) =>
-                      Object.prototype.hasOwnProperty.call(packages, p.id)
+                      Object.prototype.hasOwnProperty.call(packages, p.id),
                     )
                     .map((p) => createItem(p, 'edit'))}
                   {Object.values(packages)
@@ -398,8 +400,8 @@ function App() {
                       (p) =>
                         !Object.prototype.hasOwnProperty.call(
                           addedPackages,
-                          p.id
-                        )
+                          p.id,
+                        ),
                     )
                     .map((p) => createItem(p))}
                 </div>

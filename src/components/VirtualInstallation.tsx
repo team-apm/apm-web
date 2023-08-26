@@ -36,7 +36,7 @@ const VirtualInstallation = memo(
         archivePath: string | undefined;
         isDirectory: boolean | undefined;
       }[],
-      integrities: { hash: string | null; target: string }[]
+      integrities: { hash: string | null; target: string }[],
     ) => void;
   }) => {
     const listDownload = useRef<HTMLDivElement>(null);
@@ -89,7 +89,7 @@ const VirtualInstallation = memo(
               emptyInsertThreshold: 16,
             }),
           };
-        })
+        }),
       );
 
       const filesWirhSri = Object.entries(props.files).map(([k, v]) => {
@@ -137,14 +137,14 @@ const VirtualInstallation = memo(
 
       const getEntries = (
         sortable: Sortable | undefined,
-        currentDir: string
+        currentDir: string,
       ): { id: string; archivePath: string; targetPath: string }[] =>
         !sortable
           ? []
           : sortable.toArray().flatMap((i) => {
               const fullPath = path.join(currentDir, path.basename(i));
               const childSortable = sortables.find(
-                (s) => s.id === path.basename(i)
+                (s) => s.id === path.basename(i),
               );
               if (childSortable) {
                 return getEntries(childSortable.sortable, fullPath);
@@ -239,7 +239,7 @@ const VirtualInstallation = memo(
           invertSwap: true,
           invertedSwapThreshold: 0.6,
           emptyInsertThreshold: 16,
-        })
+        }),
       );
     }, [setRootSortable]);
 
@@ -276,8 +276,8 @@ const VirtualInstallation = memo(
                 emptyInsertThreshold: 16,
               }),
             };
-          })
-        )
+          }),
+        ),
       );
     };
 
@@ -320,7 +320,7 @@ const VirtualInstallation = memo(
         </div>
       </div>
     );
-  }
+  },
 );
 
 export default VirtualInstallation;
