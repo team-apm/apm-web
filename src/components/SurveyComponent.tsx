@@ -24,8 +24,9 @@ const SurveyComponent = memo(
       if (Object.keys(props.packageItem).length === 0) {
         survey.data = {};
       } else {
-        const preData = JSON.parse(JSON.stringify(props.packageItem)) as
-          | Packages['packages'][number];
+        const preData = JSON.parse(
+          JSON.stringify(props.packageItem),
+        ) as Packages['packages'][number];
 
         // convert
         survey.data = {
@@ -65,7 +66,7 @@ const SurveyComponent = memo(
         if (packageItem?.latestVersion) {
           if (!packageItem?.releases) packageItem.releases = [];
           packageItem.releases = packageItem.releases.filter(
-            (r) => r.version !== packageItem.latestVersion
+            (r) => r.version !== packageItem.latestVersion,
           );
           packageItem.releases.push({
             ...release.integrity,
@@ -74,7 +75,7 @@ const SurveyComponent = memo(
         }
         survey!.data = packageItem;
       },
-      [survey]
+      [survey],
     );
 
     return (
@@ -102,6 +103,6 @@ const SurveyComponent = memo(
         </div>
       </div>
     );
-  }
+  },
 );
 export default SurveyComponent;

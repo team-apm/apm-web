@@ -32,7 +32,7 @@ function ArchiveComponent(props: {
         archive: string;
         file: { hash: string | null; target: string }[];
       };
-    }
+    },
   ) => void;
 }) {
   const [sri, setSri] = useState({});
@@ -100,11 +100,10 @@ function ArchiveComponent(props: {
                 for (const file of await archive.getFilesArray()) {
                   const compressedFile = file.file as CompressedFile;
                   const buffer = await arrayBufferFromFile(
-                    await compressedFile.extract()
+                    await compressedFile.extract(),
                   );
-                  files[compressedFile._path] = await getSriFromArrayBuffer(
-                    buffer
-                  );
+                  files[compressedFile._path] =
+                    await getSriFromArrayBuffer(buffer);
                 }
               } catch (e) {
                 console.log('SRI calculations are not performed.');
@@ -123,7 +122,7 @@ function ArchiveComponent(props: {
       }
       onDropAsync(acceptedFiles);
     },
-    [setSri]
+    [setSri],
   );
 
   const setData = useCallback(
@@ -135,7 +134,7 @@ function ArchiveComponent(props: {
         },
       });
     },
-    [archiveSri, props]
+    [archiveSri, props],
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
