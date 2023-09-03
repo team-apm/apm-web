@@ -1,3 +1,10 @@
+'use client';
+
+import 'bootstrap-dark-5/dist/css/bootstrap-dark.min.css';
+import './main.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { Packages } from 'apm-schema';
 import './App.css';
