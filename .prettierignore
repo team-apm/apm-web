@@ -1,4 +1,0 @@
-.github/*.md
-.github/**/*.md
-/public/dist
-/build
