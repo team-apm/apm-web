@@ -1754,10 +1754,10 @@
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
 
-"@types/libarchive.js@^1.3.1":
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/@types/libarchive.js/-/libarchive.js-1.3.1.tgz#843aeaad7bb9dd8a9e4a11aba616dda6c97d0b84"
-  integrity sha512-ddCRDAyVftfnbNvEe77FrOSWMYoFI85xJKITQ5AnvfR330KmEHS48KOmhEncpZadxefh64TO6jk6g2oabxWupg==
+"@types/libarchive.js@^1.3.2":
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/@types/libarchive.js/-/libarchive.js-1.3.2.tgz#82c8f53187691036bd9af23807bea2bd9cf21c13"
+  integrity sha512-iS4dNPg8MrUzb3HbqAGPaSxGL9l71RDFkyBaQfJ1f5850f2Rzmy4SMNBk0N3pKiE6l/2dT+QYLHJsSToGCJMnA==
 
 "@types/mime@^1":
   version "1.3.2"
