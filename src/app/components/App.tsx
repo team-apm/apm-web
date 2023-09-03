@@ -311,7 +311,6 @@ function App() {
               target="_blank"
               rel="noreferrer"
             >
-              <img src="../icon/apm32.png" alt="" className="d-inline-block" />
               <span className="align-middle">apm-web</span>
             </a>
             <button
