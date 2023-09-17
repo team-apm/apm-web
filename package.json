@@ -10,16 +10,16 @@
   "license": "MIT",
   "author": "Mitosagi",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "lint": "run-s lint:prettier lint:eslint",
-    "lint:prettier": "prettier --check .",
-    "lint:eslint": "eslint --fix-dry-run .",
-    "fix": "run-s fix:prettier fix:eslint",
-    "fix:prettier": "prettier --write .",
-    "fix:eslint": "eslint --fix .",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "run-s lint:prettier lint:next",
+    "lint:prettier": "prettier --check --ignore-path .gitignore .",
+    "lint:next": "next lint --dir src",
+    "fix": "run-s fix:prettier fix:next",
+    "fix:prettier": "prettier --write --ignore-path .gitignore .",
+    "fix:next": "next lint --fix --dir src",
+    "telemetry-disable": "yarn run next telemetry disable",
     "prepare": "run-s prepare:husky prepare:libarchive",
     "prepare:husky": "husky install",
     "prepare:libarchive": "cpx \"./node_modules/libarchive.js/dist/**\" ./public/dist/",
@@ -28,9 +28,6 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
-    "@testing-library/jest-dom": "^6.1.3",
-    "@testing-library/react": "^14.0.0",
-    "@testing-library/user-event": "^14.5.0",
     "bootstrap": "^5.3.2",
     "bootstrap-dark-5": "^1.1.3",
     "bootstrap-icons": "^1.11.0",
@@ -38,26 +35,29 @@
     "fuse.js": "^6.6.2",
     "jszip": "^3.10.1",
     "libarchive.js": "^1.3.0",
+    "next": "^13.4.19",
     "path-browserify": "^1.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
-    "react-scripts": "5.0.1",
     "sortablejs": "^1.15.0",
     "survey-react": "^1.9.107",
-    "typescript": "^5.1.6",
-    "web-vitals": "^3.4.0"
+    "typescript": "^5.2.2"
   },
   "devDependencies": {
     "@types/bootstrap": "^5.2.6",
     "@types/encoding-japanese": "^2.0.1",
     "@types/libarchive.js": "^1.3.2",
+    "@types/node": "^20.5.9",
     "@types/path-browserify": "^1.0.0",
+    "@types/react": "^18.2.21",
+    "@types/react-dom": "^18.2.7",
     "@types/sortablejs": "^1.15.2",
     "apm-schema": "team-apm/apm-schema#v3.2.1",
     "cpx": "^1.5.0",
     "eslint": "^8.49.0",
     "eslint-config-google": "^0.14.0",
+    "eslint-config-next": "^13.4.19",
     "eslint-config-prettier": "^9.0.0",
     "gh-pages": "^6.0.0",
     "husky": "^8.0.3",
@@ -65,24 +65,5 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^3.0.3"
   },
-  "private": true,
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "prettier --write",
-      "eslint --fix"
-    ],
-    "*.{json,html,css,md,xml,xsd}": "prettier --write"
-  }
+  "private": true
 }

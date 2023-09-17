@@ -8,15 +8,11 @@
     "ecmaVersion": 2022,
     "sourceType": "module"
   },
-  "extends": [
-    "react-app",
-    "react-app/jest",
-    "eslint:recommended",
-    "google",
-    "prettier"
-  ],
+  "extends": ["next/core-web-vitals", "google", "prettier"],
   "rules": {
     "prefer-arrow-callback": "error",
-    "require-jsdoc": "off"
+    "require-jsdoc": "off",
+    "new-cap": ["error", { "capIsNew": false }],
+    "react/display-name": "off"
   }
 }
