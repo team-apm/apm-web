@@ -6,7 +6,6 @@
     "aviutl",
     "aviutl-package-manager"
   ],
-  "homepage": "https://team-apm.github.io/apm-web",
   "license": "MIT",
   "author": "Mitosagi",
   "scripts": {
