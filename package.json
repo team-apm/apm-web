@@ -24,7 +24,7 @@
     "prepare:husky": "husky install",
     "prepare:libarchive": "cpx \"./node_modules/libarchive.js/dist/**\" ./public/dist/",
     "deploy": "run-s build deploy:gh-pages",
-    "deploy:gh-pages": "gh-pages -d build"
+    "deploy:gh-pages": "gh-pages -d out"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
