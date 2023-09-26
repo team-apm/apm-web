@@ -167,10 +167,10 @@
   dependencies:
     "@popperjs/core" "^2.9.2"
 
-"@types/encoding-japanese@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@types/encoding-japanese/-/encoding-japanese-2.0.1.tgz#e8d4aa894e99aa195ce7dc792c54a6c61d019f8a"
-  integrity sha512-JaCXs2HLniKY8xXeWlg8MAtd4iKhNh8LwutW3yDMWY4usEdTZ2va1x9kd8V3179OAIUTgGQVA63XJrHettpVFQ==
+"@types/encoding-japanese@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@types/encoding-japanese/-/encoding-japanese-2.0.2.tgz#d6cd6fe2460fa067fd018ce76837201f55c40b80"
+  integrity sha512-ErppTpveRHaHa7WIYZrHMZaaOJvy3u1ZiRTNTmx6h40mnnqa99s62XSUgzN50mQ3Ifea2MrliKHQC5ThJxjCVQ==
 
 "@types/json5@^0.0.29":
   version "0.0.29"
