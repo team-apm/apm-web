@@ -218,10 +218,10 @@
   resolved "https://registry.yarnpkg.com/@types/scheduler/-/scheduler-0.16.3.tgz#cef09e3ec9af1d63d2a6cc5b383a737e24e6dcf5"
   integrity sha512-5cJ8CB4yAx7BH1oMvdU0Jh9lrEXyPkar6F9G/ERswkCuvP4KQZfZkSjcMbAICCpQTN4OuZn8tz0HiKv9TGZgrQ==
 
-"@types/sortablejs@^1.15.2":
-  version "1.15.2"
-  resolved "https://registry.yarnpkg.com/@types/sortablejs/-/sortablejs-1.15.2.tgz#d51e5ecac00a9782aa256c1401309ce1c4031ba2"
-  integrity sha512-mOIv/EnPMzAZAVbuh9uGjOZ1BBdimP9Y6IPGntsvQJtko5yapSDKB7GwB3AOlF5N3bkpk4sBwQRpS3aEkiUbaA==
+"@types/sortablejs@^1.15.3":
+  version "1.15.3"
+  resolved "https://registry.yarnpkg.com/@types/sortablejs/-/sortablejs-1.15.3.tgz#b9c0e2740100ae94919c9f138a38600c8f8124ea"
+  integrity sha512-v+zh6TZP/cLeMUK0MDx1onp8e7Jk2/4iTQ7sb/n80rTAvBm14yJkpOEfJdrTCkHiF7IZbPjxGX2NRJfogRoYIg==
 
 "@typescript-eslint/parser@^5.4.2 || ^6.0.0":
   version "6.5.0"
