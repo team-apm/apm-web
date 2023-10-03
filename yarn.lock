@@ -182,10 +182,10 @@
   resolved "https://registry.yarnpkg.com/@types/libarchive.js/-/libarchive.js-1.3.2.tgz#82c8f53187691036bd9af23807bea2bd9cf21c13"
   integrity sha512-iS4dNPg8MrUzb3HbqAGPaSxGL9l71RDFkyBaQfJ1f5850f2Rzmy4SMNBk0N3pKiE6l/2dT+QYLHJsSToGCJMnA==
 
-"@types/node@^20.8.0":
-  version "20.8.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.8.0.tgz#10ddf0119cf20028781c06d7115562934e53f745"
-  integrity sha512-LzcWltT83s1bthcvjBmiBvGJiiUe84NWRHkw+ZV6Fr41z2FbIzvc815dk2nQ3RAKMuN2fkenM/z3Xv2QzEpYxQ==
+"@types/node@^20.8.2":
+  version "20.8.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.8.2.tgz#d76fb80d87d0d8abfe334fc6d292e83e5524efc4"
+  integrity sha512-Vvycsc9FQdwhxE3y3DzeIxuEJbWGDsnrxvMADzTDF/lcdR9/K+AQIeAghTQsHtotg/q0j3WEOYS/jQgSdWue3w==
 
 "@types/path-browserify@^1.0.0":
   version "1.0.0"
