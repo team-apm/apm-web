@@ -100,9 +100,9 @@ const VirtualInstallation = memo(
       ]
         .filter((n) => n !== '.')
         .map((n) => {
-          return { name: n, sri: null, folder: true };
+          return { name: n, sri: null as string | null, folder: true };
         });
-      const dirEntries = filesWirhSri.concat(folders);
+      const dirEntries = folders.concat(filesWirhSri);
 
       dirEntries.forEach((f) => {
         const entry = document.createElement('div');
@@ -292,7 +292,7 @@ const VirtualInstallation = memo(
           </div>
         </div>
         <div className="col">
-          <div className="card">
+          <div className="card sticky-top vmh-90 overflow-y-auto">
             <div className="card-body">
               Aviutl
               <div

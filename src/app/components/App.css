@@ -13,6 +13,10 @@ body,
   border: 2px dashed var(--bs-secondary);
 }
 
+.vmh-90 {
+  max-height: 90vh !important;
+}
+
 /* SurveyJS */
 .sv_main .sv_container {
   color: inherit !important;
