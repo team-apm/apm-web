@@ -1,6 +1,6 @@
 'use client';
 
-import 'bootstrap-dark-5/dist/css/bootstrap-dark.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './main.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap-icons/font/bootstrap-icons.css';
