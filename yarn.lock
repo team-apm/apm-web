@@ -189,10 +189,10 @@
   dependencies:
     undici-types "~5.25.1"
 
-"@types/path-browserify@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@types/path-browserify/-/path-browserify-1.0.0.tgz#294ec6e88b6b0d340a3897b7120e5b393f16690e"
-  integrity sha512-XMCcyhSvxcch8b7rZAtFAaierBYdeHXVvg2iYnxOV0MCQHmPuRRmGZPFDRzPayxcGiiSL1Te9UIO+f3cuj0tfw==
+"@types/path-browserify@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@types/path-browserify/-/path-browserify-1.0.1.tgz#629c2cfece3fa6f72002e8b1e2592457fe6fc35b"
+  integrity sha512-rUSqIy7fAfK6sRasdFCukWO4S77pXcTxViURlLdo1VKuekTDS8ASMdX1LA0TFlbzT3fZgFlgQTCrqmJBuTHpxA==
 
 "@types/prop-types@*":
   version "15.7.5"
