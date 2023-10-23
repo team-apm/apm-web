@@ -53,7 +53,7 @@
     "@types/sortablejs": "^1.15.4",
     "apm-schema": "team-apm/apm-schema#v3.2.1",
     "cpx": "^1.5.0",
-    "eslint": "^8.51.0",
+    "eslint": "^8.52.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-next": "^13.5.6",
     "eslint-config-prettier": "^9.0.0",
