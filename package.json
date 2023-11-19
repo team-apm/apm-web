@@ -48,7 +48,7 @@
     "@types/libarchive.js": "^1.3.3",
     "@types/node": "^20.8.9",
     "@types/path-browserify": "^1.0.1",
-    "@types/react": "^18.2.33",
+    "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.14",
     "@types/sortablejs": "^1.15.4",
     "apm-schema": "team-apm/apm-schema#v3.2.1",
