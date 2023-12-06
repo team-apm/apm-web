@@ -177,10 +177,10 @@
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==
 
-"@types/libarchive.js@^1.3.3":
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/@types/libarchive.js/-/libarchive.js-1.3.3.tgz#23f509b945fd3eda25a2b169053383ef6525cfa0"
-  integrity sha512-OuDFN/joM3ihKYHoGrRyVkB6KjI+2p0WTp+tfgbWB+tctvTVdTXVN+Dc2gnA6ZnwZrxyF9wNf5LiR198IW3rWA==
+"@types/libarchive.js@^1.3.4":
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/@types/libarchive.js/-/libarchive.js-1.3.4.tgz#54bae138f3c223b4ebb5a77ecb22f71cc14465a2"
+  integrity sha512-NivcQAJU1mcnnZjfxcx0WMJ++u5BmiDFEfhx5/JM9wojDq3nnW+7T+4onmx0BUxh+3F28aOvUCF/VyUFhSPGLQ==
 
 "@types/node@^20.9.2":
   version "20.9.2"
