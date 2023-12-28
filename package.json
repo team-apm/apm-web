@@ -28,7 +28,7 @@
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.2",
-    "bootstrap-icons": "^1.11.1",
+    "bootstrap-icons": "^1.11.2",
     "encoding-japanese": "^2.0.0",
     "fuse.js": "^7.0.0",
     "jszip": "^3.10.1",
