@@ -2429,10 +2429,10 @@ levn@^0.4.1:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
 
-libarchive.js@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/libarchive.js/-/libarchive.js-2.0.0.tgz#24c709183cc741b160cb2c643714828ff7416c9c"
-  integrity sha512-agiHQQ8TRBqzdn0e73eFBAh/eCOGReNxzSVHjFYudH1DLahDjmD951iPQ34qxwTmSYLdZGp9KnCUAgSSQfP5tw==
+libarchive.js@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/libarchive.js/-/libarchive.js-2.0.1.tgz#43294440ee5c5f3473e5632da1f271ab16295b40"
+  integrity sha512-hII3b7MRFBiIJ+pJ1sqnLDyg6o5aqAwP8zOxldY7dDGgLR1T6rx5llf5Q8CjMKKkt8GDmH7W7C3lyDexNipIug==
   dependencies:
     comlink "^4.4.1"
 
