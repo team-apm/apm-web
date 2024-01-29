@@ -32,7 +32,7 @@
     "encoding-japanese": "^2.0.0",
     "fuse.js": "^7.0.0",
     "jszip": "^3.10.1",
-    "libarchive.js": "^2.0.0",
+    "libarchive.js": "^2.0.2",
     "next": "^14.1.0",
     "path-browserify": "^1.0.1",
     "react": "^18.2.0",
