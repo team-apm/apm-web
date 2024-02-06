@@ -20,7 +20,7 @@
     "fix:next": "next lint --fix --dir src",
     "telemetry-disable": "yarn run next telemetry disable",
     "prepare": "run-s prepare:husky prepare:libarchive",
-    "prepare:husky": "husky install",
+    "prepare:husky": "husky",
     "prepare:libarchive": "cpx \"./node_modules/libarchive.js/dist/**\" ./public/dist/",
     "deploy": "run-s build deploy:gh-pages",
     "deploy:gh-pages": "gh-pages -d out"
