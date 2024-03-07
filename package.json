@@ -40,7 +40,7 @@
     "react-dropzone": "^14.2.3",
     "sortablejs": "^1.15.2",
     "survey-react": "^1.9.132",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.2"
   },
   "devDependencies": {
     "@types/bootstrap": "^5.2.10",
