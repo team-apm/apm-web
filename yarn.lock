@@ -3753,10 +3753,10 @@ supports-preserve-symlinks-flag@^1.0.0:
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
-survey-react@^1.9.135:
-  version "1.9.135"
-  resolved "https://registry.yarnpkg.com/survey-react/-/survey-react-1.9.135.tgz#4740a2df24d88c9cea97725cf621539a9834e2b4"
-  integrity sha512-kqdrk/j+VKkxR+zWfNaBK85ft2PwRjTr4xumbK+PSJV/nskTRdZN9VPXmRmdA74GkLhSQ7lgYNDrxTBbU/R3VA==
+survey-react@^1.9.136:
+  version "1.9.136"
+  resolved "https://registry.yarnpkg.com/survey-react/-/survey-react-1.9.136.tgz#ec5c64177d99b707abc48961d4a1022a488f98d6"
+  integrity sha512-fa1UuJ8fMphRpdn56R+vSCpWyzDX3NOslveIe+Ddx/ui6FyOKJYk3wEeChV1Q0Y9DiGhtLSOnetPQhsfTdBx+g==
 
 tapable@^2.2.0:
   version "2.2.1"
