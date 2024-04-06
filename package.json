@@ -39,7 +39,7 @@
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "sortablejs": "^1.15.2",
-    "survey-react": "^1.9.136",
+    "survey-react": "^1.9.137",
     "typescript": "^5.4.3"
   },
   "devDependencies": {
