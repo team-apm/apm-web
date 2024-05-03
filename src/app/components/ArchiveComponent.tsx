@@ -3,8 +3,7 @@ import { useDropzone } from 'react-dropzone';
 import JSZip from 'jszip';
 import VirtualInstallation from './VirtualInstallation';
 import Encoding from 'encoding-japanese';
-import { Archive } from 'libarchive.js/main.js';
-import { CompressedFile } from 'libarchive.js/src/compressed-file';
+import { Archive } from 'libarchive.js';
 
 const splitUrl = window.location.href.split('/');
 const workerBaseUrl =
@@ -93,17 +92,15 @@ function ArchiveComponent(props: {
               // L-SMASH_Works_r940_plugins can't be extracted, but the file list can be read.
               // Therefore, loading is done in two steps.
               for (const file of await archive.getFilesArray()) {
-                const compressedFile = file.file as CompressedFile;
-                files[compressedFile._path] = '';
+                files[file.path] = '';
               }
               try {
                 for (const file of await archive.getFilesArray()) {
-                  const compressedFile = file.file as CompressedFile;
+                  const compressedFile = file.file;
                   const buffer = await arrayBufferFromFile(
                     await compressedFile.extract(),
                   );
-                  files[compressedFile._path] =
-                    await getSriFromArrayBuffer(buffer);
+                  files[file.path] = await getSriFromArrayBuffer(buffer);
                 }
               } catch (e) {
                 console.log('SRI calculations are not performed.');
