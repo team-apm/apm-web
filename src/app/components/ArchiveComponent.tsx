@@ -4,7 +4,7 @@ import JSZip from 'jszip';
 import VirtualInstallation from './VirtualInstallation';
 import Encoding from 'encoding-japanese';
 import { Archive } from 'libarchive.js';
-import type { CompressedFile } from 'libarchive.js/src/compressed-file';
+import type { CompressedFile } from 'libarchive.js/dist/build/compiled/compressed-file';
 
 type FileData = { file: CompressedFile; path: string };
 
