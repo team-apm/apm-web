@@ -45,7 +45,7 @@
   "devDependencies": {
     "@types/bootstrap": "^5.2.10",
     "@types/encoding-japanese": "^2.2.1",
-    "@types/node": "^22.8.4",
+    "@types/node": "^22.8.6",
     "@types/path-browserify": "^1.0.3",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
