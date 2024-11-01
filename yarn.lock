@@ -385,9 +385,10 @@ anymatch@^1.3.0:
     micromatch "^2.1.5"
     normalize-path "^2.0.0"
 
-apm-schema@team-apm/apm-schema#v3.2.1:
+apm-schema@team-apm/apm-schema#v3.3.0:
   version "3.2.1"
-  resolved "https://codeload.github.com/team-apm/apm-schema/tar.gz/da25e00299ba69d99e3678ee251d1d58ebfc631c"
+  uid fb121da649acc40cf3cb3ff69b0521840b2c457d
+  resolved "https://codeload.github.com/team-apm/apm-schema/tar.gz/fb121da649acc40cf3cb3ff69b0521840b2c457d"
 
 argparse@^2.0.1:
   version "2.0.1"
