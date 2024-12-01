@@ -33,19 +33,19 @@
     "fuse.js": "^7.0.0",
     "jszip": "^3.10.1",
     "libarchive.js": "^2.0.2",
-    "next": "^14.2.16",
+    "next": "^14.2.18",
     "path-browserify": "^1.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-dropzone": "^14.3.5",
-    "sortablejs": "^1.15.3",
-    "survey-react": "^1.12.9",
-    "typescript": "^5.6.3"
+    "sortablejs": "^1.15.6",
+    "survey-react": "^1.12.12",
+    "typescript": "^5.7.2"
   },
   "devDependencies": {
     "@types/bootstrap": "^5.2.10",
     "@types/encoding-japanese": "^2.2.1",
-    "@types/node": "^22.9.0",
+    "@types/node": "^22.10.1",
     "@types/path-browserify": "^1.0.3",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
@@ -54,13 +54,13 @@
     "cpx": "^1.5.0",
     "eslint": "^8.57.1",
     "eslint-config-google": "^0.14.0",
-    "eslint-config-next": "^14.2.16",
+    "eslint-config-next": "^14.2.18",
     "eslint-config-prettier": "^9.1.0",
     "gh-pages": "^6.2.0",
-    "husky": "^9.1.6",
+    "husky": "^9.1.7",
     "lint-staged": "^15.2.10",
     "npm-run-all": "^4.1.5",
-    "prettier": "^3.3.3"
+    "prettier": "^3.4.1"
   },
   "private": true
 }
