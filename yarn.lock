@@ -4015,10 +4015,10 @@ supports-preserve-symlinks-flag@^1.0.0:
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
-survey-react@^1.12.15:
-  version "1.12.15"
-  resolved "https://registry.yarnpkg.com/survey-react/-/survey-react-1.12.15.tgz#55554bb71e24b5e9a67be66da07ed6f168e90f07"
-  integrity sha512-6cMDvrXzW+tDE3hVNBAjRfF7cpbF68qkCuTzyNB1BObakaaM25T+H2uB86IZ4JEpX3ndO6I56n0P6tQtd8KmcA==
+survey-react@^1.12.16:
+  version "1.12.16"
+  resolved "https://registry.yarnpkg.com/survey-react/-/survey-react-1.12.16.tgz#e697c023f88445cd3326893cd69281829d48b4ae"
+  integrity sha512-IqA/y7NiH76Pn4hcpXrtomiHFRbsmbsXVxCxPaV+74r4L5Lk07NObtT/0ZlIkdNXNaPydHrVAblxaZR13L1Xgg==
 
 synckit@0.9.2:
   version "0.9.2"
