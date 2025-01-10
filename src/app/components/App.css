@@ -1,12 +1,7 @@
 html,
 body,
-#root,
-.bg-light {
+#root {
   height: 100%;
-}
-
-.nav-link {
-  cursor: pointer;
 }
 
 .dropZone {
