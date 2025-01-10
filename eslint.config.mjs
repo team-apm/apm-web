@@ -1,8 +1,10 @@
 import { FlatCompat } from '@eslint/eslintrc';
+import pluginJs from '@eslint/js';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import globals from 'globals';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import tseslint from 'typescript-eslint';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -14,7 +16,9 @@ export default [
   {
     ignores: ['**/node_modules/'],
   },
-  ...compat.extends('next/core-web-vitals'),
+  pluginJs.configs.recommended,
+  ...tseslint.configs.recommended,
+  ...compat.extends('next/core-web-vitals', 'next/typescript'),
   {
     languageOptions: {
       globals: {
