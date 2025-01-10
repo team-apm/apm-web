@@ -1,16 +1,40 @@
 'use client';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './main.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import 'bootstrap-icons/font/bootstrap-icons.css';
-
-import React, { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Packages } from 'apm-schema';
+import Fuse from 'fuse.js';
+import {
+  Badge,
+  Button,
+  Col,
+  Container,
+  Form,
+  FormControl,
+  FormLabel,
+  InputGroup,
+  ListGroup,
+  ListGroupItem,
+  Modal,
+  ModalBody,
+  ModalDialog,
+  ModalFooter,
+  ModalHeader,
+  ModalTitle,
+  Nav,
+  Navbar,
+  NavbarBrand,
+  NavbarCollapse,
+  NavbarToggle,
+  NavLink,
+  Row,
+  Stack,
+} from 'react-bootstrap';
 import './App.css';
 import SurveyComponent from './SurveyComponent';
-import Fuse from 'fuse.js';
-import { Modal } from 'bootstrap';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import './main.css';
 
 type PackageData = Packages['packages'][number];
 
@@ -36,6 +60,14 @@ function App() {
   const [searchString, setSearchString] = useState('');
   const [loadModalString, setLoadModalString] = useState<string>('');
   const [loadModalStringIsValid, setLoadModalStringIsValid] = useState(false);
+
+  const [showSendModal, setShowSendModal] = useState(false);
+  const [showLoadModal, setShowLoadModal] = useState(false);
+
+  const handleCloseSendModal = () => setShowSendModal(false);
+  const handleShowSendModal = () => setShowSendModal(true);
+  const handleCloseLoadModal = () => setShowLoadModal(false);
+  const handleShowLoadModal = () => setShowLoadModal(true);
 
   useEffect(() => {
     async function fetchJson() {
@@ -131,9 +163,7 @@ function App() {
     if (formsUrl.length < 8000) {
       window.open(formsUrl);
     } else {
-      const myModalEl = document.querySelector('#sendModal')!;
-      const modal = Modal.getOrCreateInstance(myModalEl);
-      modal.show();
+      handleShowSendModal();
     }
   }
 
@@ -155,22 +185,29 @@ function App() {
     }
 
     return (
-      <div
-        className={
-          'list-group-item list-group-item-action position-relative' +
-          (packageItem &&
+      <ListGroupItem
+        action
+        active={
+          !!packageItem &&
           Object.hasOwn(packageItem, 'id') &&
-          p.id === (packageItem as { id: string }).id
-            ? ' active'
-            : '') +
+          p.id === packageItem.id
+        }
+        className={
+          'position-relative' +
           (ps.filter((pp) => pp.id === p.id).length > 0 ? '' : ' d-none')
         }
         key={p.id}
         onClick={() => setPackageItem(p)}
       >
-        {badge === 'new' && <span className="badge bg-success me-2">New</span>}
+        {badge === 'new' && (
+          <Badge bg="success" className="me-2">
+            New
+          </Badge>
+        )}
         {badge === 'edit' && (
-          <span className="badge bg-warning me-2">Edit</span>
+          <Badge bg="warning" className="me-2">
+            Edit
+          </Badge>
         )}
         {p?.name ? p.name : p.id}
         {badge && ['new', 'edit'].includes(badge) && (
@@ -181,226 +218,173 @@ function App() {
             ×
           </div>
         )}
-      </div>
+      </ListGroupItem>
     );
   }
 
   return (
-    <div className="bg-light">
-      <div
-        className="modal fade"
-        id="sendModal"
-        tabIndex={-1}
+    <>
+      <Modal
+        show={showSendModal}
+        onHide={handleCloseSendModal}
         aria-labelledby="sendModalLabel"
-        aria-hidden="true"
       >
-        <div className="modal-dialog modal-lg modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="sendModalLabel">
-                <i className="bi bi-send me-2"></i>プレビューと送信
-              </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body">
-              <form>
-                <div className="mb-3">
-                  <label htmlFor="message-text" className="col-form-label">
-                    以下の文字列を送信ページのデータ欄にコピーアンドペーストしてください。
-                  </label>
-                  <textarea
-                    className="form-control"
-                    id="message-text"
-                    value={JSON.stringify(
-                      Object.values(addedPackages),
-                      null,
-                      '  ',
-                    )}
-                    rows={6}
-                    readOnly
-                  ></textarea>
-                </div>
-              </form>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                閉じる
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => window.open(makeFormsUrl({}))}
-              >
-                送信ページを開く
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        className="modal fade"
-        id="loadModal"
-        tabIndex={-1}
+        <ModalDialog size="lg" centered>
+          <ModalHeader closeButton>
+            <ModalTitle id="sendModalLabel">
+              <i className="bi bi-send me-2"></i>プレビューと送信
+            </ModalTitle>
+          </ModalHeader>
+          <ModalBody>
+            <form>
+              <div className="mb-3">
+                <FormLabel column htmlFor="message-text">
+                  以下の文字列を送信ページのデータ欄にコピーアンドペーストしてください。
+                </FormLabel>
+                <FormControl
+                  as="textarea"
+                  id="message-text"
+                  value={JSON.stringify(
+                    Object.values(addedPackages),
+                    null,
+                    '  ',
+                  )}
+                  rows={6}
+                  readOnly
+                ></FormControl>
+              </div>
+            </form>
+          </ModalBody>
+          <ModalFooter>
+            <Button variant="secondary" onClick={handleCloseSendModal}>
+              閉じる
+            </Button>
+            <Button
+              variant="primary"
+              onClick={() => window.open(makeFormsUrl({}))}
+            >
+              送信ページを開く
+            </Button>
+          </ModalFooter>
+        </ModalDialog>
+      </Modal>
+      <Modal
+        show={showLoadModal}
+        onHide={handleCloseLoadModal}
         aria-labelledby="loadModalLabel"
-        aria-hidden="true"
       >
-        <div className="modal-dialog modal-lg modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="loadModalLabel">
-                <i className="bi bi-send me-2"></i>パッケージデータの読み込み
-              </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body">
-              <form>
-                <div className="mb-3">
-                  <label htmlFor="loadModalText" className="col-form-label">
-                    パッケージデータを以下の欄にコピーアンドペーストしてください。
-                  </label>
-                  <textarea
-                    className={
-                      'form-control' +
-                      (loadModalStringIsValid ? '' : ' is-invalid')
-                    }
-                    id="loadModalText"
-                    value={loadModalString}
-                    onChange={(e) => loadModalStringChange(e.target.value)}
-                    rows={6}
-                    placeholder={
-                      '例：\r\n' +
-                      JSON.stringify([packages['aoytsk/easymp4']], null, '  ')
-                    }
-                  ></textarea>
-                </div>
-              </form>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                閉じる
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary"
-                data-bs-dismiss="modal"
-                disabled={!loadModalStringIsValid}
-                onClick={() => loadModalComplete(loadModalString)}
-              >
-                読み込む
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="d-flex flex-column h-100">
-        <nav className="navbar navbar-expand-lg navbar-light">
-          <div className="container-fluid">
-            <a
-              className="navbar-brand"
+        <ModalDialog size="lg" centered>
+          <ModalHeader closeButton>
+            <ModalTitle id="loadModalLabel">
+              <i className="bi bi-send me-2"></i>パッケージデータの読み込み
+            </ModalTitle>
+          </ModalHeader>
+          <ModalBody>
+            <form>
+              <div className="mb-3">
+                <FormLabel column htmlFor="loadModalText">
+                  パッケージデータを以下の欄にコピーアンドペーストしてください。
+                </FormLabel>
+                <FormControl
+                  as="textarea"
+                  className={loadModalStringIsValid ? '' : ' is-invalid'}
+                  id="loadModalText"
+                  value={loadModalString}
+                  onChange={(e) => loadModalStringChange(e.target.value)}
+                  rows={6}
+                  placeholder={
+                    '例：\r\n' +
+                    JSON.stringify([packages['aoytsk/easymp4']], null, '  ')
+                  }
+                ></FormControl>
+              </div>
+            </form>
+          </ModalBody>
+          <ModalFooter>
+            <Button variant="secondary" onClick={handleCloseLoadModal}>
+              閉じる
+            </Button>
+            <Button
+              variant="primary"
+              disabled={!loadModalStringIsValid}
+              onClick={() => loadModalComplete(loadModalString)}
+            >
+              読み込む
+            </Button>
+          </ModalFooter>
+        </ModalDialog>
+      </Modal>
+      <Container fluid id="root" className="g-0 d-flex flex-column">
+        <Navbar expand="lg" variant="light" fixed="top" bg="light">
+          <Container fluid>
+            <NavbarBrand
               href="https://team-apm.github.io/apm/"
               target="_blank"
               rel="noreferrer"
             >
               <span className="align-middle">apm-web</span>
-            </a>
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div
-              className="collapse navbar-collapse"
-              id="navbarSupportedContent"
-            >
-              <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                <li className="nav-item me-3">
-                  <span
-                    className="nav-link"
-                    onClick={() => setPackageItem(null)}
-                  >
-                    <i className="bi bi-plus-square me-2"></i>
-                    パッケージを作る
-                  </span>
-                </li>
-                <li className="nav-item me-3">
-                  <span
-                    className="nav-link"
-                    onClick={() => {
-                      loadModalStringChange('');
-                      Modal.getOrCreateInstance(
-                        document.querySelector('#loadModal')!,
-                      ).show();
-                    }}
-                  >
-                    <i className="bi bi-filetype-json me-2"></i>
-                    パッケージを読み込む
-                  </span>
-                </li>
-                <li className="nav-item me-3">
-                  <a
-                    className="nav-link"
-                    href="https://github.com/team-apm/apm-data/issues?q=is%3Aissue+label%3Aplugin%2Cscript"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <i className="bi bi-github me-2"></i>
-                    みんなの送信パッケージを見る
-                  </a>
-                </li>
-              </ul>
-              <form className="d-flex">
-                <button
-                  className="btn btn-success"
+            </NavbarBrand>
+            <NavbarToggle aria-controls="navbarSupportedContent" />
+            <NavbarCollapse id="navbarSupportedContent">
+              <Nav className="me-auto mb-2 mb-lg-0">
+                <NavLink className="me-3" onClick={() => setPackageItem(null)}>
+                  <i className="bi bi-plus-square me-2"></i>
+                  パッケージを作る
+                </NavLink>
+                <NavLink
+                  className="me-3"
+                  onClick={() => {
+                    loadModalStringChange('');
+                    handleShowLoadModal();
+                  }}
+                >
+                  <i className="bi bi-filetype-json me-2"></i>
+                  パッケージを読み込む
+                </NavLink>
+                <NavLink
+                  className="me-3"
+                  href="https://github.com/team-apm/apm-data/issues?q=is%3Aissue+label%3Aplugin%2Cscript"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <i className="bi bi-github me-2"></i>
+                  みんなの送信パッケージを見る
+                </NavLink>
+              </Nav>
+              <Form className="d-flex">
+                <Button
+                  variant="success"
                   onClick={submit}
-                  type="button"
                   disabled={Object.values(addedPackages).length === 0}
                 >
                   <i className="bi bi-send me-2"></i>
                   プレビューと送信
-                </button>
-              </form>
-            </div>
-          </div>
-        </nav>
-        <div className="flex-grow-1 overflow-auto">
-          <div className="row g-0 h-100 card border-0 rounded-0">
-            <div className="row g-0 h-100 card-body p-0">
-              <div className="col-sm-3 d-flex flex-column h-100">
-                <div className="input-group p-2">
-                  <input
-                    className="form-control shadow-none"
+                </Button>
+              </Form>
+            </NavbarCollapse>
+          </Container>
+        </Navbar>
+        <div
+          className="flex-grow-1 h-100"
+          style={{ paddingTop: '3.57109375rem' }}
+        >
+          <Row className="g-0 h-100">
+            <Col sm="3" className="h-100">
+              <Stack className="h-100">
+                <InputGroup className="p-2">
+                  <FormControl
+                    className="shadow-none"
                     type="search"
                     name="name"
                     value={searchString}
                     placeholder="🔍検索"
                     onChange={(e) => setSearchString(e.target.value)}
                   />
-                </div>
-                <div className="overflow-auto h-100 list-group list-group-flush user-select-none">
+                </InputGroup>
+                <ListGroup
+                  variant="flush"
+                  className="overflow-auto h-100 user-select-none"
+                >
                   {Object.values(addedPackages)
                     .filter(
                       (p) =>
@@ -421,21 +405,21 @@ function App() {
                         ),
                     )
                     .map((p) => createItem(p))}
-                </div>
-              </div>
-              <div className="col-sm-9 overflow-auto h-100">
-                {packageItem && (
-                  <SurveyComponent
-                    packageItem={packageItem}
-                    onComplete={surveyComplete}
-                  />
-                )}
-              </div>
-            </div>
-          </div>
+                </ListGroup>
+              </Stack>
+            </Col>
+            <Col sm="9" className="overflow-auto h-100">
+              {packageItem && (
+                <SurveyComponent
+                  packageItem={packageItem}
+                  onComplete={surveyComplete}
+                />
+              )}
+            </Col>
+          </Row>
         </div>
-      </div>
-    </div>
+      </Container>
+    </>
   );
 }
 
