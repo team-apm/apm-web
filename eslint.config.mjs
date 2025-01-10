@@ -17,7 +17,7 @@ export default [
     ignores: ['**/node_modules/'],
   },
   pluginJs.configs.recommended,
-  ...tseslint.configs.recommended,
+  ...tseslint.configs.recommendedTypeChecked,
   ...compat.extends('next/core-web-vitals', 'next/typescript'),
   {
     languageOptions: {
@@ -27,6 +27,11 @@ export default [
 
       ecmaVersion: 2022,
       sourceType: 'module',
+
+      parserOptions: {
+        project: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
 
     rules: {
