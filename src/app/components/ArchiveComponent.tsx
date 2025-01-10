@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { useDropzone } from 'react-dropzone';
+import { type DropzoneOptions, useDropzone } from 'react-dropzone';
 import JSZip from 'jszip';
 import VirtualInstallation from './VirtualInstallation';
 import Encoding from 'encoding-japanese';
@@ -17,46 +17,54 @@ Archive.init({
   workerUrl: workerBaseUrl + 'dist/worker-bundle.js',
 });
 
-async function getSriFromArrayBuffer(buffer) {
+async function getSriFromArrayBuffer(buffer: BufferSource) {
   const hash = await crypto.subtle.digest('SHA-384', buffer);
   return 'sha384-' + window.btoa(String.fromCharCode(...new Uint8Array(hash)));
 }
 
-function ArchiveComponent(props: {
-  onComplete: (
-    filesJson: {
-      filename: string;
-      archivePath: string | undefined;
-      isDirectory: boolean | undefined;
-    }[],
-    release: {
-      integrity: {
-        archive: string;
-        file: { hash: string | null; target: string }[];
-      };
-    },
-  ) => void;
-}) {
+type OnCompleteFunc = (
+  filesJson: {
+    filename: string;
+    archivePath: string | undefined;
+    isDirectory: boolean | undefined;
+  }[],
+  release: {
+    integrity: {
+      archive: string;
+      file: {
+        hash: string;
+        target: string;
+      }[];
+    };
+  },
+) => void;
+type OnCompleteFuncParams = Parameters<OnCompleteFunc>;
+
+function ArchiveComponent(props: { onComplete: OnCompleteFunc }) {
   const [sri, setSri] = useState({});
   const [archiveSri, setArchiveSri] = useState<string>('');
 
-  const onDrop = useCallback(
+  type OnDropFunc = Required<DropzoneOptions>['onDrop'];
+  const onDrop = useCallback<OnDropFunc>(
     (acceptedFiles) => {
-      async function onDropAsync(acceptedFiles) {
+      async function onDropAsync(acceptedFiles: Parameters<OnDropFunc>[0]) {
         const extention = acceptedFiles[0].name.split('.').pop();
 
-        async function arrayBufferFromFile(f) {
-          return await new Promise((resolve, reject) => {
+        async function arrayBufferFromFile(f: Blob) {
+          return await new Promise<ArrayBuffer>((resolve, reject) => {
             const reader = new FileReader();
-            reader.onload = async () => {
+            reader.onload = () => {
               try {
-                resolve(reader.result);
+                resolve(reader.result as ArrayBuffer);
               } catch (e) {
-                reject(e);
+                if (e instanceof Error) {
+                  reject(e);
+                }
+                reject(new Error('unknown error'));
               }
             };
-            reader.onerror = (e) => {
-              reject(e);
+            reader.onerror = () => {
+              reject(new Error('file read error'));
             };
             reader.readAsArrayBuffer(f);
           });
@@ -65,7 +73,7 @@ function ArchiveComponent(props: {
         const fileSRI = await getSriFromArrayBuffer(archiveBuffer);
         setArchiveSri(fileSRI);
 
-        if (['zip', '7z', 'lzh', 'rar'].includes(extention)) {
+        if (extention && ['zip', '7z', 'lzh', 'rar'].includes(extention)) {
           // unzip
           try {
             // JSZip
@@ -100,7 +108,7 @@ function ArchiveComponent(props: {
               try {
                 for (const f of (await archive.getFilesArray()) as FileData[]) {
                   const buffer = await arrayBufferFromFile(
-                    await f.file.extract(),
+                    (await f.file.extract()) as Blob,
                   );
                   files[f.path + f.file.name] =
                     await getSriFromArrayBuffer(buffer);
@@ -120,13 +128,16 @@ function ArchiveComponent(props: {
           setSri(files);
         }
       }
-      onDropAsync(acceptedFiles);
+      void onDropAsync(acceptedFiles);
     },
     [setSri],
   );
 
   const setData = useCallback(
-    (filesJson, integrities) => {
+    (
+      filesJson: OnCompleteFuncParams[0],
+      integrities: OnCompleteFuncParams[1]['integrity']['file'],
+    ) => {
       props.onComplete(filesJson, {
         integrity: {
           archive: archiveSri,
