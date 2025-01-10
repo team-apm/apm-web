@@ -1,11 +1,19 @@
-import { relative } from 'path';
+import path from 'node:path';
 
+/** @type {import('lint-staged').ConfigFn} */
 const buildEslintCommand = (filenames) =>
   `next lint --fix --file ${filenames
-    .map((f) => relative(process.cwd(), f))
+    .map((f) => path.relative(process.cwd(), f))
     .join(' --file ')}`;
+const prettierCommand = 'prettier --write';
 
+/** @type {import('lint-staged').Config} */
 export default {
-  '*.{js,jsx,ts,tsx}': ['prettier --write', buildEslintCommand],
-  '*.{json,html,css,md}': 'prettier --write',
+  '*.{ts,tsx}': [
+    () => 'tsc --incremental false --noEmit',
+    buildEslintCommand,
+    prettierCommand,
+  ],
+  '*.{js,jsx}': [buildEslintCommand, prettierCommand],
+  '*.{json,yml,md,html,css,scss}': prettierCommand,
 };
