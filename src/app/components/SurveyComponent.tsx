@@ -1,18 +1,40 @@
-import React, { useState, useEffect, useCallback, memo } from 'react';
+'use client';
+import Overwrite from '@/types/utils/Overwrite';
 import { Packages } from 'apm-schema';
-import * as Survey from 'survey-react';
-import 'survey-react/survey.css';
+import { memo, useCallback, useEffect, useState } from 'react';
+import { Model, StylesManager, type SurveyModel } from 'survey-core';
+import 'survey-core/defaultV2.min.css';
+import { bootstrapThemeName } from 'survey-core/plugins/bootstrap-integration';
+import { Survey } from 'survey-react-ui';
 import surveyJson from '../data/survey.json';
 import ArchiveComponent from './ArchiveComponent';
 
-Survey.StylesManager.applyTheme('bootstrap');
+type PackageData = Packages['packages'][number];
+
+StylesManager.applyTheme(bootstrapThemeName);
 
 const SurveyComponent = memo(
   (props: {
-    packageItem: Packages['packages'][number] | {};
-    onComplete: (jsonObject: Packages['packages'][number]) => void;
+    packageItem: PackageData | null;
+    onComplete: (jsonObject: PackageData) => void;
   }) => {
-    const [survey, setSurvey] = useState<Survey.SurveyModel>();
+    const [survey, setSurvey] = useState<SurveyModel>();
+
+    type SurveyData = Overwrite<
+      PackageData,
+      {
+        dependencies?: string;
+        downloadURLs: string;
+        releases: {
+          version: string;
+          archive: string;
+          file: {
+            target: string;
+            hash: string;
+          }[];
+        }[];
+      }
+    >;
 
     useEffect(() => {
       if (!props.packageItem) {
@@ -20,13 +42,13 @@ const SurveyComponent = memo(
         return;
       }
 
-      const survey = new Survey.Model(surveyJson);
+      const survey = new Model(surveyJson);
       if (Object.keys(props.packageItem).length === 0) {
         survey.data = {};
       } else {
         const preData = JSON.parse(
           JSON.stringify(props.packageItem),
-        ) as Packages['packages'][number];
+        ) as PackageData;
 
         // convert
         survey.data = {
@@ -38,15 +60,20 @@ const SurveyComponent = memo(
           }),
         };
       }
-      survey.onComplete.add((s, o) => {
-        const newData = s.data;
 
+      survey.onComplete.add((s) => {
+        const { dependencies, downloadURLs, releases, ...rest } =
+          s.data as SurveyData;
+        const newData = { ...rest } as PackageData;
         // convert
-        if (newData.dependencies)
-          newData.dependencies = newData.dependencies.trim().split(/\n/);
-        newData.downloadURLs = newData.downloadURLs.trim().split(/\n/);
-        if (newData.releases)
-          newData.releases = newData.releases.map((release) => {
+        if (dependencies)
+          newData.dependencies = dependencies.trim().split(/\n/);
+        newData.downloadURLs = downloadURLs.trim().split(/\n/) as [
+          string,
+          ...string[],
+        ];
+        if (releases)
+          newData.releases = releases.map((release) => {
             return {
               version: release.version,
               integrity: { archive: release.archive, file: release.file },
@@ -60,8 +87,19 @@ const SurveyComponent = memo(
     }, [props, props.packageItem]);
 
     const archiveComplete = useCallback(
-      (filesJson, release) => {
-        const packageItem = { ...survey!.data };
+      (
+        filesJson: SurveyData['files'],
+        release: {
+          integrity: {
+            archive: string;
+            file: {
+              hash: string;
+              target: string;
+            }[];
+          };
+        },
+      ) => {
+        const packageItem = { ...(survey!.data as SurveyData) };
         packageItem.files = filesJson;
         if (packageItem?.latestVersion) {
           if (!packageItem?.releases) packageItem.releases = [];
@@ -80,22 +118,29 @@ const SurveyComponent = memo(
 
     return (
       <div>
-        {survey && <Survey.Survey model={survey} />}
+        {survey && <Survey model={survey} />}
         <div className="p-3">
           <h5>インストール時にコピーするファイルの指定</h5>
           <div>
             <p>
               「パッケージの最新バージョン」に指定したバージョンのzipファイル（またはファイル）を
-              {survey?.data?.downloadURLs?.trim().split(/\n/)[0] && (
-                <a
-                  className=""
-                  href={survey.data.downloadURLs.trim().split(/\n/)[0]}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  ダウンロードして
-                </a>
-              )}
+              {survey &&
+                (survey.data as SurveyData).downloadURLs
+                  .trim()
+                  .split(/\n/)[0] && (
+                  <a
+                    className=""
+                    href={
+                      (survey.data as SurveyData).downloadURLs
+                        .trim()
+                        .split(/\n/)[0]
+                    }
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    ダウンロードして
+                  </a>
+                )}
               点線の欄にドロップします。左の欄に追加されたファイルを右の欄へ移動することでコピーするファイルを指定できます。
             </p>
           </div>

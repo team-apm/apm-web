@@ -17,8 +17,8 @@ import Sortable from 'sortablejs';
 // https://github.com/browserify/path-browserify/blob/v1.0.1/index.js#L124
 path.resolve = (a) => '/' + a;
 
-const pathRelated = (pathA, pathB) => {
-  const isParent = (parent, child) => {
+const pathRelated = (pathA: string, pathB: string) => {
+  const isParent = (parent: string, child: string) => {
     const relative = path.relative(parent, child);
     return relative && relative !== '' && !relative.startsWith('..');
   };
@@ -36,7 +36,7 @@ const VirtualInstallation = memo(
         archivePath: string | undefined;
         isDirectory: boolean | undefined;
       }[],
-      integrities: { hash: string | null; target: string }[],
+      integrities: { hash: string; target: string }[],
     ) => void;
   }) => {
     const listDownload = useRef<HTMLDivElement>(null);
@@ -51,6 +51,10 @@ const VirtualInstallation = memo(
     >([]);
 
     const [inputFolderName, setInputFolderName] = useState('');
+
+    type DirEntry =
+      | { name: string; sri: string; folder: false }
+      | { name: string; sri: null; folder: true };
 
     useEffect(() => {
       // clearList
@@ -92,17 +96,19 @@ const VirtualInstallation = memo(
         }),
       );
 
-      const filesWirhSri = Object.entries(props.files).map(([k, v]) => {
-        return { name: k, sri: v as string | null, folder: false };
-      });
-      const folders = [
+      const filesWirhSri: { name: string; sri: string; folder: false }[] =
+        Object.entries(props.files).map(([k, v]) => {
+          return { name: k, sri: v, folder: false };
+        });
+      const folders: { name: string; sri: null; folder: true }[] = [
         ...new Set(filesWirhSri.map((f) => path.dirname(f.name))),
       ]
         .filter((n) => n !== '.')
         .map((n) => {
-          return { name: n, sri: null as string | null, folder: true };
+          return { name: n, sri: null, folder: true };
         });
-      const dirEntries = folders.concat(filesWirhSri);
+      const dirEntries: DirEntry[] = [];
+      dirEntries.concat(folders, filesWirhSri);
 
       dirEntries.forEach((f) => {
         const entry = document.createElement('div');
@@ -122,18 +128,19 @@ const VirtualInstallation = memo(
     }, [props.files]);
 
     useEffect(() => {
-      const filesWirhSri = Object.entries(props.files).map(([k, v]) => {
-        return { name: k, sri: v as string | null, folder: false };
-      });
-      const folders = [
+      const filesWirhSri: { name: string; sri: string; folder: false }[] =
+        Object.entries(props.files).map(([k, v]) => {
+          return { name: k, sri: v, folder: false };
+        });
+      const folders: { name: string; sri: null; folder: true }[] = [
         ...new Set(filesWirhSri.map((f) => path.dirname(f.name))),
       ]
         .filter((n) => n !== '.')
         .map((n) => {
           return { name: n, sri: null, folder: true };
-        });
-      const dirEntries = filesWirhSri.concat(folders);
-      type DirEntry = (typeof dirEntries)[number];
+        }) as { name: string; sri: null; folder: true }[];
+      const dirEntries: DirEntry[] = [];
+      dirEntries.concat(filesWirhSri, folders);
 
       const getEntries = (
         sortable: Sortable | undefined,
@@ -172,8 +179,8 @@ const VirtualInstallation = memo(
           };
         });
         const integrities = files.flatMap((i) => {
-          const fileEntry = dirEntries.find((e) => e.name === i.id) as DirEntry;
-          if (fileEntry?.folder) return [];
+          const fileEntry = dirEntries.find((e) => e.name === i.id);
+          if (!fileEntry || fileEntry.folder) return [];
           return [
             {
               hash: fileEntry.sri,
@@ -189,11 +196,11 @@ const VirtualInstallation = memo(
 
     useEffect(() => {
       if (listDownload.current === null || listAviutl.current === null) {
-        console.log(`${listDownload} or ${listAviutl} not found.`);
+        console.log('listDownload or listAviutl not found.');
         return;
       }
 
-      const usedPath = new Set();
+      const usedPath = new Set<string>();
 
       const updateMovableEntry = () => {
         if (listDownload.current === null) return;
@@ -201,10 +208,11 @@ const VirtualInstallation = memo(
           node.classList.remove('list-group-item-dark');
           node.classList.remove('ignore-elements');
 
-          const nodePath = (node as HTMLDivElement).dataset.id as string;
+          const nodePath = (node as HTMLDivElement).dataset.id;
           if (
-            defaultFolders.includes(path.basename(nodePath)) ||
-            Array.from(usedPath).find((used) => pathRelated(nodePath, used))
+            nodePath &&
+            (defaultFolders.includes(path.basename(nodePath)) ||
+              Array.from(usedPath).find((used) => pathRelated(nodePath, used)))
           ) {
             node.classList.add('list-group-item-dark');
             node.classList.add('ignore-elements');
@@ -220,13 +228,17 @@ const VirtualInstallation = memo(
         sort: false,
         onRemove: (event) => {
           const itemPath = event.item.dataset.id;
-          usedPath.add(itemPath);
-          updateMovableEntry();
+          if (itemPath) {
+            usedPath.add(itemPath);
+            updateMovableEntry();
+          }
         },
         onAdd: (event) => {
           const itemPath = event.item.dataset.id;
-          usedPath.delete(itemPath);
-          updateMovableEntry();
+          if (itemPath) {
+            usedPath.delete(itemPath);
+            updateMovableEntry();
+          }
         },
       });
 
@@ -243,7 +255,7 @@ const VirtualInstallation = memo(
       );
     }, [setRootSortable]);
 
-    const addFolder = (name) => {
+    const addFolder = (name: string) => {
       name = name.trim();
       if (!name) return;
       if (sortables.find((s) => s.id === name)) return;
