@@ -39,6 +39,7 @@
     "react-bootstrap": "^2.10.10",
     "react-dom": "^19.1.0",
     "react-dropzone": "^14.3.8",
+    "react-sortablejs": "^6.1.4",
     "sortablejs": "^1.15.6",
     "survey-core": "^1.12.38",
     "survey-react-ui": "^1.12.38",
