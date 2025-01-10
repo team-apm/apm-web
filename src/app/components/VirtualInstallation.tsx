@@ -1,6 +1,16 @@
 import React, { useRef, useEffect, useState, memo } from 'react';
 import path from 'path-browserify';
 import Sortable from 'sortablejs';
+import {
+  Button,
+  Card,
+  CardBody,
+  Col,
+  FormControl,
+  InputGroup,
+  ListGroup,
+  Row,
+} from 'react-bootstrap';
 
 // const imageExtention = [
 //   '.png',
@@ -280,43 +290,38 @@ const VirtualInstallation = memo(
     };
 
     return (
-      <div className="row my-2">
-        <div className="col">
-          <div className="card">
-            <div className="card-body">
+      <Row className="my-2">
+        <Col>
+          <Card>
+            <CardBody>
               Zipファイル
-              <div ref={listDownload} className="list-group mt-3"></div>
-            </div>
-          </div>
-        </div>
-        <div className="col">
-          <div className="card sticky-top vmh-90 overflow-y-auto">
-            <div className="card-body">
+              <ListGroup ref={listDownload} className="mt-3" />
+            </CardBody>
+          </Card>
+        </Col>
+        <Col>
+          <Card className="sticky-top vmh-90 overflow-y-auto">
+            <CardBody>
               Aviutl
-              <div
-                ref={listAviutl}
-                className="list-group mt-3 nested-sortable"
-              ></div>
-              <div className="input-group mt-3">
-                <input
+              <ListGroup ref={listAviutl} className="mt-3 nested-sortable" />
+              <InputGroup className="mt-3">
+                <FormControl
                   type="text"
-                  className="form-control"
                   value={inputFolderName}
                   onChange={(e) => setInputFolderName(e.target.value)}
                   placeholder="フォルダ名"
-                ></input>
-                <button
-                  className="btn btn-outline-secondary"
-                  type="button"
+                />
+                <Button
+                  variant="outline-secondary"
                   onClick={() => addFolder(inputFolderName)}
                 >
                   <i className="bi bi-folder-plus me-2"></i>追加
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+                </Button>
+              </InputGroup>
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
     );
   },
 );
