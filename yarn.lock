@@ -4434,10 +4434,15 @@ supports-preserve-symlinks-flag@^1.0.0:
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
-survey-react@^1.12.35:
+survey-core@^1.12.35:
   version "1.12.35"
-  resolved "https://registry.yarnpkg.com/survey-react/-/survey-react-1.12.35.tgz#7199170fec9da3332b9e9946b38c9478613bdbf2"
-  integrity sha512-GpTVqfCb23lD1IZ1qBx4DjPKgmL/v+Mfdn1+M66JKww3kH1zOz3HB0ch4NDUOKZMapnuIFCa6GRir6qUWHOfTg==
+  resolved "https://registry.yarnpkg.com/survey-core/-/survey-core-1.12.35.tgz#55f139557f103c327f402d7e01b91de3885833d4"
+  integrity sha512-NFFxacjSkkXV11L3//OBBuMlnPEVYh3Ir1HDisSd4l/+2Hr/WvPYMGAyn9TImTOhJ5N6tfzJ6bASNuoQYNhlOw==
+
+survey-react-ui@^1.12.35:
+  version "1.12.35"
+  resolved "https://registry.yarnpkg.com/survey-react-ui/-/survey-react-ui-1.12.35.tgz#c7393a6b6c70f2f4041274c1700617af3ed6c535"
+  integrity sha512-20zBvOfifTtUNDcyX5Ji3ObhikXz/YU27ls7kwXdL/hu5iWMis9jEEQrF9TDSotJ7axfnK+VH3rn4bXlt2eaiw==
 
 synckit@0.11.4:
   version "0.11.4"
