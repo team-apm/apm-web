@@ -1,21 +1,24 @@
+'use client';
 import Overwrite from '@/types/utils/Overwrite';
 import { Packages } from 'apm-schema';
 import { memo, useCallback, useEffect, useState } from 'react';
-import * as Survey from 'survey-react';
-import 'survey-react/survey.css';
+import { Model, StylesManager, type SurveyModel } from 'survey-core';
+import 'survey-core/defaultV2.min.css';
+import { bootstrapThemeName } from 'survey-core/plugins/bootstrap-integration';
+import { Survey } from 'survey-react-ui';
 import surveyJson from '../data/survey.json';
 import ArchiveComponent from './ArchiveComponent';
 
 type PackageData = Packages['packages'][number];
 
-Survey.StylesManager.applyTheme('bootstrap');
+StylesManager.applyTheme(bootstrapThemeName);
 
 const SurveyComponent = memo(
   (props: {
     packageItem: PackageData | null;
     onComplete: (jsonObject: PackageData) => void;
   }) => {
-    const [survey, setSurvey] = useState<Survey.SurveyModel>();
+    const [survey, setSurvey] = useState<SurveyModel>();
 
     type SurveyData = Overwrite<
       PackageData,
@@ -39,7 +42,7 @@ const SurveyComponent = memo(
         return;
       }
 
-      const survey = new Survey.Model(surveyJson);
+      const survey = new Model(surveyJson);
       if (Object.keys(props.packageItem).length === 0) {
         survey.data = {};
       } else {
@@ -115,7 +118,7 @@ const SurveyComponent = memo(
 
     return (
       <div>
-        {survey && <Survey.Survey model={survey} />}
+        {survey && <Survey model={survey} />}
         <div className="p-3">
           <h5>インストール時にコピーするファイルの指定</h5>
           <div>
