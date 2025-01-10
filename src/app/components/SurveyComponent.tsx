@@ -112,7 +112,7 @@ const SurveyComponent = memo(
     );
 
     return (
-      <div>
+      <>
         {survey && <Survey model={survey} />}
         <div className="p-3">
           <h5>インストール時にコピーするファイルの指定</h5>
@@ -142,7 +142,7 @@ const SurveyComponent = memo(
           </div>
           <ArchiveComponent onComplete={archiveComplete} />
         </div>
-      </div>
+      </>
     );
   },
 );
