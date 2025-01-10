@@ -9,7 +9,7 @@ Survey.StylesManager.applyTheme('bootstrap');
 
 const SurveyComponent = memo(
   (props: {
-    packageItem: Packages['packages'][number] | {};
+    packageItem: Packages['packages'][number] | null;
     onComplete: (jsonObject: Packages['packages'][number]) => void;
   }) => {
     const [survey, setSurvey] = useState<Survey.SurveyModel>();
@@ -38,7 +38,7 @@ const SurveyComponent = memo(
           }),
         };
       }
-      survey.onComplete.add((s, o) => {
+      survey.onComplete.add((s) => {
         const newData = s.data;
 
         // convert

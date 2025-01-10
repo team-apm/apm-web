@@ -27,7 +27,7 @@ function makeFormsUrl(data) {
 
 function App() {
   const [packageItem, setPackageItem] = useState<
-    Packages['packages'][number] | {}
+    Packages['packages'][number] | null
   >();
   const [packages, setPackages] = useState<{
     [name: string]: Packages['packages'][number];
@@ -330,7 +330,10 @@ function App() {
             >
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item me-3">
-                  <span className="nav-link" onClick={() => setPackageItem({})}>
+                  <span
+                    className="nav-link"
+                    onClick={() => setPackageItem(null)}
+                  >
                     <i className="bi bi-plus-square me-2"></i>
                     パッケージを作る
                   </span>
