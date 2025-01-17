@@ -3897,10 +3897,10 @@ supports-preserve-symlinks-flag@^1.0.0:
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
-survey-react@^1.12.17:
-  version "1.12.17"
-  resolved "https://registry.yarnpkg.com/survey-react/-/survey-react-1.12.17.tgz#c8cbdf68a91c4213a4b2025eddaafb5cef4a3519"
-  integrity sha512-/ZSndX6fLMESrL22JkvvboMz6m6rhj78a5Ro49rS5i1wCgjkNfBu+Leny7xOf2TSAGShKWw6mFmCzLUYQHuXKQ==
+survey-react@^1.12.19:
+  version "1.12.19"
+  resolved "https://registry.yarnpkg.com/survey-react/-/survey-react-1.12.19.tgz#90cfac2a58fd51d8bf2196acc66f7c96ce90262d"
+  integrity sha512-T9JZI0x3MZ5Vl7mWE9iDetFca4oWvkNY4yjH77U99OoEtEDCV8pMGbudRTfNM5g0WemRU5LoVuL6Gm1+SZd2HA==
 
 synckit@0.9.2:
   version "0.9.2"
