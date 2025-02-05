@@ -424,7 +424,7 @@ function App() {
                 </div>
               </div>
               <div className="col-sm-9 overflow-auto h-100">
-                {packageItem && (
+                {packageItem !== undefined && (
                   <SurveyComponent
                     packageItem={packageItem}
                     onComplete={surveyComplete}
