@@ -41,7 +41,7 @@ type OnCompleteFunc = (
 type OnCompleteFuncParams = Parameters<OnCompleteFunc>;
 
 function ArchiveComponent(props: { onComplete: OnCompleteFunc }) {
-  const [sri, setSri] = useState({});
+  const [sri, setSri] = useState<Record<string, string>>({});
   const [archiveSri, setArchiveSri] = useState<string>('');
 
   type OnDropFunc = Required<DropzoneOptions>['onDrop'];
@@ -86,7 +86,7 @@ function ArchiveComponent(props: { onComplete: OnCompleteFunc }) {
                 });
               },
             });
-            const files = {};
+            const files: Record<string, string> = {};
             for (const file of Object.values(zip.files)) {
               if (file.dir) continue;
               const buffer = await zip.file(file.name)!.async('arraybuffer');
@@ -98,7 +98,7 @@ function ArchiveComponent(props: { onComplete: OnCompleteFunc }) {
             console.log('Fallback to libarchive');
             try {
               const archive = await Archive.open(acceptedFiles[0]);
-              const files = {};
+              const files: Record<string, string> = {};
 
               // L-SMASH_Works_r940_plugins can't be extracted, but the file list can be read.
               // Therefore, loading is done in two steps.
@@ -123,7 +123,7 @@ function ArchiveComponent(props: { onComplete: OnCompleteFunc }) {
             }
           }
         } else {
-          const files = {};
+          const files: Record<string, string> = {};
           files[acceptedFiles[0].name] = fileSRI;
           setSri(files);
         }
@@ -162,7 +162,7 @@ function ArchiveComponent(props: { onComplete: OnCompleteFunc }) {
           </p>
         )}
       </div>
-      <VirtualInstallation files={sri} onChange={setData}></VirtualInstallation>
+      <VirtualInstallation files={sri} onChange={setData} />
     </>
   );
 }
