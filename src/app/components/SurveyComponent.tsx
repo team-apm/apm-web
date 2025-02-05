@@ -18,7 +18,7 @@ const SurveyComponent = memo(
     packageItem: PackageData | null;
     onComplete: (jsonObject: PackageData) => void;
   }) => {
-    const [survey, setSurvey] = useState<SurveyModel>();
+    const [survey, setSurvey] = useState<SurveyModel>(new Model(surveyJson));
 
     type SurveyData = Overwrite<
       PackageData,
@@ -37,13 +37,8 @@ const SurveyComponent = memo(
     >;
 
     useEffect(() => {
-      if (!props.packageItem) {
-        setSurvey(undefined);
-        return;
-      }
-
       const survey = new Model(surveyJson);
-      if (Object.keys(props.packageItem).length === 0) {
+      if (props.packageItem === null) {
         survey.data = {};
       } else {
         const preData = JSON.parse(
@@ -99,7 +94,7 @@ const SurveyComponent = memo(
           };
         },
       ) => {
-        const packageItem = { ...(survey!.data as SurveyData) };
+        const packageItem = { ...(survey.data as SurveyData) };
         packageItem.files = filesJson;
         if (packageItem?.latestVersion) {
           if (!packageItem?.releases) packageItem.releases = [];
@@ -111,7 +106,7 @@ const SurveyComponent = memo(
             version: packageItem.latestVersion,
           });
         }
-        survey!.data = packageItem;
+        survey.data = packageItem;
       },
       [survey],
     );
@@ -125,6 +120,7 @@ const SurveyComponent = memo(
             <p>
               「パッケージの最新バージョン」に指定したバージョンのzipファイル（またはファイル）を
               {survey &&
+                (survey.data as SurveyData).downloadURLs &&
                 (survey.data as SurveyData).downloadURLs
                   .trim()
                   .split(/\n/)[0] && (
