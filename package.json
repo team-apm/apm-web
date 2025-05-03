@@ -24,7 +24,7 @@
     "prepare:husky": "husky",
     "prepare:libarchive": "cpx \"./node_modules/libarchive.js/dist/**\" ./public/dist/",
     "deploy": "run-s build deploy:gh-pages",
-    "deploy:gh-pages": "gh-pages -d out"
+    "deploy:gh-pages": "gh-pages -d out/apm-web"
   },
   "dependencies": {
     "bootstrap": "^5.3.5",
