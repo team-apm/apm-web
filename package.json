@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "bootstrap": "^5.3.5",
-    "bootstrap-icons": "^1.11.3",
+    "bootstrap-icons": "^1.12.1",
     "encoding-japanese": "^2.2.0",
     "fuse.js": "^7.1.0",
     "jszip": "^3.10.1",
