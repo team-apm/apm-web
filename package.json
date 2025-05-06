@@ -62,7 +62,7 @@
     "lint-staged": "^15.5.1",
     "npm-run-all2": "^8.0.1",
     "prettier": "^3.5.3",
-    "prettier-plugin-packagejson": "^2.5.10"
+    "prettier-plugin-packagejson": "^2.5.11"
   },
   "packageManager": "yarn@1.22.22"
 }
