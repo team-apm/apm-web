@@ -12,11 +12,13 @@ import SurveyComponent from './SurveyComponent';
 import Fuse from 'fuse.js';
 import { Modal } from 'bootstrap';
 
+type PackageData = Packages['packages'][number];
+
 const formsUrl =
   'https://docs.google.com/forms/d/e/1FAIpQLSfxQWxsCp9QQYHpe9oxL4gZEdJmMVQxFZijXKI1NmygeHgHkg/viewform?usp=pp_url';
 const formsAttribute = { name: 'entry.1336975935', data: 'entry.447338863' };
 
-function makeFormsUrl(data) {
+function makeFormsUrl(data: Record<string, string>) {
   let url = formsUrl;
   for (const key of Object.keys(formsAttribute)) {
     if (Object.prototype.hasOwnProperty.call(data, key))
@@ -26,15 +28,11 @@ function makeFormsUrl(data) {
 }
 
 function App() {
-  const [packageItem, setPackageItem] = useState<
-    Packages['packages'][number] | {}
-  >();
-  const [packages, setPackages] = useState<{
-    [name: string]: Packages['packages'][number];
-  }>({});
-  const [addedPackages, setAddedPackages] = useState<{
-    [name: string]: Packages['packages'][number];
-  }>({});
+  const [packageItem, setPackageItem] = useState<PackageData | null>();
+  const [packages, setPackages] = useState<Record<string, PackageData>>({});
+  const [addedPackages, setAddedPackages] = useState<
+    Record<string, PackageData>
+  >({});
   const [searchString, setSearchString] = useState('');
   const [loadModalString, setLoadModalString] = useState<string>('');
   const [loadModalStringIsValid, setLoadModalStringIsValid] = useState(false);
@@ -52,14 +50,21 @@ function App() {
           ...(JSON.parse(text) as Packages).packages.map((x) => ({
             [x.id]: x,
           })),
-        ),
+        ) as Record<string, PackageData>,
       );
 
       const tmpAddedPackges =
-        JSON.parse(localStorage.getItem('v3-packages') ?? '{}') ?? {};
+        (JSON.parse(localStorage.getItem('v3-packages') ?? '{}') as Record<
+          string,
+          PackageData
+        >) ?? {};
 
       // migration v2 to v3
-      const v2Data = JSON.parse(localStorage.getItem('packages') ?? '{}') ?? {};
+      const v2Data =
+        (JSON.parse(localStorage.getItem('packages') ?? '{}') as Record<
+          string,
+          PackageData
+        >) ?? {};
       if (Object.keys(v2Data).length !== 0) {
         tmpAddedPackges['_notify/update-v3'] = {
           id: '_notify/update-v3',
@@ -67,8 +72,11 @@ function App() {
           name: '【お知らせ】apm-webの更新',
           overview:
             'パッケージデータの形式が変わりました。これまでのデータは下の説明欄にあります。お手数ですが必要な場合は再度入力をお願いします。',
-          downloadURLs: [],
+          downloadURLs: [''],
           description: JSON.stringify(Object.values(v2Data), null, '  '),
+          pageURL: '',
+          latestVersion: '',
+          files: [],
         };
 
         localStorage.setItem('v3-packages', JSON.stringify(tmpAddedPackges));
@@ -78,11 +86,11 @@ function App() {
 
       setAddedPackages(tmpAddedPackges);
     }
-    fetchJson();
+    void fetchJson();
   }, []);
 
   const surveyComplete = useCallback(
-    (json) => {
+    (json: PackageData) => {
       const newPackages = { ...addedPackages };
       newPackages[json.id] = json;
       setAddedPackages(newPackages);
@@ -94,7 +102,7 @@ function App() {
 
   function loadModalStringChange(strJson: string) {
     try {
-      const _json = JSON.parse(strJson);
+      const _json = JSON.parse(strJson) as PackageData | PackageData[];
       const json = Array.isArray(_json) ? _json : [_json];
       setLoadModalStringIsValid(json.some((p) => Object.hasOwn(p, 'id')));
     } catch {
@@ -104,7 +112,7 @@ function App() {
   }
 
   const loadModalComplete = (strJson: string) => {
-    const _json = JSON.parse(strJson);
+    const _json = JSON.parse(strJson) as PackageData | PackageData[];
     const json = Array.isArray(_json) ? _json : [_json];
     const newPackages = { ...addedPackages };
 
@@ -138,8 +146,8 @@ function App() {
   const ps = searchString
     ? new Fuse(merged, options).search(searchString).map((p) => p.item)
     : merged;
-  function createItem(p, badge?) {
-    function removeItem(id) {
+  function createItem(p: PackageData, badge?: string) {
+    function removeItem(id: string) {
       const newPackages = { ...addedPackages };
       delete newPackages[id];
       setAddedPackages(newPackages);
@@ -165,7 +173,7 @@ function App() {
           <span className="badge bg-warning me-2">Edit</span>
         )}
         {p?.name ? p.name : p.id}
-        {['new', 'edit'].includes(badge) && (
+        {badge && ['new', 'edit'].includes(badge) && (
           <div
             className="position-absolute top-50 end-0 translate-middle-y fs-4 px-3"
             onClick={() => removeItem(p.id)}
@@ -330,7 +338,10 @@ function App() {
             >
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item me-3">
-                  <span className="nav-link" onClick={() => setPackageItem({})}>
+                  <span
+                    className="nav-link"
+                    onClick={() => setPackageItem(null)}
+                  >
                     <i className="bi bi-plus-square me-2"></i>
                     パッケージを作る
                   </span>
@@ -413,7 +424,7 @@ function App() {
                 </div>
               </div>
               <div className="col-sm-9 overflow-auto h-100">
-                {packageItem && (
+                {packageItem !== undefined && (
                   <SurveyComponent
                     packageItem={packageItem}
                     onComplete={surveyComplete}
