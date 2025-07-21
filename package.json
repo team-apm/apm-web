@@ -33,7 +33,7 @@
     "fuse.js": "^7.1.0",
     "jszip": "^3.10.1",
     "libarchive.js": "^2.0.2",
-    "next": "^15.3.3",
+    "next": "^15.4.2",
     "path-browserify": "^1.0.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
