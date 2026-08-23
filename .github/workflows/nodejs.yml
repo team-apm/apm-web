@@ -3,8 +3,10 @@ name: Node CI
 on:
   push:
     branches: [main]
+  # Do not restrict the base to main: pull requests targeting an intermediate
+  # branch (a stacked pull request) must be checked too. The branches filter
+  # matches the base, not the head, so restricting it leaves them unverified.
   pull_request:
-    branches: [main]
   workflow_dispatch:
 
 jobs:
