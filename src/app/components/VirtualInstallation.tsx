@@ -134,7 +134,7 @@ const VirtualInstallation = memo(
         .filter((n) => n !== '.')
         .map((n) => {
           return { name: n, sri: null, folder: true };
-        }) as { name: string; sri: null; folder: true }[];
+        });
       const dirEntries: DirEntry[] = [...filesWirhSri, ...folders];
 
       const getEntries = (
