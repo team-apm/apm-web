@@ -20,11 +20,19 @@ updates:
       # only ships in a new major.
       - dependency-name: 'next'
         update-types: ['version-update:semver-major']
+      # eslint-config-next tracks next's major, and it shares a group with it,
+      # so leaving it out lets the group carry a next 16 config against next 15.
+      - dependency-name: 'eslint-config-next'
+        update-types: ['version-update:semver-major']
       - dependency-name: 'react'
         update-types: ['version-update:semver-major']
       - dependency-name: 'react-dom'
         update-types: ['version-update:semver-major']
       - dependency-name: 'eslint'
+        update-types: ['version-update:semver-major']
+      # @eslint/js and @eslint/eslintrc ship in lockstep with eslint, so
+      # ignoring only the latter lets a major land on one half of the pair.
+      - dependency-name: '@eslint/*'
         update-types: ['version-update:semver-major']
       - dependency-name: 'typescript-eslint'
         update-types: ['version-update:semver-major']
