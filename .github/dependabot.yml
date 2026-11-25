@@ -37,6 +37,10 @@ updates:
       - dependency-name: 'typescript-eslint'
         update-types: ['version-update:semver-major']
     groups:
+      # Bundle all minor/patch updates into one PR. A dependency joins the first group it
+      # matches, so keep this first; the named groups below then only receive majors.
+      minor-and-patch:
+        update-types: ['minor', 'patch']
       next:
         patterns:
           - '@next/*'
